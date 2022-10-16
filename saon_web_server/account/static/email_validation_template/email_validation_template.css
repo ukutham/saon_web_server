@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+* {
+	padding: 0;
+	margin: 0;
+	font-family: Montserrat, sans-serif;
+}
+
+html, body {
+	height: 100%;
+	width: 100%;
+}
+
+a {
+	color: black;
+}
+
+#saon_icon {
+	margin-top: 10px;
+	height: 100px;
+	width: 100px;
+	position: absolute;
+	top: 0;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+#saon_icon > img {
+	height: 100px;
+	width: 100px;
+}
+
+#accept_message {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
+
+#accept_message_message {
+	margin-top: 20px;
+	font-size: 2em;
+	margin-bottom: 10px;
+	text-align: center;
+	padding-inline: 20px;
+}
+
+@media (max-width: 700px) {
+	#accept_message_message {
+		font-size: 1em;
+	}
+}

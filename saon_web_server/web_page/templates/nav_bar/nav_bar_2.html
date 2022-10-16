@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+	{% load static %}
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="{% static 'nav_bar/nav_bar_2.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'base.css' %}">
+	<link rel="icon" type='image/png' href="{% static 'logo/logo_savon_v2.png' %}">
+	<title>savonnerie SAON</title>
+
+	<meta name ='description' content ='savonnerie bio et responsable'>
+	<meta name ='description' content ='savon bon pour la peau'>
+	<meta name ='description' content ='savon au lait de chèvre'>
+	<meta name ='description' content ='savonnerie artisanal'>
+	<meta name ='description' content ='savonnerie écologique'>
+</head>
+<body>
+	<div id="web_page" csrf='{% csrf_token %}'>
+		<div id='nav_bar_loader_container' style="display: none">
+			<div id='nav_bar_loader'>
+				<div id='nav_bar_loader_1' class="nav_bar_loader_content"></div>
+				<div id='nav_bar_loader_2' class="nav_bar_loader_content"></div>
+			</div>
+		</div>
+		<div id='page_content' page='{{ page }}'>
+			
+		</div>
+	</div>
+	<div id='fixed_container'>
+		<div id='nav_bar_container'>
+			<div id='nav_bar_pointer_container'>
+				<div>
+					<div id='nav_bar_pointer'></div>
+				</div>
+			</div>
+			<div id="nav_bar_fond"></div>
+			<div id='nav_bar'>
+				<nav>
+					<input type="radio" name="nav_radio" id='home_nav_radio' class="nav_radio" position_pointer='10%' {% if page == 'menu' %}checked{% endif %}>
+		            <button class="label_nav_icon" id="div_nav_home" for="home_nav_radio" position_pointer='10%' page='menu'>
+		            	<svg
+			                viewBox=' 0 0 600 600'
+			                id='nav_icon_home'
+			                class='nav_icon'
+			                alt='menu'
+			                >
+			                <path stroke-width="40" stroke-linecap="round" stroke-linejoin="round" d='M 100 550 L 100 230 M 500 230 L 500 550 L 390 550 L 390 370 L 210 370 L 210 550 L 100 550 L 100 230'></path>
+			                <path stroke-width="40" stroke-linecap="round" stroke-linejoin="round" d='M 50 250 L 300 50 L 550 250 '></path>
+		            	</svg>
+		            	<div>accueil</div>
+		            </button>
+		            <input type="radio" name="nav_radio" id='location_nav_radio' class="nav_radio" position_pointer='30%' {% if page == 'location' %}checked{% endif %}>
+		            <button class='label_nav_icon' id='div_nav_location' for="location_nav_radio" position_pointer='30%' page='location'>
+		            	<svg
+			             	viewBox=' 0 0 600 600'
+			    			id='nav_icon_location'
+			                class='nav_icon'
+			                >
+			                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="30" d="M 300 50 C 225 50 150 100 150 200 C 150 300 280 400 300 550 C 320 400 450 300 450 200 C 450 100 375 50 300 50 z M 300 120 A 80 80 0 0 1 380 200 A 80 80 0 0 1 300 280 A 80 80 0 0 1 220 200 A 80 80 0 0 1 300 120 z " ></path>
+		            	</svg>
+		            	<div>carte SAON</div>
+		            </button>
+		            <input type="radio" name="nav_radio" id='soap_nav_radio' class="nav_radio" position_pointer='50%' {% if page == 'soap' %}checked{% endif %}>
+		            <button class='label_nav_icon' id='div_nav_soap' for="soap_nav_radio" position_pointer='50%' page='soap'>
+		            	<svg
+			            	viewBox=' 0 0 600 600'
+			                id='nav_icon_soap'
+			                class='nav_icon'
+			                >
+			                <path stroke-width="40" stroke-linecap="round" stroke-linejoin="round" d='M 220 200 L 380 200 L 380 550 L 220 550 z'></path>
+			                <path stroke-width="20" stroke-linecap="round" stroke-linejoin="round" d='M 220 280 C 150 240, 170 100 ,300 50 L 340 30 L 300 50 C 170 100, 150 240, 220 280'></path>
+			                <path stroke-width="20" stroke-linecap="round" stroke-linejoin="round" d='M 380 280 C 450 240, 430 100 ,300 50 L 260 30 L 300 50 C 430 100, 450 240, 380 280'></path>
+			                <circle cx="300" cy='50' r="30"></circle>
+		            	</svg>
+		            	<div>produits</div>
+		            </button>
+		            <input type="radio" name="nav_radio" id='basket_nav_radio' class="nav_radio" position_pointer='70%' {% if page == 'basket' %}checked{% endif %}>
+		            <button class='label_nav_icon' id='div_nav_basket' for='basket_nav_radio' position_pointer='70%' page ='basket'>
+		            	<svg
+			                viewBox=' 0 0 600 600'
+			                id='nav_icon_basket'
+			                class='nav_icon'
+			                >
+			                <path stroke-width="40" stroke-linecap="round" stroke-linejoin="round" d='M 70 350 L 530 350 L 400 550 L 200 550 z M 50 300 L 550 300 L 550 350 L 50 350 z M 260 400 L 260 500 C 260 550, 340 550, 340 500 L 340 400 C 340 350, 260 350, 260 400 M 160 400 L 160 470 C 160 520, 240 520, 240 470 L 240 400 C 240 350, 160 350, 160 400 M 360 400 L 360 470 C 360 520, 440 520, 440 470 L 440 400 C 440 350, 360 350, 360 400'></path>
+			                <path stroke-width="50" stroke-linecap="round" stroke-linejoin="round" d='M 60 250 L 210 100 z M 540 250 L 390 100 z'></path>
+		            	</svg>
+		            	<div>panier</div>
+		            	<span id="basket_product_number" have_product='false'>0</span>
+		            </button>
+		           	<input type="radio" name="nav_radio" id='account_nav_radio' class="nav_radio" position_pointer='90%' {% if page == 'account' %}checked{% endif %}>
+		            <button class='label_nav_icon' id='div_nav_account' for="account_nav_radio" position_pointer='90%' page='account'>
+		            	<svg
+			                viewBox=' 0 0 600 600'
+			                id='nav_icon_account'
+			                class='nav_icon'
+			                >
+			                <circle cx='300' cy='200' r='100'></circle>
+			                <path stroke-width="100" stroke-linecap="round" stroke-linejoin="round" d='M 200 370 C 250 410, 350 410, 400 370 L 450 520, 150 520 z'></path>
+		            	</svg>
+		            	<div>mon compte</div>
+		            </button>
+				</nav>
+			</div>
+			<script src='{% static "base.js" %}'></script>
+			<script src='{% static "nav_bar/nav_bar_2.js" %}'></script>
+		</div>
+	</div>
+	<div id='error_container' style="display:none">
+		<div id="error_icon">
+			<div id='minor_error' style="display:none;">
+				<svg
+					viewBox=' 0 0 600 600'>
+					<path stroke-width='50' stroke-linecap='round' stroke-linejoin='round' stroke='#FBAF00' fill='none' d='M 300 100 L 500 500 L 100 500 z'></path>
+					<path stroke-width='50' stroke-linecap='round' stroke-linejoin='round' stroke='#2a2f28' d='M 300 270 L 300 360 z M 300 430 z'></path>
+				</svg>
+			</div>
+			<div id='major_error' style="display:block;">
+				<svg
+					viewBox=' 0 0 600 600'>
+					<path stroke-width='50' stroke-linecap='round' stroke-linejoin='round' stroke='#BA2D0B' fill='none' d='M 200 100 L 400 100 L 500 200 L 500 400 L 400 500 L 200 500 L 100 400 L 100 200 z'></path>
+					<path stroke-width='50' stroke-linecap='round' stroke-linejoin='round' stroke='#2a2f28' fill='none' d='M 220 220 L 380 380 z M 380 220 L 220 380 z'></path>
+				</svg>
+			</div>
+		</div>
+		<div id='error_text'>Erreur: vous n'etes plus connecté à internet</div>
+	</div>
+</body>
+</html>

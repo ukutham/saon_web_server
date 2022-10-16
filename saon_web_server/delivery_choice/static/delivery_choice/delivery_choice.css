@@ -1,0 +1,301 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+:root {
+	--background-color: white;
+
+	--element-color-on-p: #474954;
+	--element-color-on-s: #474954;
+
+	--p-color: #c2efeb;
+	--p-light-color: #f5ffff;
+	--p-dark-color: #91bcb9;
+
+	--s-color: #bdaacd;
+	--s-light-color: #f0dcff;
+	--s-dark-color: #8d7b9c;
+
+	--test: #8c9e6c;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	text-decoration: none;
+	color: black;
+	font-family: Montserrat, sans-serif;
+}
+
+input[type='text'], input[type='password'], input[type='submit'] {
+	border: none;
+	outline: none;
+	background: white;
+}
+
+html, body {
+	height: max-content;
+	width: 100%;
+}
+
+.gradient_border {
+	padding: 2px;
+	background: linear-gradient(to right, var(--p-color), var(--s-color));
+	height: max-content;
+	width: max-content;
+}
+
+.disabled {
+	pointer-events: none;
+	opacity: 0.4;
+}
+
+#chose_livraison_entreprise_header {
+	font-size: 2em;
+	font-weight: bold;
+	display: flex;
+	justify-content: center;
+}
+
+#chose_livraison_entreprise {
+	display: flex;
+	flex-direction: row;
+	height: 100%;
+}
+
+#mondial_relay {
+	width: calc(50vw - 2.5px);
+	margin-top: 20px;
+}
+
+#mondial_relay_header {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+}
+
+#mondial_relay_header_title {
+	font-size: 1.5em;
+	font-weight: bold;
+}
+
+#mondial_relay_body {
+	padding: 10px;
+}
+
+.mondial_relay_body_title {
+	margin-top: 20px;
+	margin-left: 10px;
+	font-weight: bold;
+}
+
+#mondial_relay_map {
+	margin-top: 10px;
+	height: 45vw;
+	max-height: 550px;
+	width: 100%;
+	border-radius: 10px;
+}
+
+.MRW-Results + div + div {
+	display: none;
+}
+
+#mondial_relay_validation_button_container {
+	display: flex;
+	justify-content: center;
+}
+
+#mondial_relay_validation_button_container > .gradient_border {
+	margin-top: 30px;
+	border-radius: 10px;
+	padding: 5px;
+	padding-inline: 10px;
+	cursor: pointer;
+}
+
+#mondial_relay_validation_button {
+	font-size: 1.5em;
+}
+
+@media (max-width: 870px) {
+	#mondial_relay_validation_button {
+		font-size: 1.2em;
+	}
+}
+
+#middle_bar {
+	margin-top: 2.5%;
+	width: 5px;
+	border-radius: 10px;
+	background: linear-gradient(to bottom, var(--p-color), var(--s-color));
+}
+
+#colissimo {
+	width: calc(50vw - 2.5px);
+	margin-top: 20px;
+	display: flex;
+	flex-direction: column;
+}
+
+#colissimo_header {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+}
+
+#colissimo_header_title {
+	font-size: 1.5em;
+	font-weight: bold;
+}
+
+#colissimo_body {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.colissimo_body_title {
+	margin-top: 20px;
+	padding: 10px;
+	font-weight: bold;
+}
+
+.colissimo_dashbord_content {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin: 10px;
+	padding: 10px;
+	border-radius: 10px;
+	cursor: pointer;
+}
+
+.colissimo_dashbord_content[select='true'] {
+	background: var(--p-dark-color);
+}
+
+.colissimo_dashbord_content_del {
+	display: flex;
+	cursor: pointer;
+}
+
+.colissimo_dashbord_separation_bar {
+	height: 3px;
+	border-radius: 3px;
+	margin-inline: 20px;
+	background: linear-gradient(to right, var(--p-color), var(--s-color));
+}
+
+.colissimo_dashbord_add_button_container {
+	position: relative;
+	display: flex;
+	flex-direction: row-reverse;
+	align-items: center;
+	z-index: 1;
+	padding: 10px;
+}
+
+
+.colissimo_dashbord_add_button {
+	display: flex;
+	cursor: pointer;
+}
+
+.colissimo_dashbord_add {
+	position: relative;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	padding: 10px;
+	transform: translateY(-100%);
+	visibility: hidden;
+	opacity: 0;
+	transition: all 0.5s;
+}
+
+.colissimo_dashbord_add_button_container[open='true'] + .colissimo_dashbord_add {
+	transform: translateY(0%);
+	visibility: visible;
+	opacity: 1;
+}
+
+/* add addr input */
+#colissimo_state_dashbord_add_error {
+	color: red;
+	margin-inline: 10px;
+}
+
+.colissimo_dashbord_add_input {
+	display: flex;
+	flex-direction: column;
+}
+
+.colissimo_dashbord_add_input > div {
+	margin-top: 5px;
+	margin-bottom: 5px;
+	margin-inline: 10px;
+}
+
+.colissimo_dashbord_add_input > div > input {
+	border-radius: 7px;
+	height: 25px;
+	padding-inline: 10px;
+	width: 150px;
+}
+
+.colissimo_dashbord_add_confirm, .colissimo_dashbord_add_del {
+	display: flex;
+	cursor: pointer;
+}
+
+#colissimo_validation_button_container {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 10px;
+}
+
+#colissimo_validation_button_container > .gradient_border {
+	margin-top: 30px;
+	border-radius: 10px;
+	padding: 5px;
+	padding-inline: 10px;
+	cursor: pointer;
+}
+
+#colissimo_validation_button {
+	font-size: 1.5em;
+}
+
+@media (max-width: 870px) {
+	#colissimo_validation_button {
+		font-size: 1.2em;
+	}
+}
+
+@media (max-width: 650px) {
+	#chose_livraison_entreprise_header {
+		font-size: 1.7em;
+		text-align: center;
+	}
+
+	#chose_livraison_entreprise {
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+	}
+
+	#mondial_relay {
+		width: 100vw;
+	}
+
+	#middle_bar {
+		min-height: 5px;
+		width: 95%;
+		margin-top: 20px;
+		margin-left: 2.5%;
+		background: linear-gradient(to right, var(--p-color), var(--s-color));
+	}
+
+	#colissimo {
+		width: 100vw;
+	}
+}

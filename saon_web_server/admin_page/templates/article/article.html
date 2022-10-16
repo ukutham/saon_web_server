@@ -1,0 +1,159 @@
+{% load static %}
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="{% static 'article/article.css' %}">
+
+	<meta name ="robots" content ="noindex, nofollow">
+</head>
+<body>
+	<div id='soap_container'>
+		<div id='soap_info' open='false' mode='create'>
+			<div id='soap_info_closer'>
+				<svg
+				viewBox='0 0 200 200'
+				height='50'
+				width='50'
+				>
+					<path stroke='black' stroke-width="10" stroke-linecap="round" stroke-linejoin="round" d='M 40 40 L 160 160 z M 160 40 L 40 160 z'/>
+				</svg>
+			</div>
+			<div id='soap_info_loader' style="display: none;">
+				<svg style='height: 0; width: 0;'>
+					<filter id='liquid'>
+						<feGaussianBlur in="SourceGraphic" stdDeviation="10"/>
+						<feColorMatrix values="
+							1 0 0 0 0 
+							0 1 0 0 0
+							0 0 1 0 0
+							0 0 0 20 -10
+						"/>
+					</filter>
+				</svg>
+				<div id="soap_info_loader_bubble_1"></div>
+				<div id='soap_info_loader_soap'></div>
+			</div>
+			<div id='soap_info_container'>
+				<div id='article_info' article_id=''>
+					<h1 id='soap_name_title'>
+						<span>Uyuni</span>
+						<div style="flex: auto;"></div>
+						<svg
+							viewBox=' 0 0 600 600'
+							id='ok_icon'
+							class='info_icon'>
+							<path stroke-width='90' stroke-linecap='round' stroke-linejoin='round' fill='none' d='M 150 350 L 300 500 L 500 150'></path>
+						</svg>
+					</h1>
+					<div class="article_option_article_type_container">
+						<label for="uyunie_option_article_type">type d'article :</label>
+						<select type="text" name="uyunie_option_article_type" id="uyunie_option_article_type" onchange="put_article_save_on_false(event)">
+							{% for article_type in article_types %}
+							<option value='{{ article_type.id }}'>{{ article_type.name }}</option>
+							{% endfor %}
+						</select>
+					</div>
+					<div id="soap_name">
+						<label for="soap_name_input">Nom :</label>
+						<input type="text" name="name" value='Uyuni' id="soap_name_input" onchange="put_article_save_on_false(event)">
+					</div>
+					<div id="soap_principal_ingredient">
+						<label for="soap_principal_ingredient_input">ingredients principaux :</label>
+						<input type="text" name="principal_ingredient" value='beurre, beurre, beurre' id="soap_principal_ingredient_input" onchange="put_article_save_on_false(event)">
+					</div>
+					<div id="soap_ingredient">
+						<label for="soap_ingredient_input">ingredients:</label>
+						<textarea id="soap_ingredient_input" rows="2" cols="30" name='ingredients' onchange="put_article_save_on_false(event)">test, test test, test, test...</textarea>
+					</div>
+					<div id="soap_description">
+						<label for="soap_description_input">description:</label>
+						<textarea id="soap_description_input" rows="2" cols="30" name='description' onchange="put_article_save_on_false(event)">test, test test, test, test...</textarea>
+					</div>
+					<div id="soap_principal_image" class="soap_image">
+						<label for="soap_principal_image_input">image principal :</label>
+						<img width="100">
+						<input type="file" id="soap_principal_image_input" name="principal_image" accept="image/*" onchange='previewFile(event); put_article_save_on_false(event)'> 
+					</div>
+					<div id="soap_image_1" class="soap_image">
+						<label for="soap_image_1_input">image 1 :</label>
+						<img width="100">
+						<input type="file" id="soap_image_1_input" name="image_1" accept="image/*" onchange='previewFile(event); put_article_save_on_false(event)'> 
+					</div>
+					<div id="soap_image_2" class="soap_image">
+						<label for="soap_image_2_input">image 2 :</label>
+						<img width="100">
+						<input type="file" id="soap_image_2_input" name="image_2" accept="image/*" onchange='previewFile(event); put_article_save_on_false(event)'> 
+					</div>
+					<div id="soap_image_3" class="soap_image">
+						<label for="soap_image_3_input">image 3 :</label>
+						<img width="100">
+						<input type="file" id="soap_image_3_input" name="image_3" accept="image/*" onchange='previewFile(event); put_article_save_on_false(event)'> 
+					</div>
+					<div id="soap_available">
+						<label for="soap_available_input">activer :</label>
+						<input type="checkbox" id="soap_available_input" name="available" onchange="put_article_save_on_false(event)"> 
+					</div>
+					<div id="article_button_container">
+						<div style="flex: auto;"></div>
+						<div class="gradient_border" id='article_save_button_container'>
+							<button id="article_save_button" onclick="modify_article(event)">Sauvegarder</button>
+						</div>
+						<div class="gradient_border" id='article_remove_button_container'>
+							<button id="article_remove_button" onclick="remove_article(event)">Supprimer</button>
+						</div>
+						<div class="gradient_border" id='create_article_button_container'>
+							<button id="create_article_button" onclick="create_new_article(event)">cree</button>
+						</div>
+					</div>
+				</div>
+				<div id="soap_info_separation"></div>
+				<div id='article_option_container'>
+					<h3 id="article_option_title">Options</h3>
+					<div id="add_article_option_container">
+						<div style="flex: auto"></div>
+						<div class="gradient_border">
+							<button id='add_article_option' onclick="add_new_article_option_in_innerHTML(event)">Ajouter une option</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+			<div id='create_new_type_article'>
+				<div style="flex: auto"></div>
+				<input type="text" name="create_new_type_article_input" id='create_new_type_article_input'>
+				<div class="gradient_border" style="border-radius: 5px;">
+					<button id='create_new_type_article_button'>creer un nouveau type d'article</button>
+				</div>
+			</div>
+			{% for product_type, product in all_product.items %}
+			<div class="product_type" value='savon'>
+				<div class='product_type_title'>{{ product_type.name }}</div>
+				<input type="text" name="type_new_name" placeholder="Changer le nom du type d'article">
+				<div class="gradient_border">
+					<button class='type_new_name_saver' article_type_id='{{ product_type.id }}' onclick="modify_name_article_type(event)">sauvegarder</button>
+				</div>
+				<div class="gradient_border">
+					<button class='type_remover' article_type_id='{{ product_type.id }}' onclick="remove_article_type(event)">supprimer</button>
+				</div>
+			</div>
+			<div class='create_new_article'>
+				<div style="flex: auto"></div>
+				<div class="gradient_border" style="border-radius: 5px;">
+					<button class='create_new_article_button' onclick="open_create_popup(event)">creer un nouveau article</button>
+				</div>
+			</div>
+			<div class="product_container">
+				{% for i in product %}
+				<button class="product" id="{{ i.id }}">
+					<div class="product_img" style="background: center / cover no-repeat url({{ i.photo }});">
+						<div class="product_name">{{ i.name }}</div>
+						<div class="product_major_ingredients">{{ i.ingredient }}</div>
+					</div>
+				</button>
+				{% endfor %}
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+</body>

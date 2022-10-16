@@ -1,0 +1,88 @@
+{% load static %}
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="{% static 'order/order.css' %}">
+
+	<meta name ="robots" content ="noindex, nofollow">
+</head>
+<body>
+	<div id="account_search_bar">
+		<div style="flex: auto;"></div>
+		<div class="gradient_border" id='search_account_container'>
+			<input type="text" name="email" id="search_account" placeholder="email ou prénom/nom" onchange="search_account(event)">
+		</div>
+	</div>
+	{% for date_or_account, orders in dates_or_acounts.items %}
+	<div class="one_date">
+		<div class="order_date_title">{{ date_or_account }}</div>
+		{% for order in orders %}
+		<div class="order_container">
+			<!-- order -->
+			<div class="gradient_border gradient_border_order" open='false'>
+			    <div style="background: white; border-radius: 10px; height: 100%; overflow: hidden;">
+			      <div class="order" finish='false' tabindex="0" role='button' onclick="open_or_close_order(event)">
+			        <div class="order_info">
+			          <div class="order_info_number">
+			            commande n° {{ order.id }}
+			          </div>
+			          <div class="order_info_montant">
+			            montant TTC : {{ order.cost_TTC }} €
+			          </div>
+			        </div>
+			        <div class="order_status" state='{{ order.state }}'>
+			          {{ order.dev_state }}
+			        </div>
+			        <div class="order_user">
+			        	<h6 class="order_user_title">Compte :</h6>
+			        	<span class="order_user_name"> {{ order.create_by.name }} {{ order.create_by.surname }}</span>
+			        	<span class="order_user_tel"> {{ order.create_by.phone_number }}</span>
+			        	<span class="order_user_email"> {{ order.create_by.email }}</span>
+			        </div>
+			      </div>
+			      <div class="order_all_info">
+			        <div class="order_all_info_livraison_place">
+			          <span class="order_all_info_livraison_mode_title">mode de livraison :</span> <span>{{ order.dev_livraison_mode }}</span>
+			          {% if order.livraison_mode == 'M' %}
+			          <span class="order_all_info_livraison_mode_title">relay id :</span> <span>{{ order.relay_id }}</span>
+			          {% endif %}
+			          <span class="order_all_info_livraison_place_title">lieux de livraison :</span> <span>{{ order.address }}</span>
+			        </div>
+			        <div class="order_all_info_products">
+			          <div class="order_all_info_products_title">
+			            produits achetés :
+			          </div>
+			          <div class='order_all_info_product'>
+			            {% for product in order.products %}
+			            <div class="order_all_info_product_name">
+			              {{ product.article_name }}, {{ product.option_name }}
+			            </div>
+			            <div class="order_all_info_product_number">
+			              x {{ product.number }}
+			            </div>
+			            {% endfor %}
+			          </div>
+			        </div>
+			        <div class="order_facture">
+			          <span class="order_facture_title">Votre facture :</span>
+			          <button class="order_facture_url" facture="{{ order.facture.url }}">{{ order.facture_name }}</button>
+			        </div>
+			      </div>
+			    </div>
+		  </div>
+		  <!---->
+		  <!-- pass to expedied order -->
+			<button class="pass_to_expedied_order" order_id='{{ order.id }}' state='{% if order.state == "0" %}1{% elif order.state == "1" %}0{% endif %}' onclick="change_status(event, event.target.getAttribute('state'))">
+				{% if order.state == '0' %}
+				validez la commande
+				{% elif order.state == '1' %}
+				dévalidez la commande
+				{% endif %}
+			</button>
+		  <!---->
+		</div>
+		{% endfor %}
+	</div>
+	{% endfor %}
+</body>

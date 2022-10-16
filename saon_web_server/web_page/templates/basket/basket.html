@@ -1,0 +1,65 @@
+{% load static %}
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="{% static 'basket/basket.css' %}">
+	<title>Saon</title>
+
+	<meta name ="robots" content ="noindex, nofollow">
+</head>
+<body>
+	<div id='panier_web_page'>
+		{% if connected %}
+		{% if soaps_in_basket != None %}
+		<div id='product_in_basket_container'>
+			{% for soap in soaps_in_basket %}
+			<div class="product_in_basket" id="{{ soap.option.view_name }}" product_id='{{ soap.id }}' number='{{ soap.number }}'>
+				<div class='product_in_basket_img' style="background: center / cover url( {{ soap.soap.photo }} ) no-repeat;" alt='{{ soap.soap.name }}, {{ soap.option.view_name }}'></div>
+				<div class='product_in_basket_name_cost'>
+					<div class="product_in_basket_name">{{ soap.soap.name }} : {{ soap.option.view_name }}</div>
+					<div class='product_in_basket_cost'>{{ soap.option.cost }}€</div>
+				</div>
+				<div class="product_in_basket_add">
+					<input type="number" value="{{ soap.number }}" min="1" max="30" onchange="product_func(event)" product='{{ soap.option.view_name }}' product_cost='{{ soap.option.cost }}' product_id='{{ soap.id }}'>
+				</div>
+				<div class="product_in_basket_final_cost">{{ soap.total_cost }} €</div>
+				<div class="product_in_basket_delete">
+					<button product='{{ soap.option.view_name }}'>
+						<svg
+							product='{{ soap.option.view_name }}'
+							viewBox='0 0 200 200'
+							width='50'
+							height='50'
+							>
+							<path product='{{ soap.option.view_name }}' fill='none' stroke='#000' stroke-width='10' stroke-linecap='round' stroke-linejoin='round' d='M 50 50 L 150 150 z M 150 50 L 50 150 z'/>
+						</svg>
+					</button>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+		{% else %}
+		<div id='probleme_container'>
+			<div id='probleme'>aucun article</div>
+		</div>
+		{% endif %}
+		{% else %}
+		<div id='probleme_container'>
+			<div id='probleme'>Veuillez vous connecter</div>
+		</div>
+		{% endif %}
+		<div id='total_cost_container'>
+			<div id='total_cost' class="total_cost_container">
+				<div id='total_cost_label'><span>aucun</span> article(s)</div>
+				<div id='total_cost_price'>0€</div>
+			</div>
+			<div id="total_cost_bar"></div>
+			<div id='total_cost_TTC' class="total_cost_container">
+				<div id='total_cost_TTC_label'>Total TTC hors livraison</div>
+				<div id='total_cost_TTC_price'>0€</div>
+			</div>
+			<button id='pay_button' onclick="got_to_delivery_choice()">commander</button>
+		</div>
+	</div>
+</body>

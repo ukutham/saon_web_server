@@ -1,0 +1,7 @@
+#message {
+	font-weight: bold;
+	width: 100vw;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}

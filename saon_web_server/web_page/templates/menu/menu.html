@@ -1,0 +1,75 @@
+{% extends 'header_footer/header_footer.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="{% static 'menu/menu.css' %}">
+	<script type="text/javascript" src="{% static 'menu/menu.js' %}"></script>
+	
+	<meta name ="robots" content ="noindex, nofollow">
+</head>
+<body>
+	<header id='menu_header'>
+		<h3>Pourquoi se laver avec du savon, plutôt qu’avec un gel douche?</h3>
+		<p>
+			SAON fabrique des savons surgras, résultat de la méthode de saponification à froid. Ils sont riches en corps gras ce qui permet de protéger le film hydrolipidique de la peau. Nous avons développé notre gamme de savons afin de proposer aux consommateurs une alternative aux gels douches. Mais pourquoi?
+		</p>
+	</header>
+	<section id='for_planete_savon_pres' class="pres_produit">
+		<div class='text_pres' id='for_planete_text_pres'>
+			<h6>Pour notre planète!</h6>
+			<p>
+				Il se vend 440 millions de produits de beauté et de soin en France chaque année ! Autant d'emballages plastiques que nous ne pensons pas à trier. Les savons SAON sont emballés uniquement d'une étiquette papier minimaliste, moins de déchets pour notre planéte ! 
+			</p>
+		</div>
+		<div class='photo_pres' id="for_planete_pres_photo">
+			<img src="{% static 'menu/img/earth.jpg' %}" height="300px" width="auto" alt="illustration de la Terre">
+		</div>
+	</section>
+	<div id='between_section'>
+		<svg viewBox='0 0 1680 50'>
+			<linearGradient id='gradient_between_section'>
+				<stop class='stop_1' offset='0%'/>
+				<stop class='stop_2' offset='100%'>
+			</linearGradient>
+			<path stroke='url(#gradient_between_section)' stroke-width='15px' stroke-linecap='round' stroke-linejoin='round' d='M 0 25 C 300 50 , 540 50, 840 25 C 1140 0 , 1380 0 , 1680 25 C 1380 0, 1140 0, 840 25 C 540 50, 300 50, 0 25 z'></path>
+		</svg>
+	</div>
+	<section id='for_you_pres' class="pres_produit">
+		<div class='photo_pres'>
+			<img src="{% static 'menu/img/peau-douce.jpg' %}" height="300px" width="300px" alt="présentation des bien-fait sur la peau">
+		</div>
+		<div class='text_pres' id='for_you_text_pres'>
+			<h6>Pour vous!</h6>
+			<p>
+				Les savons SAON sont tous surgras, et protègent ainsi votre peau beaucoup mieux que le gel douche qui aura tendance à l’assécher sur le long terme. Facile à utiliser, nos savons sont équipés d’une cordelette en coton bio pour le suspendre afin d’augmenter sa durée de vie.
+			</p>
+		</div>
+	</section>
+	<div id='between_section'>
+		<svg viewBox='0 0 1680 50'>
+			<linearGradient id='gradient_between_section'>
+				<stop class='stop_1' offset='0%'/>
+				<stop class='stop_2' offset='100%'>
+			</linearGradient>
+			<path stroke='url(#gradient_between_section)' stroke-width='15px' stroke-linecap='round' stroke-linejoin='round' d='M 0 25 C 300 50 , 540 50, 840 25 C 1140 0 , 1380 0 , 1680 25 C 1380 0, 1140 0, 840 25 C 540 50, 300 50, 0 25 z'></path>
+		</svg>
+	</div>
+	<section id='for_money_savon_pres' class="pres_produit">
+		<div class='text_pres' id='for_money_text_pres'>
+			<h6>Pour votre portefeuille!</h6>
+			<p>
+				Quand vous achetez un gel douche, vous achetez 80 à 90% d’EAU et le reste en principes actifs. Un SAON, c’est 100% de produit actif pour votre toilette. Il vous durera 2 à 4 fois plus longtemps qu’un gel douche
+			</p>
+		</div>
+		<div class='photo_pres' id="for_money_pres_photo">
+			<img src="{% static 'menu/img/money.jpg' %}" height="300px" width="auto" alt="signe euro avec des feuilles">
+		</div>
+	</section>
+</body>
+
+{% endblock %}

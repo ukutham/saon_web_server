@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+:root {
+	--background-color: white;
+
+	--element-color-on-p: #474954;
+	--element-color-on-s: #474954;
+
+	--p-color: #c2efeb;
+	--p-light-color: #f5ffff;
+	--p-dark-color: #91bcb9;
+
+	--s-color: #bdaacd;
+	--s-light-color: #f0dcff;
+	--s-dark-color: #8d7b9c;
+
+	--test: #8c9e6c;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	text-decoration: none;
+	color: black;
+	font-family: Montserrat, sans-serif;
+}
+
+input[type='text'], input[type='password'], input[type='submit'] {
+	border: none;
+	outline: none;
+	background: white;
+}
+
+html {
+	height: 100%;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+}
+
+.gradient_border {
+	padding: 2px;
+	background: linear-gradient(to right, var(--p-color), var(--s-color));
+	height: max-content;
+	width: max-content;
+}
+
+.compte_state_info {
+	display: flex;
+	flex-direction: row;
+	margin-bottom: 10px;
+}
+
+.gradient_border > input {
+	border-radius: 7px;
+	height: 25px;
+	padding-inline: 10px;
+}
+
+.compte_state_change .gradient_border {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.compte_state_validation .gradient_border {
+	margin-top: 20px;
+	margin-bottom: 10px;
+}
+
+.error_message {
+	color: red;
+	font-size: 0.8em;
+}
+
+#saon_icon {
+	margin-top: 10px;
+	height: 100px;
+	width: 100px;
+	position: absolute;
+	top: 0;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+#saon_icon > img {
+	height: 100px;
+	width: 100px;
+}
+
+
+/* mail */
+
+#compte_state_mail > .compte_state_change {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+#compte_state_change_mail_input {
+	width: 240px;
+}

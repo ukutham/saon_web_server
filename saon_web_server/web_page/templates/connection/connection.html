@@ -1,0 +1,269 @@
+{% extends 'header_footer/header_footer.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="{% static 'connection/connection.css' %}">
+	<meta charset="utf-8" page_name='connection' id='account_page_identification'>
+
+	<meta name ="robots" content ="noindex, nofollow">
+</head>
+<body>
+	<div id='body_of_web_page'>
+		<div id='compte_container' style="transform: translateY(0%);">
+			<div class="compte_container_positioner">
+				<div class="gradient_border" style="border-radius: 20px">
+					<div id='compte_connection_container' class="box_container">
+						<div id="compte_connection_title">Se connecter</div>
+						<div id='compte_connection_error_message' style="display: none">
+							<svg
+								height='20'
+								width='20'
+								viewBox=' 0 0 600 600'
+							>
+								<path stroke-width='50' stroke-linecap='round' stroke-linejoin='round' stroke='#BA2D0B' fill='none' d='M 200 100 L 400 100 L 500 200 L 500 400 L 400 500 L 200 500 L 100 400 L 100 200 z'></path>
+								<path stroke-width='50' stroke-linecap='round' stroke-linejoin='round' stroke='#2a2f28' fill='none' d='M 220 220 L 380 380 z M 380 220 L 220 380 z'></path>
+							</svg>
+							<span></span>
+						</div>
+						<div id='compte_connection_input_mail' class="compte_connection_input">
+							<input type="text" name="connection" id="compte_connection_input_mail_input" onchange='InputValueChange(event)'>
+							<label for="compte_connection_input_mail_input" id="compte_connection_input_mail_label">adresse mail</label>
+						</div>
+						<div class='password_input' style="margin-bottom: 10px;">
+							<div>
+								<div id='compte_connection_input_password' class="compte_connection_input">
+									<input type="password" name="connection" id='compte_connection_input_password_input' onchange='InputValueChange(event)'>
+									<label for="compte_connection_input_password_input" id="compte_connection_input_password_label">mot de passe</label>
+								</div>
+								<div class="password_input_show" show_password='false'>
+									<svg
+									height='20'
+									width='20'
+									viewBox='0 0 512 512'>
+										<path d="m34,256l26.2,26.2c108,108 283.7,108 391.7,0l26.1-26.2-26.2-26.2c-108-108-283.7-108-391.7,0l-26.1,26.2zm222,126.2c-75.8,0-151.6-28.9-209.3-86.6l-32.9-32.9c-3.7-3.7-3.7-9.7 0-13.5l32.9-32.9c115.4-115.4 303.2-115.4 418.6,0l32.9,32.9c3.7,3.7 3.7,9.7 0,13.5l-32.9,32.9c-57.7,57.7-133.5,86.6-209.3,86.6z"/>
+	      								<path d="m256,183.5c-40,0-72.5,32.5-72.5,72.5s32.5,72.5 72.5,72.5c40,0 72.5-32.5 72.5-72.5s-32.5-72.5-72.5-72.5zm0,164c-50.5,0-91.5-41.1-91.5-91.5 0-50.5 41.1-91.5 91.5-91.5s91.5,41.1 91.5,91.5c0,50.5-41,91.5-91.5,91.5z"/>
+	      								<path class='password_input_show_bar' stroke-width='25' stroke='black' fill='none' d='M 100 100 L 412 412 z'/>
+									</svg>
+								</div>
+							</div>
+						</div>
+						<div id='password_forget'><a href="/password_forgot" style="color: black;">mot de passe oublié</a></div>
+						<div id='compte_connection_input_send' class="compte_connection_input">
+							<div class="gradient_border" style="border-radius: 10px;">
+								<input type="submit" name="connection" value='connexion'>
+							</div>
+						</div>
+					</div>
+					<button class="scroller_text" position='-50'>créer un compte</button>
+				</div>
+			</div>
+			<div class="compte_container_positioner">
+				<div class="gradient_border" style="border-radius: 20px;">
+					<div id='compte_creation_container' class="box_container" type='client'>
+						<div id="compte_creation_title">Créer votre compte</div>
+						<div id="compte_creation_general_error" class="compte_connection_error"></div>
+						<!--
+						<div style="display: flex; flex-direction: row;">
+							<span style="margin-right: 20px;">type du compte :</span>
+							<div id='compte_creation_input_type'>
+								<div class="gradient_border" style="border-radius: 10px; width: 100%;">
+									<label for="compte_creation_input_type_input" id="compte_creation_input_type_label" tabindex="0" role="button">
+										<span style="margin-right: 20px; display: flex; align-items: center;">particulier</span>
+										<div></div>
+										<svg
+										width='20'
+										height='20'
+										viewBox='0 0 40 20'
+										open='false'>
+											<path fill='black' stroke-width='0.3' d='M 3 3 L 6 3 L 20 17 L 37 3 L 40 3 L 20 20 z'/>
+										</svg>
+									</label>
+								</div>
+								<div style="height: 0; position: relative;">
+									<div class="gradient_border" id="compte_creation_input_type_option_gradient_border" open='false'>
+										<div id='compte_creation_input_type_option'>
+											<div class="compte_creation_input_type_option">
+												<input type="radio" name="compte_creation_input_type_option" value="client" id="compte_creation_input_type_option_client" checked='true'>
+												<label for="compte_creation_input_type_option_client" type='client' tabindex="0" role="button">particulier</label>
+											</div>
+											<div class="compte_creation_input_type_option">
+												<input type="radio" name="compte_creation_input_type_option" value="professionel" id="compte_creation_input_type_option_professional">
+												<label for="compte_creation_input_type_option_professional" type='prof' tabindex="0" role="button">professionnel</label>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<input type="text" name="create_account" id='compte_creation_input_type_input'>
+						</div> -->
+						<!-- creation compte client -->
+						<div id='compte_creation_people'>
+							<!--name-->
+							<div id="compte_creation_name_error" class="compte_connection_error"></div>
+							<div id='compte_creation_people_name' class="compte_creation_people">
+								<label for="compte_creation_people_name_input">prénom : </label>
+								<div class="gradient_border" style="border-radius: 10px;">
+									<input type="text" name="create_account" id="compte_creation_people_name_input">
+								</div>
+							</div>
+							<!--surname-->
+							<div id="compte_creation_surname_error" class="compte_connection_error"></div>
+							<div id='compte_creation_people_surname' class="compte_creation_people">
+								<label for="compte_creation_people_surname_input">nom : </label>
+								<div class="gradient_border" style="border-radius: 10px;">
+									<input type="text" name="create_account" id="compte_creation_people_surname_input">
+								</div>
+							</div>
+							<!--phonenumber-->
+							<div id="compte_creation_phonenumber_error" class="compte_connection_error"></div>
+							<div id='compte_creation_people_phonenumber' class="compte_creation_people">
+								<label for="compte_creation_people_phonenumber_input">numéro de téléphone : </label>
+								<div class="gradient_border" style="border-radius: 10px;">
+									<input type="tel" name="create_account" id="compte_creation_people_phonenumber_input" pattern=”[0-9]{3}-[0-9]{3}-[0-9]{4}”>
+								</div>
+							</div>
+							<!--mail-->
+							<div id="compte_creation_mail_error" class="compte_connection_error"></div>
+							<div id='compte_creation_people_mail' class="compte_creation_people">
+								<label for="compte_creation_people_mail_input">adresse mail : </label>
+								<div class="gradient_border" style="border-radius: 10px;">
+									<input type="text" name="create_account" id="compte_creation_people_mail_input">
+								</div>
+							</div>
+							<!--password-->
+							<div id="compte_creation_password_error" class="compte_connection_error"></div>
+							<div class="compte_creation_people compte_creation_people_password">
+								<label for="compte_creation_people_password_input">mot de passe : </label>
+								<div class="gradient_border" style="border-radius: 10px; display: flex; flex-direction: row">
+									<div>
+										<input type="password" name="create_account" id="compte_creation_people_password_input">
+									</div>
+									<div class="password_input_show" show_password='false' style="padding-right: 10px;">
+										<svg
+										height='20'
+										width='20'
+										viewBox='0 0 512 512'>
+											<path d="m34,256l26.2,26.2c108,108 283.7,108 391.7,0l26.1-26.2-26.2-26.2c-108-108-283.7-108-391.7,0l-26.1,26.2zm222,126.2c-75.8,0-151.6-28.9-209.3-86.6l-32.9-32.9c-3.7-3.7-3.7-9.7 0-13.5l32.9-32.9c115.4-115.4 303.2-115.4 418.6,0l32.9,32.9c3.7,3.7 3.7,9.7 0,13.5l-32.9,32.9c-57.7,57.7-133.5,86.6-209.3,86.6z"/>
+		      								<path d="m256,183.5c-40,0-72.5,32.5-72.5,72.5s32.5,72.5 72.5,72.5c40,0 72.5-32.5 72.5-72.5s-32.5-72.5-72.5-72.5zm0,164c-50.5,0-91.5-41.1-91.5-91.5 0-50.5 41.1-91.5 91.5-91.5s91.5,41.1 91.5,91.5c0,50.5-41,91.5-91.5,91.5z"/>
+		      								<path class='password_input_show_bar' stroke-width='25' stroke='black' fill='none' d='M 100 100 L 412 412 z'/>
+										</svg>
+									</div>
+								</div>
+							</div>
+							<!--password_confirm-->
+							<div id="compte_creation_confirm_error" class="compte_connection_error"></div>
+							<div class="compte_creation_people compte_creation_people_password">
+								<label for="compte_creation_people_password_input">confirmer votre mot de passe : </label>
+								<div class="gradient_border" style="border-radius: 10px; display: flex; flex-direction: row">
+									<div>
+										<input type="password" name="create_account" id="compte_creation_people_confirm_password_input">
+									</div>
+									<div class="password_input_show" show_password='false' style="padding-right: 10px;">
+										<svg
+										height='20'
+										width='20'
+										viewBox='0 0 512 512'>
+											<path d="m34,256l26.2,26.2c108,108 283.7,108 391.7,0l26.1-26.2-26.2-26.2c-108-108-283.7-108-391.7,0l-26.1,26.2zm222,126.2c-75.8,0-151.6-28.9-209.3-86.6l-32.9-32.9c-3.7-3.7-3.7-9.7 0-13.5l32.9-32.9c115.4-115.4 303.2-115.4 418.6,0l32.9,32.9c3.7,3.7 3.7,9.7 0,13.5l-32.9,32.9c-57.7,57.7-133.5,86.6-209.3,86.6z"/>
+		      								<path d="m256,183.5c-40,0-72.5,32.5-72.5,72.5s32.5,72.5 72.5,72.5c40,0 72.5-32.5 72.5-72.5s-32.5-72.5-72.5-72.5zm0,164c-50.5,0-91.5-41.1-91.5-91.5 0-50.5 41.1-91.5 91.5-91.5s91.5,41.1 91.5,91.5c0,50.5-41,91.5-91.5,91.5z"/>
+		      								<path class='password_input_show_bar' stroke-width='25' stroke='black' fill='none' d='M 100 100 L 412 412 z'/>
+										</svg>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- crreation compte proffesionnel-->
+						<!--<div id='compte_creation_professional'>
+							<div id="compte_creation_prof_name_error" class="compte_connection_error"></div>
+							<div id='compte_creation_prof_name' class="compte_creation_people">
+								<label for="compte_creation_prof_name_input">prénom : </label>
+								<div class="gradient_border" style="border-radius: 10px;">
+									<input type="text" name="create_account" id="compte_creation_prof_name_input">
+								</div>
+							</div>
+							<div id="compte_creation_prof_surname_error" class="compte_connection_error"></div>
+							<div id='compte_creation_prof_surname' class="compte_creation_people">
+								<label for="compte_creation_prof_surname_input">nom : </label>
+								<div class="gradient_border" style="border-radius: 10px;">
+									<input type="text" name="create_account" id="compte_creation_prof_surname_input">
+								</div>
+							</div>
+							<div id="compte_creation_prof_phonenumber_error" class="compte_connection_error"></div>
+							<div id='compte_creation_prof_phonenumber' class="compte_creation_people">
+								<label for="compte_creation_prof_phonenumber_input">numéro de téléphone : </label>
+								<div class="gradient_border" style="border-radius: 10px;">
+									<input type="tel" name="create_account" id="compte_creation_prof_phonenumber_input" pattern=”[0-9]{3}-[0-9]{3}-[0-9]{4}”>
+								</div>
+							</div>
+							->
+							<div id="compte_creation_prof_mail_error" class="compte_connection_error"></div>
+							<div id='compte_creation_prof_mail' class="compte_creation_prof">
+								<label for="compte_creation_prof_mail_input">adresse mail professionelle : </label>
+								<div class="gradient_border" style="border-radius: 10px;">
+									<input type="text" name="create_account" id="compte_creation_prof_mail_input">
+								</div>
+							</div>
+							<div id="compte_creation_prof_password_error" class="compte_connection_error"></div>
+							<div class="compte_creation_prof compte_creation_prof_password">
+								<label for="compte_creation_prof_password_input">mot de passe : </label>
+								<div class="gradient_border" style="border-radius: 10px; display: flex; flex-direction: row">
+									<div>
+										<input type="password" name="create_account" id="compte_creation_prof_password_input">
+									</div>
+									<div class="password_input_show" show_password='false' style="padding-right: 10px;">
+										<svg
+										height='20'
+										width='20'
+										viewBox='0 0 512 512'>
+											<path d="m34,256l26.2,26.2c108,108 283.7,108 391.7,0l26.1-26.2-26.2-26.2c-108-108-283.7-108-391.7,0l-26.1,26.2zm222,126.2c-75.8,0-151.6-28.9-209.3-86.6l-32.9-32.9c-3.7-3.7-3.7-9.7 0-13.5l32.9-32.9c115.4-115.4 303.2-115.4 418.6,0l32.9,32.9c3.7,3.7 3.7,9.7 0,13.5l-32.9,32.9c-57.7,57.7-133.5,86.6-209.3,86.6z"/>
+		      								<path d="m256,183.5c-40,0-72.5,32.5-72.5,72.5s32.5,72.5 72.5,72.5c40,0 72.5-32.5 72.5-72.5s-32.5-72.5-72.5-72.5zm0,164c-50.5,0-91.5-41.1-91.5-91.5 0-50.5 41.1-91.5 91.5-91.5s91.5,41.1 91.5,91.5c0,50.5-41,91.5-91.5,91.5z"/>
+		      								<path class='password_input_show_bar' stroke-width='25' stroke='black' fill='none' d='M 100 100 L 412 412 z'/>
+										</svg>
+									</div>
+								</div>
+							</div>
+							<div id="compte_creation_prof_confirm_error" class="compte_connection_error"></div>
+							<div class="compte_creation_prof compte_creation_prof_password">
+								<label for="compte_creation_prof_password_input">confirmer votre mot de passe : </label>
+								<div class="gradient_border" style="border-radius: 10px; display: flex; flex-direction: row">
+									<div>
+										<input type="password" name="create_account" id="compte_creation_prof_confirm_password_input">
+									</div>
+									<div class="password_input_show" show_password='false' style="padding-right: 10px;">
+										<svg
+										height='20'
+										width='20'
+										viewBox='0 0 512 512'>
+											<path d="m34,256l26.2,26.2c108,108 283.7,108 391.7,0l26.1-26.2-26.2-26.2c-108-108-283.7-108-391.7,0l-26.1,26.2zm222,126.2c-75.8,0-151.6-28.9-209.3-86.6l-32.9-32.9c-3.7-3.7-3.7-9.7 0-13.5l32.9-32.9c115.4-115.4 303.2-115.4 418.6,0l32.9,32.9c3.7,3.7 3.7,9.7 0,13.5l-32.9,32.9c-57.7,57.7-133.5,86.6-209.3,86.6z"/>
+		      								<path d="m256,183.5c-40,0-72.5,32.5-72.5,72.5s32.5,72.5 72.5,72.5c40,0 72.5-32.5 72.5-72.5s-32.5-72.5-72.5-72.5zm0,164c-50.5,0-91.5-41.1-91.5-91.5 0-50.5 41.1-91.5 91.5-91.5s91.5,41.1 91.5,91.5c0,50.5-41,91.5-91.5,91.5z"/>
+		      								<path class='password_input_show_bar' stroke-width='25' stroke='black' fill='none' d='M 100 100 L 412 412 z'/>
+										</svg>
+									</div>
+								</div>
+							</div>
+							<div id="compte_creation_siren_error" class="compte_connection_error"></div>
+							<div class="compte_creation_prof">
+								<label for="compte_creation_prof_siren_input">numéro siren : </label>
+								<div class="gradient_border" style="border-radius: 10px;">
+									<input type="text" name="create_account" id="compte_creation_prof_siren_input">
+								</div>
+							</div>
+						</div>-->
+						<div id='compte_creation_submit' class="compte_creation_people">
+							<div class="gradient_border" style="border-radius: 10px;">
+								<input type="submit" name="create_account" id="compte_creation_submit_input" value="valider">
+							</div>
+						</div>
+					</div>
+					<div class="scroller_text" position='0' tabindex="0" role="button">j'ai déjà un compte</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+{% endblock %}

@@ -1,0 +1,354 @@
+:root {
+	--p-color: #c2efeb;
+	--s-color: #bdaacd;
+}
+
+* {
+	padding: 0;
+	margin: 0;
+	font-family: Montserrat, sans-serif;
+}
+
+html, body {
+	height: 100vh;
+	width: 100vw;
+}
+
+input[type='text'], input[type='password'], input[type='tel'] {
+	outline: none;
+	border: none;
+}
+
+.gradient_border {
+	padding: 2px;
+	background: linear-gradient(to right,var(--p-color), var(--s-color));
+	width: max-content;
+}
+
+.password_input {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 30px;
+}
+
+.password_input > div {
+	display: flex;
+	align-items: end;
+}
+
+.password_input:after {
+	content: '';
+	height: 1px;
+	width: 100%;
+	background: linear-gradient(to right,var(--p-color), var(--s-color));
+}
+
+.password_input_show {
+	display: flex;
+	align-items: center;
+	background: white;
+	border-top-right-radius: 7px;
+	border-bottom-right-radius: 7px;
+	cursor: pointer;
+}
+
+.password_input_show[show_password='true'] .password_input_show_bar {
+	display: none;
+}
+
+#body_of_web_page {
+	height: 100vh;
+	width: 100vw;
+	overflow: hidden;
+}
+
+@media (max-height: 800px) {
+	#body_of_web_page {
+		height: 150vh;
+	}
+}
+
+#compte_container {
+	height: 200%;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	transition: transform 1s;
+}
+
+.compte_container_positioner {
+	height: 50%;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+.box_container{
+	background: white;
+	padding: 20px;
+	border-radius: 20px;
+}
+
+#compte_connection_title {
+	font-size: 1.75em;
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+
+#compte_connection_error_message {
+	font-size: 0.75em;
+	color: #BA2D0B;
+	display: flex;
+	align-items: center;
+}
+
+#compte_connection_error_message > span {
+	margin-left: 2px;
+}
+
+.compte_connection_input {
+	display: flex;
+	flex-direction: column;
+}
+
+#compte_connection_input_mail, #compte_connection_input_password {
+	flex-direction: column-reverse;
+}
+
+#compte_connection_input_mail {
+	margin-bottom: 20px;
+}
+
+#password_forget {
+	margin-bottom: 30px;
+	font-size: 0.75em;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+#compte_connection_input_mail_label, #compte_connection_input_password_label {
+	margin-bottom: 3px;
+	transform: translateY(20px);
+	transition: transform 0.5s ;
+}
+
+#compte_connection_input_mail_input, #compte_connection_input_password_input {
+	width: 300px;
+}
+
+#compte_connection_input_mail_input:focus + #compte_connection_input_mail_label, #compte_connection_input_password_input:focus + #compte_connection_input_password_label{
+	transform: translateY(0px);
+}
+
+#compte_connection_input_mail::before{
+	content: '';
+	height: 1px;
+	width: 100%;
+	background: linear-gradient(to right,var(--p-color), var(--s-color));
+}
+
+#compte_connection_input_remember {
+	flex-direction: row;
+}
+
+#compte_connection_input_remember > label {
+	font-size: 0.75em;
+	opacity: 0.75;
+}
+
+#compte_connection_input_remember_input {
+	margin-right: 10px;
+}
+
+#compte_connection_input_send {
+	margin-top: 20px;
+	margin-bottom: 0px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#compte_connection_input_send > div > input {
+	background: white;
+	border: none;
+	border-radius: 7px;
+	padding-inline: 20px;
+	font-size: 1.5em;
+	cursor: pointer;
+	transition: transform 0.5s;
+}
+
+.scroller_text {
+	position: absolute;
+	margin-top: 10px;
+	margin-left: 10px;
+	width: 100%;
+	font-size: 0.90em;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+/* create account */
+
+
+#compte_creation_input_type_label {
+	display: flex;
+	flex-direction: row;
+	border-radius: 7px;
+	padding-inline: 10px;
+	background: white;
+	height: 25px;
+}
+
+#compte_creation_title {
+	margin-bottom: 20px;
+	font-size: 1.75em;
+	font-weight: bold;
+}
+
+#compte_creation_input_type_label > div {
+	flex: 1;
+}
+
+#compte_creation_input_type_label > svg {
+	transition: transform 0.5s;
+}
+
+#compte_creation_input_type_label > svg[open='true'] {
+	transform: rotate(180deg);
+}
+
+#compte_creation_input_type_option_gradient_border {
+	border-radius: 10px;
+	max-height: 0px;
+	width: 100%;
+	padding: 2px;
+	overflow: hidden;
+	transform: translateY(10px);
+	opacity: 0;
+	box-shadow: 0 0 20px -10px black;
+	transition: all 0.5s;
+}
+
+#compte_creation_input_type_option_gradient_border[open='true'] {
+	max-height: 75px;
+	opacity: 1;
+}
+
+#compte_creation_input_type_option {
+	border-radius: 10px;
+	background: white;
+	padding-inline: 10px;
+}
+
+.compte_creation_input_type_option {
+	display: flex;
+	flex-direction: column;
+}
+
+.compte_creation_input_type_option > input {
+	display: none;
+}
+
+.compte_creation_input_type_option > label {
+	margin-top: 5px;
+	margin-bottom: 5px;
+	cursor: pointer;
+}
+
+.compte_creation_input_type_option::after {
+	content: "";
+	margin-inline: auto;
+	background: linear-gradient( to right, var(--p-color), var(--s-color));
+	border-radius: 10px;
+	width: 99%;
+	height: 2px;
+}
+
+.compte_creation_input_type_option:last-child::after {
+	height: 0;
+}
+
+#compte_creation_input_type_input {
+	display: none;
+}
+
+.compte_creation_people {
+	display: flex;
+	flex-direction: column;
+	margin-top: 20px;
+}
+
+.compte_creation_people > label {
+	margin-left: 5px;
+	margin-bottom: 10px;
+}
+
+.compte_creation_people > div  input {
+	border-radius: 7px;
+	height: 25px;
+	padding-inline: 10px;
+}
+
+#compte_creation_people_password_input, #compte_creation_people_confirm_password_input {
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+}
+
+.compte_creation_prof {
+	display: flex;
+	flex-direction: column;
+	margin-top: 20px;
+}
+
+.compte_creation_prof > label {
+	margin-left: 5px;
+	margin-bottom: 10px;
+}
+
+.compte_creation_prof > div  input {
+	border-radius: 7px;
+	height: 25px;
+	padding-inline: 10px;
+}
+
+#compte_creation_prof_password_input, #compte_creation_prof_confirm_password_input {
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+}
+
+.compte_connection_error {
+	margin-left: 5px;
+	color: red;
+	font-size: 0.7em;
+	transform: translateY(15px);
+}
+
+#compte_creation_general_error {
+	transform: none;
+}
+
+#compte_creation_submit {
+	display: flex;
+	align-items: center;
+}
+
+#compte_creation_submit_input {
+	background: white;
+	border-radius: 7px;
+	border: none;
+	font-size: 1.2em;
+	height: 40px;
+	cursor: pointer;
+}
+
+#compte_creation_container[type='prof'] > #compte_creation_people {
+	display: none;
+}
+
+#compte_creation_container[type='client'] > #compte_creation_professional {
+	display: none;
+}

@@ -1,0 +1,119 @@
+{% extends 'header_footer/header_footer.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="{% static 'soap/soap.css' %}">
+
+	<meta name ="robots" content ="noindex, nofollow">
+</head>
+<body>
+	<div id='soap_container'>
+		<div id='soap_info' style="transform: translateX(100%);">
+			<button id='soap_info_closer' tabindex="0" role="button">
+				<svg
+				viewBox='0 0 200 200'
+				height='50'
+				width='50'
+				>
+					<path stroke='black' stroke-width="10" stroke-linecap="round" stroke-linejoin="round" d='M 40 40 L 160 160 z M 160 40 L 40 160 z'/>
+				</svg>
+			</button>
+			<div id="soap_info_body" style="display: none;">
+				<div id='soap_info_saon_icon' style="margin-bottom: 50px;">
+					<div>
+						<div style="font-family: Montserrat, sans-serif; font-size: 3em;">Saon</div>
+						<div style="font-family: Montserrat, sans-serif; font-size: 1em;">savonnerie artisanale</div>
+					</div>
+					<img style="margin-left: 50px;" src="{% static 'nav_bar/img/png/logo_savon_v2_tranparent.png' %}" height="100" width="auto">
+				</div>
+				<div id="soap_info_flex_1">
+					<div id='soap_info_img'>
+						<div class="img_border" style="margin-inline: auto">
+							<div id="soap_info_main_img"></div>
+						</div>
+						<div id='soap_info_others_img'>
+							<div class='img_border img_other_border'>
+								<button class="soap_info_others_img" checked='true'></button>
+							</div>
+							<div class='img_border img_other_border'>
+								<button class="soap_info_others_img" checked='false'></button>
+							</div>
+							<div class='img_border img_other_border'>
+								<button class="soap_info_others_img" checked='false'></button>
+							</div>
+						</div>
+					</div>
+					<div id='soap_info_name_desc'>
+						<div id="soap_info_name">
+							<h1></h1>
+						</div>
+						<div id="soap_info_desc">
+							<p></p>
+						</div>
+						<div id="soap_info_ingr">
+							<label>ingrédients avant saponification :</label>
+							<p></p>
+						</div>
+						<div id="soap_options">
+						</div>
+						<div id="soap_info_price">
+							<span id="price"></span>€ TTC le savon de <span id='poid'></span>g
+						</div>
+					</div>
+				</div>
+				<div id="soap_info_body_flex_2">
+					<div id="ajouter_au_panier">
+						<div id='add_in_basket_error'></div>
+						<div id='soap_stock'><span id='stock' style="margin-right: 0.4em;">100</span>savons en stock</div>
+						<div id="soap_command_number">
+							quantité:
+							<input type="number" style="width: 50px">
+						</div>
+						<input type="checkbox" name="add_basket_input" id="add_basket_input" style="display: none;">
+						<label for="add_basket_input" inloading='false' tabindex="0" role="button">
+							<span></span>
+							<div id="basket_input_loader">
+								<span style="position: absolute; width: 47px; height: 47px; top: 3px; background: linear-gradient(to right, #c1e6e7, #beb5d2); border-radius: 50%; animation: anti-horaire-rotating 1s infinite;"></span>
+							</div>
+						</label>
+					</div>
+				</div>
+			</div>
+			<div id='soap_info_loader' style="display: none;">
+				<svg style='height: 0; width: 0;'>
+					<filter id='liquid'>
+						<feGaussianBlur in="SourceGraphic" stdDeviation="10"/>
+						<feColorMatrix values="
+							1 0 0 0 0 
+							0 1 0 0 0
+							0 0 1 0 0
+							0 0 0 20 -10
+						"/>
+					</filter>
+				</svg>
+				<div id="soap_info_loader_bubble_1"></div>
+				<div id='soap_info_loader_soap'></div>
+			</div>
+		</div>
+		{% for product_type, product in all_product.items %}
+			<div class="product_type"><span>{{ product_type }}</span></div>
+			<div class="product_container">
+				{% for i in product %}
+				<div class="product" product="{{ i.id }}">
+					<button class="product_img" style="background: center / cover no-repeat url({{ i.photo }});" alt='photo du savon {{ i.name }}'>
+						<div class="product_name">{{ i.name }}</div>
+						<div class="product_major_ingredients">{{ i.ingredient }}</div>
+					</button>
+				</div>
+				{% endfor %}
+			</div>
+		{% endfor %}
+	</div>
+</body>
+
+{% endblock %}

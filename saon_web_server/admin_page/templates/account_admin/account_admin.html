@@ -1,0 +1,25 @@
+{% load static %}
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="{% static 'account_admin/account_admin.css' %}">
+
+	<meta name ="robots" content ="noindex, nofollow">
+</head>
+<body>
+	<div id="account_search_bar">
+		<div style="flex: auto;"></div>
+		<div class="gradient_border" id='search_account_container'>
+			<input type="text" name="email" id="search_account" placeholder="email ou prénom/nom" onchange="search_account(event)">
+		</div>
+	</div>
+	<div id="loading_search" display='false'>
+		<span>loading</span>
+		<span id="point_1" class="point">.</span>
+		<span id="point_2" class="point">.</span>
+		<span id="point_3" class="point">.</span>
+	</div>
+	<div id="all_account" display='false'>
+	</div>
+</body>

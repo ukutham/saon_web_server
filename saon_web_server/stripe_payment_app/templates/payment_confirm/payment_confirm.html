@@ -1,0 +1,32 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="{% static 'payment_confirm/payment_confirm.css' %}">
+	<link rel="icon" type='image/png' href="{% static 'logo/logo_savon_v2.png' %}">
+	<title>Saon</title>
+
+	<meta name ="robots" content ="noindex, nofollow">
+</head>
+<body>
+	<div id="accept_message">
+		<div id='saon_icon'>
+			<img src="{% static 'nav_bar/img/png/logo_savon_v2_tranparent.png' %}">
+		</div>
+		<div id="accept_message_icon">
+			<svg
+			height='200'
+			width='200'
+			viewBox='40 20 600 600'
+			>
+				<path stroke-width='90' stroke-linecap='round' stroke-linejoin='round' stroke='#FFF' fill='none' d='M 150 350 L 300 500 L 500 150'></path>
+			</svg>
+		</div>
+		<div id='accept_message_message'>Votre commande a bien été pris en compte, Merci et Bravo!!</div>
+		<div id='accept_message_return'><a href="../../">retourner au menu</a></div>
+	</div>
+</body>
+</html>

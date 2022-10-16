@@ -1,0 +1,55 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="{% static 'base.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'change_email/change_email.css' %}">
+	<link rel="icon" type='image/png' href="{% static 'logo/logo_savon_v2.png' %}">
+	<title>Saon</title>
+
+	<meta name ="robots" content ="noindex, nofollow">
+</head>
+<body>
+	<script type="text/javascript" src="{% static 'base.js' %}"></script>
+	<div>
+		<div id='saon_icon'>
+			<img src="{% static 'logo/logo_savon_v2.png' %}">
+		</div>
+		<div class="error_message" id='mail_error_message'></div>
+		<div class="compte_state_change">
+			<label for="compte_state_change_mail_input">votre nouvelle adresse mail :</label>
+			<div class="gradient_border" id='compte_state_change_mail_input_container' style="border-radius: 10px;">
+				<input type="text" name="change_mail" id="compte_state_change_mail_input">
+			</div>
+		</div>
+		<div class="compte_state_validation">
+			<div class="gradient_border" style="border-radius: 10px">
+				<input type="submit" name="change_mail" value='valider' compte_id="{{ user.id }}">
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="{% static 'change_email/change_email.js' %}"></script>
+	<div id='error_container' style="display:none">
+		<div id="error_icon">
+			<div id='minor_error' style="display:none;">
+				<svg
+					viewBox=' 0 0 600 600'>
+					<path stroke-width='50' stroke-linecap='round' stroke-linejoin='round' stroke='#FBAF00' fill='none' d='M 300 100 L 500 500 L 100 500 z'></path>
+					<path stroke-width='50' stroke-linecap='round' stroke-linejoin='round' stroke='#2a2f28' d='M 300 270 L 300 360 z M 300 430 z'></path>
+				</svg>
+			</div>
+			<div id='major_error' style="display:block;">
+				<svg
+					viewBox=' 0 0 600 600'>
+					<path stroke-width='50' stroke-linecap='round' stroke-linejoin='round' stroke='#BA2D0B' fill='none' d='M 200 100 L 400 100 L 500 200 L 500 400 L 400 500 L 200 500 L 100 400 L 100 200 z'></path>
+					<path stroke-width='50' stroke-linecap='round' stroke-linejoin='round' stroke='#2a2f28' fill='none' d='M 220 220 L 380 380 z M 380 220 L 220 380 z'></path>
+				</svg>
+			</div>
+		</div>
+		<div id='error_text'>Erreur: vous n'etes plus connecté à internet</div>
+	</div>
+</body>
+</html>

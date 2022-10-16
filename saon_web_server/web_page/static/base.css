@@ -1,0 +1,242 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+
+:root {
+	--background-color: white;
+
+	--element-color-on-p: #474954;
+	--element-color-on-s: #474954;
+
+	--p-color: #c2efeb;
+	--p-light-color: #f5ffff;
+	--p-dark-color: #91bcb9;
+
+	--s-color: #bdaacd;
+	--s-light-color: #f0dcff;
+	--s-dark-color: #8d7b9c;
+}
+
+* {
+	padding: 0px;
+	margin: 0px;
+	font-family: Montserrat, sans-serif;
+}
+
+html::-webkit-scrollbar, body::-webkit-scrollbar {
+	width: 4px;
+}
+
+html::-webkit-scrollbar-track, body::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+html::-webkit-scrollbar-thumb, body::-webkit-scrollbar-thumb {
+	background-color: #00000050;
+	border-radius: 30px;
+	transition-property: background-color;
+	transition-duration: 1s;
+}
+
+button {
+	border-radius: none;
+	border: none;
+	background: none;
+	text-align: left;
+	font-size: 1em;
+}
+
+.gradient_border {
+	padding: 2px;
+	background: linear-gradient(to right, var(--p-color), var(--s-color));
+	height: max-content;
+	width: max-content;
+}
+
+/* error_container */
+
+#error_container {
+	position: fixed;
+	display: flex;
+	flex-direction: row;
+	height: 100px;
+	background: white;
+	border-radius: 10px;
+	box-shadow: 0px 0px 20px #CCC;
+	left: 50%;
+	transform: translateX(-50%);
+	bottom: 200px;
+	opacity: 0;
+	animation: error_apparition 7s;
+}
+
+#error_container  svg {
+	height: 100px;
+	width: 100px;
+}
+
+#error_text {
+	font-family: Montserrat, sans-serif;
+	display: flex;
+	align-items: center;
+	margin: 10px;
+}
+
+@media (max-width: 650px) {
+	#error_container {
+		height: 50px;
+	}
+
+	#error_container svg {
+		height: 50px;
+		width: 50px;
+	}
+
+	#error_text {
+		font-size: 0.70em;
+	}
+}
+
+@keyframes error_apparition {
+	0% {
+		opacity: 0;
+	} 10% {
+		opacity: 1;
+	} 90% {
+		opacity: 1;
+	} 100% {
+		opacity: 0;
+	}
+}
+
+/* header */
+
+#header_of_body {
+	background: linear-gradient(to bottom, transparent 99%, white 100%) ,linear-gradient(to right,var(--p-color), var(--s-color));
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+#text_saon_start {
+	padding-top: 10px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+}
+
+#name_text_saon_start {
+	font-family: Montserrat, sans-serif;
+	font-size: 5rem;
+	margin-right: 30px;
+}
+
+#logo_text_saon_start {
+	margin-left: 40px;
+	height: 200px;
+	width: 200px;
+}
+
+#label_text_saon_start {
+	font-family: Montserrat, sans-serif;
+	font-size: 1.5em;
+	display: flex;
+	justify-content: start;
+}
+
+#label_text_saon_start > svg {
+	fill:#31CC37;
+	stroke: black;
+	margin-left: 5px;
+}
+
+.wave {
+	position: relative;
+	height: max-content;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+#saon_start > .wave {
+	top: 1.3vw;
+}
+
+@media (max-width: 830px) {
+	#name_text_saon_start {
+		font-size: 4em;
+		margin-right: 15px;
+	}
+
+	#logo_text_saon_start {
+		height: 150px;
+		width: 150px;
+	}
+
+	#label_text_saon_start {
+		font-size: 1em;
+	}
+}
+
+@media (max-width: 400px) {
+	#name_text_saon_start {
+		font-size: 3em;
+		margin-right: 15px;
+	}
+
+	#logo_text_saon_start {
+		height: 100px;
+		width: 100px;
+		margin-left: 20px;
+	}
+}
+
+/* footer */
+
+#footer_of_body {
+	height: 300px;
+	background: linear-gradient(to top, transparent 99%, white 100%), linear-gradient(to right,var(--p-color), var(--s-color));
+	margin-top: 50px;
+}
+
+#footer_of_body > .wave > svg {
+	transform: rotate(180deg);
+}
+
+#footer_of_body > #social_network_icon {
+	display: flex;
+	flex-direction: row-reverse;
+	margin-inline: 20px;
+}
+
+#footer_of_body > #social_network_icon > a {
+	margin-inline: 10px;
+	transition: transform 0.5s;
+}
+
+#footer_of_body > #social_network_icon > a:hover {
+	transform: scale(1.1);
+}
+
+#footer_of_body > #social_network_icon > a > #insta_icon {
+	margin-inline: 8px;
+}
+
+#footer_of_body > #social_network_icon > a > svg {
+	height: 50px;
+	width: 50px;
+	fill: #000;
+	stroke: #000;
+}
+
+@media (max-width: 600px) {
+	#footer_of_body > #social_network_icon {
+		height: calc(100% - 100px);
+		padding-top: 20px;
+	}
+
+	#footer_of_body > #social_network_icon > a > #insta_icon {
+		margin-inline: 0;
+	}
+}

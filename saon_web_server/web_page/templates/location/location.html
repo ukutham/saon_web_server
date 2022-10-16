@@ -1,0 +1,57 @@
+{% load static %}
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="{% static 'location/location.css' %}">
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin="" />
+
+	<meta name ="robots" content ="noindex, nofollow">
+</head>
+<body>
+	<div id='absolute_container'>
+		<div id="seller_container" style="transform: translateX(-100%);">
+			<div id="shearch_bar">
+				<div id="shearch_bar_text">
+					<input type="text" autocomplete="off" placeholder="Où trouver nos savons">
+				</div>
+				<div id="shearch_bar_icon" inreshearch='false'>
+					<svg
+						viewBox=' 0 0 600 500'
+						height='30'
+						width='30'
+						>
+						<path stroke-width='60' stroke-linecap='round' stroke-linejoin='round' fill='none' d='M 100 200 A 100,100 0 0,1 400,200 A 100,100 0 0,1 100,200 z M 360 310 L 500 450 z'></path>
+					</svg>
+				</div>
+			</div>
+			<div id='shearch_bar_shadow'></div>
+			<div id='seller_loader'>
+				<svg style='height: 0px; width: 0px;'>
+					<filter id='drops_filter'>
+						<feGaussianBlur in="SourceGraphic" stdDeviation="10"/>
+						<feColorMatrix values="
+							1 0 0 0 0 
+							0 1 0 0 0
+							0 0 1 0 0
+							0 0 0 20 -10
+						"/>
+					</filter>
+				</svg>
+				<div id="seller_loader_bar"></div>
+				<div id='seller_loader_drops'></div>
+			</div>
+			<button id="seller_extender" open='false' onclick="seller_container_extention(event)">
+				<div id='extender_bar_1' style="transform: translateY(5px);">
+					<div style="height: 20px; bottom: 10px; transform: rotate(55deg);"></div>
+				</div>
+				<div id='extender_bar_2' style="transform: translateY(-5px);">
+					<div style="height: 20px; bottom: 10px; transform: rotate(-55deg);"></div>
+				</div>
+			</button>
+			<div id='seller_result'></div>
+		</div>
+	</div>
+	<div id='map' style="width: 100vw; height: 100vh;"></div>
+	<div id='map_hidder' style="opacity: 0; z-index: -1;"></div>
+</body>

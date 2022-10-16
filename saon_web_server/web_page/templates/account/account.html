@@ -1,0 +1,296 @@
+{% extends 'header_footer/header_footer.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="{% static 'account/account.css' %}">
+  <meta charset="utf-8" page_name='account' id='account_page_identification'>
+  
+  <meta name ="robots" content ="noindex, nofollow">
+</head>
+<body>
+  <div id="compte">
+    {% if user.is_staff %}
+    <div class='gradient_border' id='admin_page'>
+      <div>
+        <a href="/admin">page administrateur</a>
+      </div>
+    </div>{% endif %}
+    <div id='compte_state_header'>
+      <button id="compte_title" select='true'>Votre compte</button> <button id="compte_order_title" select='false'>Vos commandes</button>
+    </div>
+    <div id="header_bar_separation"></div>
+    <div style="display: flex;">
+      <div id="compte_state_body">
+        <div id='compte_state_content' open='true'>
+          <div id="compte_log_out">
+            <div class="gradient_border" style="border-radius: 10px">
+              <button id="compte_log_out_button">déconnexion</button>
+            </div>
+          </div>
+          <div id="compte_unchangeable_info">
+          </div>
+           <!-- name/surname -->
+          <div class="compte_state" id="compte_state_name_surname">
+            <div class="compte_state_title">
+              changer votre prénom/nom
+            </div>
+            <div class="compte_state_info">
+              <label for="compte_state_info_name_surname">votre prénom et nom :</label>
+              <div id="compte_state_info_name_surname" class="compte_state_info_content">
+                {{ user.name }} {{ user.surname }}
+              </div>
+            </div>
+            <div class="error_message" id='name_surname_error_message'></div>
+            <div class="compte_state_change">
+              <label for="compte_state_change_name_surname_input">votre nouveau prénom :</label>
+              <div class="gradient_border" id='compte_state_change_name_surname_input_container' style="border-radius: 10px;">
+                <input type="text" name="change_name_surname" id="compte_state_change_name_input">
+              </div>
+            </div>
+            <div class="compte_state_change">
+              <label for="compte_state_change_name_surname_input">votre nouveau nom :</label>
+              <div class="gradient_border" id='compte_state_change_name_surname_input_container' style="border-radius: 10px;">
+                <input type="text" name="change_name_surname" id="compte_state_change_surname_input">
+              </div>
+            </div>
+            <div class="compte_state_validation">
+              <div class="gradient_border" style="border-radius: 10px">
+                <input type="submit" name="change_name_surname" value='valider' compte_id="{{ user.id }}">
+              </div>
+            </div>
+          </div>
+          <!-- phone_number -->
+          <div class="compte_state" id="compte_state_phonenumber">
+            <div class="compte_state_title">
+              changer votre numéro de téléphone
+            </div>
+            <div class="compte_state_info">
+              <label for="compte_state_info_phonenumber">votre numéro de téléphone :</label>
+              <div id="compte_state_info_phonenumber" class="compte_state_info_content">
+                {{ user.phone_number }}
+              </div>
+            </div>
+            <div class="error_message" id='phonenumber_error_message'></div>
+            <div class="compte_state_change">
+              <label for="compte_state_change_phonenumber_input">votre nouveau numéro de téléphone :</label>
+              <div class="gradient_border" id='compte_state_change_phonenumber_input_container' style="border-radius: 10px;">
+                <input type="tel" name="change_phonenumber" id="compte_state_change_phonenumber_input">
+              </div>
+            </div>
+            <div class="compte_state_validation">
+              <div class="gradient_border" style="border-radius: 10px">
+                <input type="submit" name="change_phonenumber" value='valider' compte_id="{{ user.id }}">
+              </div>
+            </div>
+          </div>
+          <!-- email -->
+          <div class="compte_state" id="compte_state_mail">
+            <div class="compte_state_title">
+              changer d'adresse mail
+            </div>
+            <div class="compte_state_info">
+              <label for="compte_state_info_mail">votre adresse mail :</label>
+              <div id="compte_state_info_mail" class="compte_state_info_content">
+                {{ user.mail }}
+              </div>
+            </div>
+            <div class="error_message" id='mail_error_message'></div>
+            <div class="compte_state_change">
+              <label for="compte_state_change_mail_input">votre nouvelle adresse mail :</label>
+              <div class="gradient_border" id='compte_state_change_mail_input_container' style="border-radius: 10px;">
+                <input type="text" name="change_mail" id="compte_state_change_mail_input">
+              </div>
+            </div>
+            <div class="compte_state_validation">
+              <div class="gradient_border" style="border-radius: 10px">
+                <input type="submit" name="change_mail" value='valider' compte_id="{{ user.id }}">
+              </div>
+            </div>
+          </div>
+          <!-- password -->
+          <div class="compte_state" id="compte_state_password">
+            <div class="compte_state_title">
+              changer de mot de passe
+            </div>
+            <div class="error_message" id='password_error_message'></div>
+            <div class="validation_message" id='password_validation_message'></div>
+            <div class="compte_state_change">
+              <div id="compte_state_change_password_basic">
+                <label for="compte_state_change_password_basic_input">votre mot de passe :</label>
+                <div class="gradient_border password_input" id="compte_state_change_password_basic_input_container" style="border-radius: 10px">
+                  <input type="password" name="change_password" id="compte_state_change_password_basic_input">
+                  <div class="password_input_show" show_password='false'>
+                    <svg height='20' width='20' viewbox='0 0 512 512'>
+                    <path d="m34,256l26.2,26.2c108,108 283.7,108 391.7,0l26.1-26.2-26.2-26.2c-108-108-283.7-108-391.7,0l-26.1,26.2zm222,126.2c-75.8,0-151.6-28.9-209.3-86.6l-32.9-32.9c-3.7-3.7-3.7-9.7 0-13.5l32.9-32.9c115.4-115.4 303.2-115.4 418.6,0l32.9,32.9c3.7,3.7 3.7,9.7 0,13.5l-32.9,32.9c-57.7,57.7-133.5,86.6-209.3,86.6z"></path>
+                    <path d="m256,183.5c-40,0-72.5,32.5-72.5,72.5s32.5,72.5 72.5,72.5c40,0 72.5-32.5 72.5-72.5s-32.5-72.5-72.5-72.5zm0,164c-50.5,0-91.5-41.1-91.5-91.5 0-50.5 41.1-91.5 91.5-91.5s91.5,41.1 91.5,91.5c0,50.5-41,91.5-91.5,91.5z"></path>
+                    <path class='password_input_show_bar' stroke-width='25' stroke='black' fill='none' d='M 100 100 L 412 412 z'></path></svg>
+                  </div>
+                </div>
+              </div>
+              <div id="compte_state_change_password_new">
+                <label for="compte_state_change_password_new_input">votre nouveau mot de passe :</label>
+                <div class="gradient_border password_input" id='compte_state_change_password_new_input_container' style="border-radius: 10px">
+                  <input type="password" name="change_password" id="compte_state_change_password_new_input">
+                  <div class="password_input_show" show_password='false'>
+                    <svg height='20' width='20' viewbox='0 0 512 512'>
+                    <path d="m34,256l26.2,26.2c108,108 283.7,108 391.7,0l26.1-26.2-26.2-26.2c-108-108-283.7-108-391.7,0l-26.1,26.2zm222,126.2c-75.8,0-151.6-28.9-209.3-86.6l-32.9-32.9c-3.7-3.7-3.7-9.7 0-13.5l32.9-32.9c115.4-115.4 303.2-115.4 418.6,0l32.9,32.9c3.7,3.7 3.7,9.7 0,13.5l-32.9,32.9c-57.7,57.7-133.5,86.6-209.3,86.6z"></path>
+                    <path d="m256,183.5c-40,0-72.5,32.5-72.5,72.5s32.5,72.5 72.5,72.5c40,0 72.5-32.5 72.5-72.5s-32.5-72.5-72.5-72.5zm0,164c-50.5,0-91.5-41.1-91.5-91.5 0-50.5 41.1-91.5 91.5-91.5s91.5,41.1 91.5,91.5c0,50.5-41,91.5-91.5,91.5z"></path>
+                    <path class='password_input_show_bar' stroke-width='25' stroke='black' fill='none' d='M 100 100 L 412 412 z'></path></svg>
+                  </div>
+                </div>
+              </div>
+              <div id="compte_state_change_password_confirm">
+                <label for="compte_state_change_password_confirm_input">confirmer votre nouveau mot de passe :</label>
+                <div class="gradient_border password_input" id='compte_state_change_password_confirm_input_container' style="border-radius: 10px">
+                  <input type="password" name="change_password" id="compte_state_change_password_confirm_input">
+                  <div class="password_input_show" show_password='false'>
+                    <svg height='20' width='20' viewbox='0 0 512 512'>
+                    <path d="m34,256l26.2,26.2c108,108 283.7,108 391.7,0l26.1-26.2-26.2-26.2c-108-108-283.7-108-391.7,0l-26.1,26.2zm222,126.2c-75.8,0-151.6-28.9-209.3-86.6l-32.9-32.9c-3.7-3.7-3.7-9.7 0-13.5l32.9-32.9c115.4-115.4 303.2-115.4 418.6,0l32.9,32.9c3.7,3.7 3.7,9.7 0,13.5l-32.9,32.9c-57.7,57.7-133.5,86.6-209.3,86.6z"></path>
+                    <path d="m256,183.5c-40,0-72.5,32.5-72.5,72.5s32.5,72.5 72.5,72.5c40,0 72.5-32.5 72.5-72.5s-32.5-72.5-72.5-72.5zm0,164c-50.5,0-91.5-41.1-91.5-91.5 0-50.5 41.1-91.5 91.5-91.5s91.5,41.1 91.5,91.5c0,50.5-41,91.5-91.5,91.5z"></path>
+                    <path class='password_input_show_bar' stroke-width='25' stroke='black' fill='none' d='M 100 100 L 412 412 z'></path></svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="compte_state_validation">
+              <div class="gradient_border" style="border-radius: 10px">
+                <input type="submit" name="change_password" value='valider'>
+              </div>
+            </div>
+          </div>
+          <div class="compte_state" id="compte_state_addr">
+            <div class='compte_state_title'>
+              Vos adresses de livraison
+            </div>
+            <div id="compte_state_addr_dashbord">
+              <div id='compte_state_dashbord_content_container'>
+                {% for address in user.addresses %}
+                <div class="compte_state_dashbord_content" id="{{address.id}}">
+                  <div class="compte_state_addr_dashbord_content_addr">
+                    {{address.delivery_address}}
+                  </div>
+                  <div style="flex: auto"></div><button class="compte_state_dashbord_content_del"><svg height="30" width='30' viewbox='0 0 100 100'>
+                  <path fill='none' stroke='#ba2d0b' stroke-width='15' stroke-linecap='round' stroke-linejoin='round' d='M 20 20 L 80 80 z M 80 20 L 20 80 z'></path></svg></button>
+                </div>
+                {% endfor %}
+              </div>
+              <div class="compte_state_dashbord_separation_bar"></div>
+              <div class="compte_state_dashbord_add_button_container" open='false'>
+                <div class="compte_state_dashbord_add_button" tabindex="0" role="button">
+                  <svg height='30' width='30' viewbox='0 0 100 100'>
+                  <path fill='none' stroke='#00af54' stroke-width='15' stroke-linecap='round' stroke-linejoin='round' d='M 50 10 L 50 90 z M 10 50 L 90 50 z'></path></svg>
+                </div>
+              </div>
+              <div class="compte_state_dashbord_add">
+                <div>
+                  <div id="compte_state_dashbord_add_error"></div>
+                  <div class="compte_state_dashbord_add_input">
+                    <div class="gradient_border" style="border-radius: 10px">
+                      <input type="text" name="add_addr" placeholder="rue">
+                    </div>
+                    <div class="gradient_border" style="border-radius: 10px">
+                      <input type="text" name="add_addr" placeholder="ville">
+                    </div>
+                    <div class="gradient_border" style="border-radius: 10px">
+                      <input type="text" name="add_addr" placeholder="pays">
+                    </div>
+                  </div>
+                </div>
+                <div style="flex: auto"></div>
+                <div class="compte_state_dashbord_add_confirm">
+                  <button><svg height='30' width='30' viewbox='0 0 600 600'>
+                  <path stroke-width='90' stroke-linecap='round' stroke-linejoin='round' stroke='#00AF54' fill='none' d='M 150 350 L 300 500 L 500 150'></path></svg></button>
+                </div>
+                <div class="compte_state_dashbord_add_del" tabindex="0" role="button">
+                  <svg height="30" width='30' viewbox='0 0 100 100'>
+                  <path fill='none' stroke='#ba2d0b' stroke-width='15' stroke-linecap='round' stroke-linejoin='round' d='M 20 20 L 80 80 z M 80 20 L 20 80 z'></path></svg>
+                </div>
+              </div>
+            </div><!-- remove your account -->
+            <div id='remove_account_container'>
+              <div style="flex: auto"></div>
+              <div class="gradient_border">
+                <button id='remove_account_button'>supprimer votre compte</button>
+              </div>
+            </div><!-- remove pop up -->
+            <div id='remove_pop_up_cache' open='false'>
+              <div class="gradient_border">
+                <div id='remove_pop_up_container'>
+                  <div id='remove_pop_up_message'>
+                    Etes-vous sur de vouloir supprimer votre compte ?
+                  </div>
+                  <div id='remove_pop_up_choide'>
+                    <div id='remove_pop_up_choide_yes' class="gradient_border">
+                      <button>oui</button>
+                    </div>
+                    <div id='remove_pop_up_choide_no' class="gradient_border">
+                      <button>non</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div><!-- compte order -->
+        <div id='compte_order' open='false'>
+          {% for order in orders %}
+          <div class="gradient_border gradient_border_order" open='false'>
+            <div style="background: white; border-radius: 10px; height: 100%; overflow: hidden;">
+              <div class="order" finish='false' tabindex="0" role='button' onclick="open_or_close_order(event)">
+                <div class="order_info">
+                  <div class="order_info_number">
+                    commande n° {{ order.id }}
+                  </div>
+                  <div class="order_info_montant">
+                    montant TTC : {{ order.cost_TTC }} €
+                  </div>
+                </div>
+                <div class="order_status" status='{{ order.state }}'>
+                  {{ order.dev_state }}
+                </div>
+                <div class="order_date">
+                  <span class="order_date_command">commander le {{ order.creation_date }}</span> <span class="order_date_livraison">livré entre le {{ order.livrate_date_1 }} et le {{ order.livrate_date_2 }}</span>
+                </div>
+              </div>
+              <div class="order_all_info">
+                <div class="order_all_info_livraison_place">
+                  <span class="order_all_info_livraison_mode_title">mode de livraison :</span> <span>{{ order.livraison_mode }}</span>
+                  <span class="order_all_info_livraison_place_title">lieu de livraison :</span> <span>{{ order.address }}</span>
+                </div>
+                <div class="order_all_info_products">
+                  <div class="order_all_info_products_title">
+                    produits achetés :
+                  </div>
+                  <div class='order_all_info_product'>
+                    {% for product in order.products %}
+                    <div class="order_all_info_product_name">
+                      {{ product.article_name }}, {{ product.option_name }}
+                    </div>
+                    <div class="order_all_info_product_number">
+                      x {{ product.number }}
+                    </div>
+                    {% endfor %}
+                  </div>
+                </div>
+                <div class="order_facture">
+                  <span class="order_facture_title">Votre facture :</span>
+                  <button class="order_facture_url" facture="{{ order.facture.url }}">{{ order.facture_name }}</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+{% endblock %}

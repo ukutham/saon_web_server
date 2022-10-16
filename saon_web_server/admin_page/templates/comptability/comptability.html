@@ -1,0 +1,18 @@
+{% load static %}
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="{% static 'comptability/comptability.css' %}">
+
+	<meta name ="robots" content ="noindex, nofollow">
+</head>
+<body>
+	{% for date, str_date in dates.items %}
+	<div class="on_date">
+		<div class="date_title">{{ date }} :</div>
+		<div style="flex: auto;"></div>
+		<button class="facture_sum" date="{{ str_date }}" onclick='get_facture(event)'>factures_of_{{ str_date }}.pdf</button>
+	</div>
+	{% endfor %}
+</body>

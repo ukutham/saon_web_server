@@ -1,0 +1,385 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="{% static 'delivery_choice/delivery_choice.css'%}">
+	<link rel="stylesheet" type="text/css" href="{% static 'base.css'%}">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin="" />
+	<script src="https://widget.mondialrelay.com/parcelshop-picker/jquery.plugin.mondialrelay.parcelshoppicker.min.js"></script>
+	<link rel="icon" type='image/png' href="{% static 'logo/logo_savon_v2.png' %}">
+
+	<meta name ="robots" content ="noindex, nofollow">
+</head>
+<body>
+	<div id='error_container' style="display:none; z-index: 100;">
+		<div id="error_icon">
+			<div id='minor_error' style="display:none;">
+				<svg
+					viewBox=' 0 0 600 600'>
+					<path stroke-width='50' stroke-linecap='round' stroke-linejoin='round' stroke='#FBAF00' fill='none' d='M 300 100 L 500 500 L 100 500 z'></path>
+					<path stroke-width='50' stroke-linecap='round' stroke-linejoin='round' stroke='#2a2f28' d='M 300 270 L 300 360 z M 300 430 z'></path>
+				</svg>
+			</div>
+			<div id='major_error' style="display:block;">
+				<svg
+					viewBox=' 0 0 600 600'>
+					<path stroke-width='50' stroke-linecap='round' stroke-linejoin='round' stroke='#BA2D0B' fill='none' d='M 200 100 L 400 100 L 500 200 L 500 400 L 400 500 L 200 500 L 100 400 L 100 200 z'></path>
+					<path stroke-width='50' stroke-linecap='round' stroke-linejoin='round' stroke='#2a2f28' fill='none' d='M 220 220 L 380 380 z M 380 220 L 220 380 z'></path>
+				</svg>
+			</div>
+		</div>
+		<div id='error_text'>Erreur: vous n'etes plus connecté à internet</div>
+	</div>
+	<script type="text/javascript" src="{% static 'base.js'%}"></script>
+	<script type="text/javascript">
+		async function test_token() {
+			var result = await bearer_fetch('../test_token', 'GET')
+
+			if (result.token != 'valid') {
+				window.location.href = "..";
+			}
+		}
+
+		test_token()
+
+		async function have_product_in_basket() {
+			var my_product = await bearer_fetch('../api/product/', 'GET')
+			
+			if (my_product.count == 0) {
+				window.location.href = "..";
+			}
+		}
+
+		have_product_in_basket()
+	</script>
+	<div><a href=".." style="text-decoration: underline; margin: 5px;">retour au menu</a></div>
+	<div id="chose_livraison_entreprise_header" style="display: ;">
+		<span>choisissez votre systeme de livraison</span>
+	</div>
+	<div id='chose_livraison_entreprise' style="z-index: 10; position: relative;">
+		<div id='mondial_relay'>
+			<div id="mondial_relay_header">
+				<div id='mondial_relay_header_img'>
+					<img src="{% static 'delivery_choice/img/mondial-relay-logo.png'%}" height="auto" width="100px">
+				</div>
+				<div id='mondial_relay_header_title'>Mondial Relay</div>
+			</div>
+			<div id='mondial_relay_body'>
+				<div class="mondial_relay_body_title">selectionnez votre point relais :</div>
+				<div id="mondial_relay_map"></div>
+				<input style="display: none" type="text" id='input_of_id_relay_point'>
+				<input style="display: none" type='text' id="input_of_coord_relay_point">
+				<div id="mondial_relay_validation_button_container">
+					<button class="gradient_border disabled" livraison_mode='mondial relay' onclick="create_select_address(event)">
+						<div id="mondial_relay_validation_button" style="cursor: pointer;" livraison_mode='mondial relay'>commander avec mondial relay</div>
+					</button>
+				</div>
+				<script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js" integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw==" crossorigin=""></script>
+				<script type="text/javascript">
+					var mondial_relay_validation_button = document.getElementById('mondial_relay_validation_button_container').querySelector('.gradient_border')
+					var input_of_lat_relay_point = document.getElementById('input_of_lat_relay_point')
+					var input_of_lon_relay_point = document.getElementById('input_of_lon_relay_point')
+
+					$(document).ready(function() {
+					  $("#mondial_relay_map").MR_ParcelShopPicker({
+					    Target: "#input_of_id_relay_point",
+					    Brand: "BDTEST  ",
+					    ColLivMod: "24R",
+					    NbResults: "7",
+					    Responsive: true,
+					    ShowResultsOnMap: true,
+					    OnParcelShopSelected: function(data) {RelayPointSelect(data)},
+
+					  });
+
+					});
+
+					function RelayPointSelect(data) {
+						input_of_coord_relay_point.value = `${data.Lat.replace(',', '.')}, ${data.Long.replace(',', '.')}`
+						mondial_relay_validation_button.classList.remove('disabled')
+					}
+				</script>
+			</div>
+		</div>
+		<div id="middle_bar"></div>
+		<div id='colissimo'>
+			<div id="colissimo_header">
+				<div id='colissimo_header_img'>
+					<img src="{% static 'delivery_choice/img/colissimo_logo.png'%}" height="auto" width="165px">
+				</div>
+			</div>
+			<div id="colissimo_body">
+				<div class="colissimo_body_title">selectionnez votre addresse :</div>
+				<div id="colissimo_addr_dashbord">
+					<div id='colissimo_dashbord_content_container'>
+					</div>
+					<button class="colissimo_dashbord_add_button_container" open='false' style="margin-left: calc(100% - 60px);">
+						<div class="colissimo_dashbord_add_button">
+							<svg
+								height='30'
+								width='30'
+								viewBox='0 0 100 100'
+								>
+								<path fill='none' stroke='#00af54' stroke-width='15' stroke-linecap='round' stroke-linejoin='round' d='M 50 10 L 50 90 z M 10 50 L 90 50 z'/>
+							</svg>
+						</div>
+					</button>
+					<div class="colissimo_dashbord_add">
+						<div style="display: flex; flex-direction: column;">
+							<div id="colissimo_state_dashbord_add_error"></div>
+							<div class="colissimo_dashbord_add_input">
+								<div class="gradient_border" style="border-radius: 10px">
+									<input type="text" name="add_addr" placeholder="rue">
+								</div>
+								<div class="gradient_border" style="border-radius: 10px">
+									<input type="text" name="add_addr" placeholder="ville">
+								</div>
+								<div class="gradient_border" style="border-radius: 10px">
+									<input type="text" name="add_addr" placeholder="pays">
+								</div>
+							</div>
+						</div>
+						<div style="flex: auto"></div>
+						<div class="colissimo_dashbord_add_confirm">
+							<button onclick="add_new_address()">
+								<svg 
+									height='30'
+									width='30'
+									viewBox='0 0 600 600'>
+									<path stroke-width='90' stroke-linecap='round' stroke-linejoin='round' stroke='#00AF54' fill='none' d='M 150 350 L 300 500 L 500 150'></path>
+								</svg>
+							</button>
+						</div>
+						<div class="colissimo_dashbord_add_del">
+							<button>
+								<svg
+									height="30"
+									width='30'
+									viewBox='0 0 100 100'
+									>
+									<path fill='none' stroke='#ba2d0b' stroke-width='15' stroke-linecap='round' stroke-linejoin='round' d='M 20 20 L 80 80 z M 80 20 L 20 80 z'/>
+								</svg>
+							</button>
+						</div>
+					</div>
+				</div>
+				<div style="flex: auto;"></div>
+				<div id="colissimo_validation_button_container">
+					<button class="gradient_border disabled" livraison_mode='colissimo'>
+						<div id="colissimo_validation_button" style="cursor: pointer;" livraison_mode='colissimo' onclick="create_select_address(event)">commander avec colissimo</div>
+					</button>
+				</div>
+				<script type="text/javascript">
+					var colissimo_dashbord_content_container = document.getElementById('colissimo_dashbord_content_container')
+					var colissimo_dashbord_content = document.getElementsByClassName('colissimo_dashbord_content')
+					var colissimo_validation_button = document.getElementById('colissimo_validation_button_container').querySelector('.gradient_border')
+
+					function select_addresse(dashbord_content) {
+						for (let a = 0; a < colissimo_dashbord_content.length; a++) {
+							colissimo_dashbord_content[a].setAttribute('select', 'false')
+						}
+
+						dashbord_content.setAttribute('select', 'true')
+						colissimo_validation_button.classList.remove('disabled') 
+					}
+
+					async function get_my_address() {
+						var my_address = await bearer_fetch('../api/delivery_choice/', 'GET')
+
+						if (my_address.results == undefined) {
+							window.location.href = '..'
+						}
+						colissimo_dashbord_content_container.innerHTML = ""
+						Object.keys(my_address.results).forEach((address_id) => {
+							colissimo_dashbord_content_container.innerHTML += `<div class="colissimo_dashbord_content" select='false' id='${my_address.results[address_id].id}'>
+																				<button class="colissimo_addr_dashbord_content_addr">${my_address.results[address_id].delivery_address}</button>
+																				<div style="flex: auto"></div>
+																				<div class="colissimo_dashbord_content_del">
+																					<button address_id='${my_address.results[address_id].id}' onclick='address_remover(event)'>
+																						<svg
+																							height="30"
+																							width='30'
+																							viewBox='0 0 100 100'
+																							address_id='${my_address.results[address_id].id}'
+																							>
+																							<path address_id='${my_address.results[address_id].id}' fill='none' stroke='#ba2d0b' stroke-width='15' stroke-linecap='round' stroke-linejoin='round' d='M 20 20 L 80 80 z M 80 20 L 20 80 z'/>
+																						</svg>
+																					</button>
+																				</div>
+																			</div>
+																			<div class="colissimo_dashbord_separation_bar"></div>`
+						})
+
+						for (let i = 0; i < colissimo_dashbord_content.length; i++) {
+							colissimo_dashbord_content[i].addEventListener('click', (event) => {select_addresse(colissimo_dashbord_content[i])})
+						}
+
+					}
+
+					get_my_address()
+
+					var colissimo_dashbord_add_button_container = document.getElementsByClassName('colissimo_dashbord_add_button_container')
+
+					for (let i = 0; i< colissimo_dashbord_add_button_container.length; i++)
+					{
+						colissimo_dashbord_add_button_container[i].addEventListener('click', (event) => {
+							if (colissimo_dashbord_add_button_container[i].getAttribute('open') === 'false') {
+								colissimo_dashbord_add_button_container[i].setAttribute('open', 'true')
+							} else {
+								colissimo_dashbord_add_button_container[i].setAttribute('open', 'false')
+							}
+						})
+					}
+
+					var colissimo_dashbord_add_del = document.getElementsByClassName('colissimo_dashbord_add_del')
+
+					for (let i = 0; i< colissimo_dashbord_add_del.length; i++)
+					{
+						colissimo_dashbord_add_del[i].addEventListener('click', (event) =>  {
+							if (colissimo_dashbord_add_button_container[i].getAttribute('open') === 'false') {
+								colissimo_dashbord_add_button_container[i].setAttribute('open', 'true')
+							} else {
+								colissimo_dashbord_add_button_container[i].setAttribute('open', 'false')
+							}
+						})
+					}
+
+					var colissimo_dashbord_content_container = document.getElementById('colissimo_dashbord_content_container')
+					var colissimo_state_dashbord_add_error = document.getElementById('colissimo_state_dashbord_add_error')
+
+					async function add_new_address() {
+						var rue = document.querySelector('.colissimo_dashbord_add_input input[placeholder="rue"]').value
+						var ville = document.querySelector('.colissimo_dashbord_add_input input[placeholder="ville"]').value
+						var pays = document.querySelector('.colissimo_dashbord_add_input input[placeholder="pays"]').value
+
+						if (rue === "" || ville === "" || pays === "")
+						{
+							colissimo_state_dashbord_add_error.innerHTML = "Veuillez remplir tous les champs"
+						} else {
+							const body = {
+								'rue': rue,
+								'ville': ville,
+								'pays': pays,
+							}
+
+							var data = await bearer_fetch('../api/delivery_choice/', 'POST', body)
+
+							if (data.details != "success") {
+								colissimo_state_dashbord_add_error.innerHTML = data.details
+							} else {
+								colissimo_state_dashbord_add_error.innerHTML = ""
+								document.querySelector('.colissimo_dashbord_add_input input[placeholder="rue"]').value = ""
+								document.querySelector('.colissimo_dashbord_add_input input[placeholder="ville"]').value = ""
+								document.querySelector('.colissimo_dashbord_add_input input[placeholder="pays"]').value = ""
+
+								var new_address = `<div class="colissimo_dashbord_content" select='false' id='${data.id}'>
+												<button class="colissimo_addr_dashbord_content_addr">${data.new_address}</button>
+												<div style="flex: auto"></div>
+												<div class="colissimo_dashbord_content_del">
+													<button address_id='${data.id}' onclick='address_remover(event)'>
+														<svg
+															height="30"
+															width='30'
+															viewBox='0 0 100 100'
+															address_id='${data.id}'
+															>
+															<path address_id='${data.id}' fill='none' stroke='#ba2d0b' stroke-width='15' stroke-linecap='round' stroke-linejoin='round' d='M 20 20 L 80 80 z M 80 20 L 20 80 z'/>
+														</svg>
+													</button>
+												</div>
+											</div>
+											<div class="colissimo_dashbord_separation_bar"></div>`
+
+								document.getElementById('colissimo_dashbord_content_container').innerHTML += new_address
+								colissimo_dashbord_content_container = document.getElementsByClassName('colissimo_dashbord_content_container')
+								colissimo_dashbord_content = document.getElementsByClassName('colissimo_dashbord_content')
+
+								for (let i = 0; i < colissimo_dashbord_content.length; i++) {
+									colissimo_dashbord_content[i].addEventListener('click', (event) => {select_addresse(colissimo_dashbord_content[i])})
+								}
+							}
+						}
+					}
+
+					var target = null
+
+					async function address_remover(event){
+						var id = event.target.parentElement.getAttribute('address_id')
+						var address = document.querySelector(`.colissimo_dashbord_content[id='${id}']`)
+						var his_separation_bar = address.nextElementSibling
+
+						let data = await bearer_fetch(`../api/delivery_choice/${id}/remove`, 'DELETE')
+
+						if (data.Object === 'remove') {
+							address.remove()
+							his_separation_bar.remove()
+						}
+
+						colissimo_validation_button.classList.add('disabled') 
+
+						colissimo_dashbord_content_container = document.getElementsByClassName('colissimo_dashbord_content_container')
+						colissimo_dashbord_content = document.getElementsByClassName('colissimo_dashbord_content')
+
+						for (let i = 0; i < colissimo_dashbord_content.length; i++) {
+							colissimo_dashbord_content[i].addEventListener('click', (event) => {select_addresse(colissimo_dashbord_content[i])})
+							if (colissimo_dashbord_content[i].getAttribute('select') == 'true') {
+								colissimo_validation_button.classList.remove('disabled') 
+							}
+						}
+					}
+				</script>
+
+				<script type="text/javascript">
+					var test = null
+					async function create_select_address(event) {
+
+						var post_data = {
+							'livraison_mode': event.target.getAttribute('livraison_mode')
+						}
+
+						if (post_data.livraison_mode == 'mondial relay') {
+							post_data['relay_id'] = document.querySelector('#input_of_id_relay_point').value
+							post_data['coord'] = input_of_coord_relay_point.value
+
+							test=post_data
+
+						} else if (post_data.livraison_mode == 'colissimo') {
+							var split_address = document.querySelector('.colissimo_dashbord_content[select="true"] > .colissimo_addr_dashbord_content_addr').innerHTML.split(',')
+							var new_address = `${split_address[0]} ${split_address[1]} ${split_address[2]} ${split_address.pop()}`
+							post_data['address'] = new_address
+
+							post_data['relay_id'] = null
+						}
+
+						let result = await bearer_fetch('../api/address_select/', 'POST', post_data)
+
+						if (result.details != undefined) {
+							if (result.details == 'success') {
+								var payment_page_data = await bearer_fetch('../test_payment/', 'GET')
+
+								console.log(payment_page_data)
+								if (payment_page_data.payment_page_url != undefined) {
+									window.location.href = payment_page_data.payment_page_url
+								} else if (payment_page_data.detail != undefined) {
+									error_message('minor_error', payment_page_data.detail)
+								} else {
+									error_message('major_error', 'error inconnue')
+								}
+
+							} else {
+								await error_message('minor_error', result.details)
+							}
+						} else {
+							await error_message('major_error', 'error inconnue')
+						}
+					}
+				</script>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
