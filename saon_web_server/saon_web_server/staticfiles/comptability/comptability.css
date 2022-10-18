@@ -1,0 +1,28 @@
+.on_date {
+	display: flex;
+	flex-direction: row;
+	margin: 20px;
+	align-items: center;
+}
+
+.date_title {
+	width: max-content;
+	font-size: 2em;
+	font-weight: bold;
+	display: flex;
+	flex-direction: column;
+}
+
+.date_title::after {
+	content: '';
+	width: 100%;
+	height: 3px;
+	border-radius: 3px;
+	background: linear-gradient(to right ,var(--p-color), var(--s-color));
+}
+
+.facture_sum {
+	text-decoration: underline;
+	cursor: pointer;
+	font-size: 1.2em;
+}

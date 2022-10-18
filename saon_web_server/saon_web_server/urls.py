@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
-from django.conf.urls.static import static
+from django.conf.urls.static import static, serve
 from rest_framework import routers
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
@@ -55,6 +55,7 @@ Address_select_router = routers.SimpleRouter()
 Address_select_router.register('', AddressSelectViewset, basename='account')
 
 from stripe_payment_app.views import secure_facture
+from article.views import get_article_media_image
 
 urlpatterns = [
     path('', include('web_page.urls')),
@@ -77,8 +78,9 @@ urlpatterns = [
     path('api/delivery_choice/', include(Delivery_choice_router.urls)),
     path('delivery_choice/', include('delivery_choice.urls')),
     path('api/address_select/', include(Address_select_router.urls)),
-
+    
     path('media/facture/<str:file>',secure_facture, name="secure_facture"),
+    path('media/image/article/<str:file>', get_article_media_image),
 
     ############ test ###############
 

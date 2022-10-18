@@ -1,0 +1,1 @@
+bearer_fetch(`${window.location.origin}/api/account/send_confirm_mail`, 'GET', '')

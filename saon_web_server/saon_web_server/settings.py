@@ -25,9 +25,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-w3ziu1hf#3c4ba962@jr==$3*$e146q257$^*cn(zut)d(+(fq'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+
+#ALLOWED_HOSTS = ['savons-saon.fr', '2001:41d0:401:3000:0:0:0:4e03', '51.254.124.210']
+#CSRF_TRUSTED_ORIGINS = ['https://savons-saon.fr', 'https://2001:41d0:401:3000:0:0:0:4e03', 'https://51.254.124.210']
 
 ALLOWED_HOSTS = ['127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1']
 
 
 # Application definition
@@ -75,6 +79,7 @@ SIMPLE_JWT = {
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -155,7 +160,16 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+STATICFILES_DIRS = (
+    os.path.join(PROJECT_ROOT, '../web_page/static'),
+    os.path.join(PROJECT_ROOT, '../account/static'),
+    os.path.join(PROJECT_ROOT, '../delivery_choice/static'),
+    os.path.join(PROJECT_ROOT, '../admin_page/static'),
+    os.path.join(PROJECT_ROOT, '../stripe_payment_app/static'),
+)
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

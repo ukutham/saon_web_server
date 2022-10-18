@@ -1,0 +1,103 @@
+#account_search_bar {
+	display: flex;
+	flex-direction: row;
+	margin: 10px;
+	align-items: center;
+}
+
+#search_account_container {
+	border-radius: 10px;
+}
+
+#search_account {
+	border: none;
+	border-radius: 10px;
+	height: 30px;
+	width: 400px;
+	outline: none;
+	padding: 5px;
+}
+
+#loading_search {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
+#loading_search[display='false'] {
+	display: none;
+}
+
+#loading_search > span {
+	font-size: 2em;
+	font-weight: bold;
+	opacity: 0.7;
+	display: flex;
+	align-items: flex-end;
+}
+
+#loading_search > .point {
+	font-size: 4em;
+	transform: translateY(10px);
+}
+
+#point_1 {
+	animation: move_point 1s infinite;
+}
+
+#point_2 {
+	animation: move_point 1s infinite 0.1s;
+}
+
+#point_3 {
+	animation: move_point 1s infinite 0.2s;
+}
+
+@keyframes move_point {
+	0% { transform: translateY(10px); }
+	50% { transform: translateY(0px); }
+	100% { transform: translateY(10px); }
+}
+
+#all_account[display='false'] {
+	display: none;
+}
+
+.gradient_border_account {
+	width: calc(100% - 20px);
+	margin-inline: 10px;
+	border-radius: 10px;
+	height: 50px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.gradient_border_account[open='true'] {
+	height: 400px;
+}
+
+.account {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	padding: 10px;
+	height: 30px;
+}
+
+.account > div {
+	display: flex;
+	align-items: center;
+}
+
+.account_name_surname {
+	font-size: 1.2em;
+	font-weight: bold;
+}
+
+.get_account_order {
+	background: linear-gradient(to right, var(--p-color), var(--s-color));
+	padding: 5px;
+	padding-inline: 10px;
+	border-radius: 10px;
+	cursor: pointer;
+}

@@ -1,0 +1,140 @@
+a {
+	color: var(--s-dark-color);
+	font-weight: bolder;
+}
+
+input[type='checkbox'] {
+	display: none;
+}
+
+#menu_header {
+	margin-inline: auto;
+	margin-top: 1.3vw;
+	max-width: 800px;
+	padding: 20px;
+}
+
+#menu_header > h3 {
+	font-size: 1.5em;
+}
+
+#menu_header > p {
+	margin-top: 20px;
+}
+
+/* SECTION 1 ET 2 */
+
+.pres_produit {
+	margin-top: 1.3vw;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+}
+
+.photo_pres {
+	max-width: 400px;
+	flex: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.text_pres {
+	max-width: 400px;
+	padding: 20px;
+	padding-left: 0;
+	flex: 1;
+	font-family: Montserrat, sans-serif;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.text_pres > h6 {
+	font-size: 1.3em;
+	margin-bottom: 10px;
+}
+
+/* SECTION 1 */
+
+#savon_pres {
+	display: flex;
+	align-items: flex-start;
+}
+
+#savon_text_pres {
+	margin-top: 50px;
+	display: flex;
+	justify-content: flex-start;
+	max-height: 230px;
+	padding-bottom: 0;
+	overflow: hidden;
+	transition: max-height 0.5s;
+}
+
+#more_info_savon_container {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	background: linear-gradient(to bottom, transparent, white 20%);
+	transform: translateY(-40px);
+	transition: transform 0.5s;
+}
+
+/* between section */
+
+#between_section {
+	margin-top: 25px;
+	margin-bottom: 100px;
+	display: none;
+	width: 100%;
+	height: max-content;
+}
+
+.stop_1 {
+	stop-color: var(--p-color);
+}
+.stop_2 {
+	stop-color: var(--s-color);
+}
+
+/*################################*/
+
+@media (max-width: 830px) {
+
+	#for_planete_savon_pres {
+		flex-direction: column-reverse;
+		align-items: center;
+	}
+
+	.photo_pres > img {
+		width: 300px;
+		height: auto;
+	}
+
+	#more_info_savon_container > div {
+		display: none;
+	}
+
+	#between_section {
+		display: block;
+	}
+
+	#for_you_pres {
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.text_pres {
+		max-width: 100%;
+		padding: 20px;
+	}
+
+	#for_money_savon_pres {
+		flex-direction: column-reverse;
+		align-items: center;
+	}
+}
