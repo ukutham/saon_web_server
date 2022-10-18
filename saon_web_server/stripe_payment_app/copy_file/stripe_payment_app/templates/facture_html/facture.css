@@ -1,0 +1,103 @@
+@font-face {
+    font-family: 'Montserrat';
+    src: url('Montserrat(1)/Montserrat-VariableFont_wght.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+:root {
+	--background-color: white;
+
+	--element-color-on-p: #474954;
+	--element-color-on-s: #474954;
+
+	--p-color: #c2efeb;
+	--p-light-color: #f5ffff;
+	--p-dark-color: #91bcb9;
+
+	--s-color: #bdaacd;
+	--s-light-color: #f0dcff;
+	--s-dark-color: #8d7b9c;
+}
+
+* {
+	padding: 0px;
+	margin: 0px;
+	font-family: Montserrat, sans-serif;
+}
+
+h5 {
+	font-size: 1.5em;
+	font-weight: bold;
+}
+
+#saon_logo {
+	width: 100%;
+}
+#saon_logo img {
+	height: 200px;
+	width: auto;
+}
+#saon_logo td {
+	width: 50%;
+}
+#saon_logo_name {
+	text-align: left;
+	font-size: 3em;
+}
+
+#saon_info_and_facture_ref {
+	margin: 50px;
+	width: calc(100% - 100px);
+}
+#saon_info {
+	font-style: italic;
+}
+#facture_ref {
+	vertical-align: text-top;
+}
+#facture_ref h1 {
+	font-size: 1.5em;
+	font-weight: bold;
+}
+
+#facture_info {
+	margin-left: 50px;
+}
+
+#dest_info_container {
+	margin: 50px;
+	width: calc(100% - 100px);
+}
+#dest_info_container td{
+	width: 50%;
+}
+#livraison_add {
+	vertical-align: text-top;
+	margin-left: auto;
+}
+
+#all_product {
+	margin-inline: 50px;
+}
+#all_product table, #all_product td, #all_product tr {
+	border: 1px solid;
+	border-collapse: collapse;
+}
+#all_product td {
+	padding: 10px;
+}
+
+#total_table {
+	margin: 50px;
+}
+#total_table table, #total_table td, #total_table tr {
+	border: 1px solid;
+	border-collapse: collapse;
+}
+#total_table table {
+	margin-left: auto;
+}
+#total_table td {
+	padding: 10px;
+}

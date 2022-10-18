@@ -11,6 +11,7 @@ class ArticleListSerializer(ModelSerializer):
 	def validate_name(self, value):
 		if Article.objects.filter(name=value).exists():
 			raise serializers.ValidationError('nom déjà utilisé')
+
 		return value
 
 	def create(self, validate_data):
@@ -55,12 +56,14 @@ class ArticleOptionsSerializer(ModelSerializer):
 		model = Article_options
 		fields = ['view_name', 'cost', 'masse', 'stock', 'importance', 'article', 'id']
 
-	def validate_view_name(self, value):
-		if Article_options.objects.filter(view_name=value).exists():
+	def validate(self, validate_data):
+		print(Article_options.objects.filter(article=validate_data['article'] ,view_name=validate_data['view_name']))
+		if Article_options.objects.filter(article=validate_data['article'] ,view_name=validate_data['view_name']).exists():
 			raise serializers.ValidationError('nom déjà utilisé')
-		return value
+		return validate_data
 
 	def create(self, validate_data):
+		print(validate_data)
 		user = None
 		request = self.context.get('request')
 		if request and hasattr(request, "user"):

@@ -1,3 +1,4 @@
+import pdfkit
 from django.shortcuts import render
 import stripe
 from django.shortcuts import redirect
@@ -11,6 +12,7 @@ from django.shortcuts import get_object_or_404, render
 from django.http import FileResponse
 import os
 from saon_web_server.permissions import FactureViewPermission
+from saon_web_server import settings
 
 import json
 from datetime import date, timedelta
@@ -20,10 +22,12 @@ from article.models import Article, Article_options
 from basket.models import Basket, Product
 from order.models import *
 from delivery_choice.models import AddressSelect
-from .odt import odtRender
 from account.models import User
+from .models import StripeMetaData
 
 stripe.api_key = 'sk_test_51LoVkzGv1JxcHciCMwVe4W4gKJaeJAHZCOG2Q9BtcNBfr8vI7fL1DBgewHtvT7ttpRGaQ55HccXLz0i2035ANX8A00L2P4cP6t'
+
+LIVRAISON_DESCRIPTION = "cout de livraison"
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -84,7 +88,7 @@ def go_to_payment_page(request):
 			'price_data': {
 				'currency': 'eur',
 				'product_data' : {
-					'name': "cout de livraison",
+					'name': LIVRAISON_DESCRIPTION,
 				},
 				'unit_amount': int((livraison_cost.cost + livraison_cost.carton_cost) * 100),
 			},
@@ -106,8 +110,9 @@ def go_to_payment_page(request):
 		mode='payment',
 		success_url=f'{hostname}test_payment/success/?session_id={{CHECKOUT_SESSION_ID}}',
 		cancel_url=f'{hostname}delivery_choice/',
-		metadata={'data': json.dumps(metadata)},
   	)
+
+	StripeMetaData.objects.create(stripe_session_id=session.id, metadata=json.dumps(metadata))
 
 	return Response({'payment_page_url' : session.url})
 
@@ -124,24 +129,22 @@ def payment_success(request):
 	if Order.objects.filter(stripe_session_id=request.GET['session_id']).exists():
 		return HttpResponse(template.render(request=request))
 
+	metadata = StripeMetaData.objects.get(stripe_session_id=session.id).metadata
 
 	products = []
-
 	for product in session.list_line_items()['data']:
-		if product['description'] != 'cout de livraison':
-			products.append(json.loads(session['metadata']['data'])[product['description']])
+		if product['description'] != LIVRAISON_DESCRIPTION:
+			products.append(json.loads(metadata)[product['description']])
 
 
 	request.user = User.objects.get(email=session.customer_email)
 
-	livraison = json.loads(session['metadata']['data'])['livraison']
+	livraison = json.loads(metadata)['livraison']
 	livraison_mode = livraison["livraison_mode"]
 
 	######## odt render ########
 
-	DIRECTORY = "/home/michique/Bureau/project_web/saon_site_web_2/saon_web_server/stripe_payment_app"
-	SOURCE_DIRECTORY = f"{DIRECTORY}/facture_src"
-	MEDIA_DIRECTORY = "/home/michique/Bureau/project_web/saon_site_web_2/saon_web_server/media/facture"
+	MEDIA_DIRECTORY = settings.MEDIA_ROOT + "/facture"
 
 	products_for_facture = [
 		{
@@ -183,7 +186,7 @@ def payment_success(request):
 	livraison_cost = get_livraison_price_by_masse(masse=total_masse / 1000, livraison_mode=livraison_mode)
 
 	total_tva = total_ttc * 0.2
-	total_ttc += float(livraison_cost.cost)
+	total_ttc += float(livraison_cost.cost + livraison_cost.carton_cost)
 
 	new_order_data = {
 		"stripe_session_id" : request.GET['session_id'],
@@ -208,38 +211,51 @@ def payment_success(request):
 	today_date = date.today()
 	str_today_date = today_date.strftime('%d-%m-%Y').replace('-', '/')
 
+	DIR = os.path.dirname(os.path.abspath(__file__))
+
 	data = {
-		'facture_ref': new_order.id,
-		'facture_date': str_today_date,
-		'client_n': request.user.id,
-		'send_date': str_today_date,
-		'payment_date': str_today_date,
-		'livraison_delay': f"du {(today_date + timedelta(days=2)).strftime('%d-%m-%Y').replace('-', '/')} au {(today_date + timedelta(days=5)).strftime('%d-%m-%Y').replace('-', '/')}",
-		'saon_rue': "8 chemin du Bel Air",
-		'saon_ville': "78200, Magnanville",
-		'saon_pays': "France",
-		'saon_naf_code': "20.41Z",
-		'saon_siret': "913 715 496 00018",
-		'saon_n_tva': "FR26 913 715 496",
-		'saon_mail': "savonnerie.saon@gmail.com",
-		'saon_tel': "0766005088",
-		'dest_name': f'{request.user.name} {request.user.surname}',
-		'dest_mail': request.user.email,
-		'dest_address': livraison["address"],
+		'saon': {
+			'naf_code': '20.41Z',
+			'siret': "913 715 496 00018",
+			'n_tva': "FR26 913 715 496",
+			'email': "savonnerie.saon.sav@gmail.com",
+			'tel': "0766005088",
+		},
+		'facture': {
+			'ref': new_order.id,
+			'date': str_today_date,
+			'livraison_delay': f"du {(today_date + timedelta(days=2)).strftime('%d-%m-%Y').replace('-', '/')} au {(today_date + timedelta(days=5)).strftime('%d-%m-%Y').replace('-', '/')}",
+		},
+		'dest': {
+			'name': request.user.name,
+			'surname': request.user.surname,
+			'email': request.user.email,
+			'id': request.user.id,
+		},
+		'address': livraison["address"],
 		'products': products_for_facture,
 		'total_tva': f"{round(total_tva, 2)}€",
 		'livraison_cost': f'{livraison_cost.cost + livraison_cost.carton_cost}€',
 		'total_ttc': f"{total_ttc}€",
-		}
+		'DIR': DIR,
+	}
 
-	new_facture = odtRender(DIRECTORY, source=SOURCE_DIRECTORY)
-	new_facture.extract_file_to_source(f"{DIRECTORY}/facture.odt", 'facture_src')
-	new_facture.render(data, new_order.id, MEDIA_DIRECTORY)
+	wkhtmltopdf_options = {
+	    'enable-local-file-access': True,
+	    'javascript-delay': 1,
+	}
+
+	new_facture = loader.get_template('facture_html/facture.html') 
+
+	pdfkit.from_string(new_facture.render(data, request=request), f'{MEDIA_DIRECTORY}/{new_order.id}.pdf', options=wkhtmltopdf_options)
 
 	############################
 
 	new_order.facture.name = f"facture/{new_order.id}.pdf"
 	new_order.save()
+
+	Basket.objects.get(create_by=request.user).delete()
+	StripeMetaData.objects.get(stripe_session_id=session.id).delete()
 
 	return HttpResponse(template.render(request=request))
 

@@ -47,8 +47,8 @@
 						</svg>
 					</h1>
 					<div class="article_option_article_type_container">
-						<label for="uyunie_option_article_type">type d'article :</label>
-						<select type="text" name="uyunie_option_article_type" id="uyunie_option_article_type" onchange="put_article_save_on_false(event)">
+						<label for="article_option_article_type">type d'article :</label>
+						<select type="text" name="article_option_article_type" id="article_option_article_type" onchange="put_article_save_on_false(event)">
 							{% for article_type in article_types %}
 							<option value='{{ article_type.id }}'>{{ article_type.name }}</option>
 							{% endfor %}
@@ -147,8 +147,10 @@
 				{% for i in product %}
 				<button class="product" id="{{ i.id }}">
 					<div class="product_img" style="background: center / cover no-repeat url({{ i.photo }});">
-						<div class="product_name">{{ i.name }}</div>
-						<div class="product_major_ingredients">{{ i.ingredient }}</div>
+						<div class="product_shadowing">
+							<div class="product_name">{{ i.name }}</div>
+							<div class="product_major_ingredients">{{ i.ingredient }}</div>
+						</div>
 					</div>
 				</button>
 				{% endfor %}

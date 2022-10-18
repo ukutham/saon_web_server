@@ -3,6 +3,9 @@ from rest_framework.response import Response
 from rest_framework.decorators import action
 from django.db import transaction
 from rest_framework import serializers, status
+from rest_framework.decorators import api_view, permission_classes
+from django.http import FileResponse
+from saon_web_server import settings
 
 from rest_framework.permissions import IsAuthenticated
 
@@ -245,21 +248,23 @@ class ArticleOptionViewset(ModelViewSet):
 	@transaction.atomic
 	@action(detail=True, methods=['post'])
 	def modify(self, request, pk):
+		test_queryset = Article_options.objects.filter(article=request.data['article'] ,view_name=request.data['view_name']).exclude(id=pk)
+		if test_queryset.exists():
+			return Response({f'detail': 'nom déjà utilisé'}, status=status.HTTP_400_BAD_REQUEST)
+
 		article_option = Article_options.objects.get(id=pk)
 
-		if 'view_name' in request.data and request.data['view_name'] != '' and not Article_options.objects.filter(view_name=request.data['view_name']).exists():
+		if 'view_name' in request.data and request.data['view_name'] != '':
 			article_option.view_name = request.data['view_name']
-		elif Article_options.objects.get(view_name=request.data['view_name']) == None:
-			return Response({f'detail': 'nom déjà utilisé'}, status=status.HTTP_200_OK)
 
 		try:
-			if 'cost' in request.data and request.data['cost'] != '':
+			if 'cost' in request.data or request.data['cost'] != '':
 				article_option.cost = float(request.data['cost'])
-			if 'masse' in request.data and request.data['masse'] != '':
+			if 'masse' in request.data or request.data['masse'] != '':
 				article_option.masse = int(request.data['masse'])
-			if 'stock' in request.data and request.data['stock'] != '':
+			if 'stock' in request.data or request.data['stock'] != '':
 				article_option.stock = int(request.data['stock'])
-			if 'importance' in request.data and request.data['importance'] != '':
+			if 'importance' in request.data or request.data['importance'] != '':
 				article_option.importance = int(request.data['importance'])
 		except:
 			return Response({f'detail': 'use number fucking moron'}, status=status.HTTP_400_BAD_REQUEST)
@@ -378,3 +383,14 @@ class Article_typeViewSet(ModelViewSet):
 		except KeyError:
 			return self.serializer_class_by_action['default']
 
+
+@api_view(['GET'])
+@permission_classes([AlwaysPermission])
+def get_article_media_image(request, file):
+	print(f'{settings.MEDIA_ROOT}/image/article/{file}')
+	try:
+		response = FileResponse(open(f'{settings.MEDIA_ROOT}/image/article/{file}', 'rb'))
+	except:
+		return Response(status=status.HTTP_404_NOT_FOUND)
+
+	return response

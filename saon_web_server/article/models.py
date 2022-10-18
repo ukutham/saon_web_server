@@ -59,7 +59,7 @@ class Article(models.Model):
 
 class Article_options(models.Model):
 	id = models.BigAutoField(primary_key=True)
-	view_name = models.CharField(max_length=100, unique=True)
+	view_name = models.CharField(max_length=100)
 	cost = models.DecimalField(decimal_places=2, max_digits=5)
 	masse = models.IntegerField()
 	stock = models.IntegerField(default=0)

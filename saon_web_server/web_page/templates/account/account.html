@@ -271,10 +271,7 @@
                   <div class='order_all_info_product'>
                     {% for product in order.products %}
                     <div class="order_all_info_product_name">
-                      {{ product.article_name }}, {{ product.option_name }}
-                    </div>
-                    <div class="order_all_info_product_number">
-                      x {{ product.number }}
+                      {{ product.article_name }}, {{ product.option_name }} x {{ product.number }}
                     </div>
                     {% endfor %}
                   </div>

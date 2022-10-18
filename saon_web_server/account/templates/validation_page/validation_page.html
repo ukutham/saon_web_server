@@ -28,7 +28,7 @@
 		<div id='accept_message_message'>Votre compte est maintenant activer. Bravo!!!</div>
 		<div id='accept_message_return'><a href="">retourner a votre compte</a></div>
 		<script type="text/javascript">
-			document.getElementById('accept_message_return').href = `${window.location.origin}/?page=account`
+			document.querySelector('#accept_message_return > a').href = `${window.location.origin}/?page=account`
 		</script>
 	</div>
 </body>

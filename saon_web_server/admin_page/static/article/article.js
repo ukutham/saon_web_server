@@ -41,8 +41,8 @@ function open_soap_info(mode, article_data) {
 						<div class="article_option_separation" id='${i}'></div>
 						<div class='article_option' id='${i}' article_id='${article_id}' save='true'>
 							<div class="article_option_name_container">
-								<label for="uyunie_option_name_${i}">Nom :</label>
-								<input type="text" name="uyunie_option_name" value='${options[i].view_name}' id="uyunie_option_name_${i}" onchange='put_save_on_false(event)'>
+								<label for="article_option_name_${i}">Nom :</label>
+								<input type="text" name="article_option_name" value='${options[i].view_name}' id="article_option_name_${i}" onchange='put_save_on_false(event)'>
 								<div style="flex: auto;"></div>
 								<svg
 									viewBox=' 0 0 600 600'
@@ -52,22 +52,22 @@ function open_soap_info(mode, article_data) {
 								</svg>
 							</div>
 							<div class="article_option_cost_container">
-								<label for="uyunie_option_cost_${i}">cout :</label>
-								<input type="number" name="uyunie_option_cost" value='${options[i].cost}' id="uyunie_option_cost_${i}" onchange='put_save_on_false(event)'>
-								<label for="uyunie_option_cost">€</label>
+								<label for="article_option_cost_${i}">cout :</label>
+								<input type="number" name="article_option_cost" value='${options[i].cost}' id="article_option_cost_${i}" onchange='put_save_on_false(event)'>
+								<label for="article_option_cost">€</label>
 							</div>
 							<div class="article_option_masse_container">
-								<label for="uyunie_option_masse_${i}">poid :</label>
-								<input type="number" name="uyunie_option_masse" value='${options[i].masse}' id="uyunie_option_masse_${i}" onchange='put_save_on_false(event)'>
-								<label for="uyunie_option_masse_${i}"> en gramme</label>
+								<label for="article_option_masse_${i}">poid :</label>
+								<input type="number" name="article_option_masse" value='${options[i].masse}' id="article_option_masse_${i}" onchange='put_save_on_false(event)'>
+								<label for="article_option_masse_${i}"> en gramme</label>
 							</div>
 							<div class="article_option_stock_container">
-								<label for="uyunie_option_stock_${i}">stock :</label>
-								<input type="number" name="uyunie_option_stock" value='${options[i].stock}' id="uyunie_option_stock_${i}" onchange='put_save_on_false(event)'>
+								<label for="article_option_stock_${i}">stock :</label>
+								<input type="number" name="article_option_stock" value='${options[i].stock}' id="article_option_stock_${i}" onchange='put_save_on_false(event)'>
 							</div>
 							<div class="article_option_importance_container">
-								<label for="uyunie_option_importance_${i}">niveau d'apparation :</label>
-								<input type="number" name="uyunie_option_importance" value='${options[i].importance}' id="uyunie_option_importance_${i}" onchange='put_save_on_false(event)'>
+								<label for="article_option_importance_${i}">niveau d'apparation :</label>
+								<input type="number" name="article_option_importance" value='${options[i].importance}' id="article_option_importance_${i}" onchange='put_save_on_false(event)'>
 							</div>
 							<div class="submit_remove_button">
 								<div style="flex: auto;"></div>
@@ -107,8 +107,8 @@ function open_soap_info(mode, article_data) {
 		article_info.setAttribute('article_id', article_data.id)
 		article_info.querySelector('#soap_name_title > span').innerHTML = article_data.name
 
-		article_info.querySelector('#uyunie_option_article_type').value = article_data.article_type
-		article_info.querySelector('#uyunie_option_article_type').setAttribute('ancien_value', article_data.article_type)
+		article_info.querySelector('#article_option_article_type').value = article_data.article_type
+		article_info.querySelector('#article_option_article_type').setAttribute('ancien_value', article_data.article_type)
 
 		article_info.querySelector('#soap_name_input').value = article_data.name
 		article_info.querySelector('#soap_name_input').setAttribute('ancien_value', article_data.name)
@@ -236,7 +236,7 @@ async function create_new_article(event) {
 
 	var posted_data = new FormData()
 
-	var select_article_type = document.getElementById('uyunie_option_article_type')
+	var select_article_type = document.getElementById('article_option_article_type')
 
 	posted_data.append('article_type', select_article_type.options[select_article_type.selectedIndex].value)
 	posted_data.append('name', article_info.querySelector('#soap_name_input').value)
@@ -286,15 +286,15 @@ for (let i = 0; i< product.length; i++) {
 	})
 }
 
-/* add new article in innerHTML */
+/* add new article option in innerHTML */
 
 function add_new_article_option_in_innerHTML(event) {
 	article_option_container.innerHTML += `
 					<div class="article_option_separation" id='${article_option_lenght}'></div>
 					<div class='article_option' id='${article_option_lenght}' article_id='${article_id}' save='false'>
 						<div class="article_option_name_container">
-							<label for="uyunie_option_name_${article_option_lenght}">Nom :</label>
-							<input type="text" name="uyunie_option_name" value='Nouvelle option' id="uyunie_option_name_${article_option_lenght}" onchange='put_save_on_false(event)'>
+							<label for="article_option_name_${article_option_lenght}">Nom :</label>
+							<input type="text" name="article_option_name" value='Nouvelle option' id="article_option_name_${article_option_lenght}" onchange='put_save_on_false(event)'>
 							<div style="flex: auto;"></div>
 							<svg
 								viewBox=' 0 0 600 600'
@@ -304,22 +304,22 @@ function add_new_article_option_in_innerHTML(event) {
 							</svg>
 						</div>
 						<div class="article_option_cost_container">
-							<label for="uyunie_option_cost_${article_option_lenght}">cout :</label>
-							<input type="number" name="uyunie_option_cost" value='0' id="uyunie_option_cost_${article_option_lenght}" onchange='put_save_on_false(event)'>
-							<label for="uyunie_option_cost">€</label>
+							<label for="article_option_cost_${article_option_lenght}">cout :</label>
+							<input type="number" name="article_option_cost" value='0' id="article_option_cost_${article_option_lenght}" onchange='put_save_on_false(event)'>
+							<label for="article_option_cost">€</label>
 						</div>
 						<div class="article_option_masse_container">
-							<label for="uyunie_option_masse_${article_option_lenght}">poid :</label>
-							<input type="number" name="uyunie_option_masse" value='0' id="uyunie_option_masse_${article_option_lenght}" onchange='put_save_on_false(event)'>
-							<label for="uyunie_option_masse_${article_option_lenght}"> en gramme</label>
+							<label for="article_option_masse_${article_option_lenght}">poid :</label>
+							<input type="number" name="article_option_masse" value='0' id="article_option_masse_${article_option_lenght}" onchange='put_save_on_false(event)'>
+							<label for="article_option_masse_${article_option_lenght}"> en gramme</label>
 						</div>
 						<div class="article_option_stock_container">
-							<label for="uyunie_option_stock_${article_option_lenght}">stock :</label>
-							<input type="number" name="uyunie_option_stock" value='0' id="uyunie_option_stock_${article_option_lenght}" onchange='put_save_on_false(event)'>
+							<label for="article_option_stock_${article_option_lenght}">stock :</label>
+							<input type="number" name="article_option_stock" value='0' id="article_option_stock_${article_option_lenght}" onchange='put_save_on_false(event)'>
 						</div>
 						<div class="article_option_importance_container">
-							<label for="uyunie_option_importance_${article_option_lenght}">niveau d'apparation :</label>
-							<input type="number" name="uyunie_option_importance" value='0' id="uyunie_option_importance_${article_option_lenght}" onchange='put_save_on_false(event)'>
+							<label for="article_option_importance_${article_option_lenght}">niveau d'apparation :</label>
+							<input type="number" name="article_option_importance" value='0' id="article_option_importance_${article_option_lenght}" onchange='put_save_on_false(event)'>
 						</div>
 						<div class="submit_remove_button">
 							<div style="flex: auto;"></div>
@@ -347,14 +347,14 @@ async function save_article_option(event) {
 		var parent = event.target.parentNode.parentNode.parentNode
 		var posted_data = {}
 
-		posted_data['view_name'] = parent.querySelector('input[name="uyunie_option_name"]').value
-		posted_data['cost'] = parent.querySelector('input[name="uyunie_option_cost"]').value
-		posted_data['masse'] = parent.querySelector('input[name="uyunie_option_masse"]').value
-		posted_data['stock'] = parent.querySelector('input[name="uyunie_option_stock"]').value
-		posted_data['importance'] = parent.querySelector('input[name="uyunie_option_importance"]').value
+		posted_data['view_name'] = parent.querySelector('input[name="article_option_name"]').value
+		posted_data['cost'] = parent.querySelector('input[name="article_option_cost"]').value
+		posted_data['masse'] = parent.querySelector('input[name="article_option_masse"]').value
+		posted_data['stock'] = parent.querySelector('input[name="article_option_stock"]').value
+		posted_data['importance'] = parent.querySelector('input[name="article_option_importance"]').value
 		posted_data['article'] = parent.getAttribute('article_id')
 
-		if (parent.querySelector('input[name="uyunie_option_name"]').value == '' || parent.querySelector('input[name="uyunie_option_cost"]').value == '' || parent.querySelector('input[name="uyunie_option_masse"]').value == '' || parent.querySelector('input[name="uyunie_option_stock"]').value == '' || parent.querySelector('input[name="uyunie_option_importance"]').value == '')
+		if (parent.querySelector('input[name="article_option_name"]').value == '' || parent.querySelector('input[name="article_option_cost"]').value == '' || parent.querySelector('input[name="article_option_masse"]').value == '' || parent.querySelector('input[name="article_option_stock"]').value == '' || parent.querySelector('input[name="article_option_importance"]').value == '')
 		{
 			await error_message('minor_error', 'veuillez remplir tous les champs !!!!!!!!!!!')
 			return
@@ -362,20 +362,18 @@ async function save_article_option(event) {
 
 		var data = await bearer_fetch('../api/article_options/', 'POST', posted_data)
 
-		console.log(data)
-
 		if(not_allow(data)) {
 			return
 		}
-		else if (data.view_name === parent.querySelector('input[name="uyunie_option_name"]').value) {
+		else if (data.view_name === parent.querySelector('input[name="article_option_name"]').value) {
 			parent.setAttribute('save', 'true')
 			parent.querySelector('button[real_id="0"]').setAttribute('in_creation', 'false')
 			parent.querySelector('button[real_id="0"]').setAttribute('real_id', data.id)
 			parent.querySelector('button[real_id="0"]').setAttribute('in_creation', 'false')
 			parent.querySelector('button[real_id="0"]').setAttribute('real_id', data.id) 
 		}
-		else if(data.view_name[0] == "article_options with this view name already exists.") {
-			await error_message('minor_error', 'nom déjà utilisé')
+		else if(data.non_field_errors[0] != null || data.non_field_errors[0] != undefined) {
+			await error_message('minor_error', data.non_field_errors[0])
 		}
 		else {
 			await error_message('major_error', 'erreur inattendu, veuillez contacter le service informatique svp mamouazelle')
@@ -388,14 +386,14 @@ async function save_article_option(event) {
 		}
 		var posted_data = {}
 
-		posted_data['view_name'] = parent.querySelector('input[name="uyunie_option_name"]').value
-		posted_data['cost'] = parent.querySelector('input[name="uyunie_option_cost"]').value
-		posted_data['masse'] = parent.querySelector('input[name="uyunie_option_masse"]').value
-		posted_data['stock'] = parent.querySelector('input[name="uyunie_option_stock"]').value
-		posted_data['importance'] = parent.querySelector('input[name="uyunie_option_importance"]').value
+		posted_data['view_name'] = parent.querySelector('input[name="article_option_name"]').value
+		posted_data['cost'] = parent.querySelector('input[name="article_option_cost"]').value
+		posted_data['masse'] = parent.querySelector('input[name="article_option_masse"]').value
+		posted_data['stock'] = parent.querySelector('input[name="article_option_stock"]').value
+		posted_data['importance'] = parent.querySelector('input[name="article_option_importance"]').value
 		posted_data['article'] = parent.getAttribute('article_id')
 
-		if (parent.querySelector('input[name="uyunie_option_name"]').value == '' || parent.querySelector('input[name="uyunie_option_cost"]').value == '' || parent.querySelector('input[name="uyunie_option_masse"]').value == '' || parent.querySelector('input[name="uyunie_option_stock"]').value == '' || parent.querySelector('input[name="uyunie_option_importance"]').value == '')
+		if (parent.querySelector('input[name="article_option_name"]').value == '' || parent.querySelector('input[name="article_option_cost"]').value == '' || parent.querySelector('input[name="article_option_masse"]').value == '' || parent.querySelector('input[name="article_option_stock"]').value == '' || parent.querySelector('input[name="article_option_importance"]').value == '')
 		{
 			await error_message('minor_error', 'tous les champs ne sont pas remplient')
 			return
@@ -405,6 +403,9 @@ async function save_article_option(event) {
 
 		if(not_allow(data)) {
 			return
+		}
+		else if (data['detail'] != null || data['detail'] != undefined) {
+			await error_message('minor_error', data['detail'])
 		}
 		else if (data['Modification'] === 'ok') {
 			parent.setAttribute('save', 'true')
@@ -475,8 +476,8 @@ async function modify_article(event) {
 
 	var posted_data = new FormData()
 
-	if (article_info.querySelector('#uyunie_option_article_type').value != article_info.querySelector('#uyunie_option_article_type').getAttribute('ancien_value')) {
-		posted_data.append('article_type', article_info.querySelector('#uyunie_option_article_type').value)
+	if (article_info.querySelector('#article_option_article_type').value != article_info.querySelector('#article_option_article_type').getAttribute('ancien_value')) {
+		posted_data.append('article_type', article_info.querySelector('#article_option_article_type').value)
 	}
 	if (article_info.querySelector('#soap_name_input').value != article_info.querySelector('#soap_name_input').getAttribute('ancien_value')) {
 		posted_data.append('name', article_info.querySelector('#soap_name_input').value)
@@ -516,7 +517,7 @@ async function modify_article(event) {
 	else if (get_data['Modification'] === 'ok') {
 		article_info.setAttribute('save', 'true')
 		article_info.querySelector('#soap_name_title > span').innerHTML = article_info.querySelector('#soap_name_input').value
-		article_info.querySelector('#uyunie_option_article_type').setAttribute('ancien_value', article_info.querySelector('#uyunie_option_article_type').value)
+		article_info.querySelector('#article_option_article_type').setAttribute('ancien_value', article_info.querySelector('#article_option_article_type').value)
 		article_info.querySelector('#soap_name_input').setAttribute('ancien_value', article_info.querySelector('#soap_name_input').value)
 		article_info.querySelector('#soap_principal_ingredient_input').setAttribute('ancien_value', article_info.querySelector('#soap_principal_ingredient_input').value)
 		article_info.querySelector('#soap_ingredient_input').setAttribute('ancien_value', article_info.querySelector('#soap_ingredient_input').value)
@@ -526,18 +527,6 @@ async function modify_article(event) {
 		article_in_menu = document.querySelector(`.product[id='${article_info.getAttribute('article_id')}']`)
 		article_in_menu.querySelector('.product_name').innerHTML = article_info.querySelector('#soap_name_input').value
 		article_in_menu.querySelector('.product_major_ingredients').innerHTML = article_info.querySelector('#soap_principal_ingredient_input').value
-
-	  var reader  = new FileReader()
-
-	  reader.onloadend = function () {
-	    article_in_menu.querySelector('.product_img').style.background = `center / cover no-repeat url(${reader.result})`
-	  }
-
-	  if (article_info.querySelector('#soap_principal_image_input').files[0]) {
-	    reader.readAsDataURL(article_info.querySelector('#soap_principal_image_input').files[0])
-	  } else {
-	    article_in_menu.querySelector('.product_img').style.background = `center / cover no-repeat url()`
-	  }
 	}
 	else {
 		await error_message('major_error', 'erreur inattendu, veuillez contacter le service informatique svp mamouazelle')

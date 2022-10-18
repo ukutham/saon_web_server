@@ -23,7 +23,7 @@ class Order(models.Model):
 	surname = models.CharField(max_length=100)
 	email = models.EmailField(max_length=50)
 
-	address = models.CharField(max_length=400)
+	address = models.CharField(max_length=1000)
 	relay_id = models.CharField(max_length=30, default=None, null=True)
 	cost_TTC = models.DecimalField(decimal_places=2, max_digits=10)
 	livraison_mode = models.CharField(max_length=1, choices=LIVRAISON_MODE_CHOICE)

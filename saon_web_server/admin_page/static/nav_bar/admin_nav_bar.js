@@ -8,13 +8,17 @@ function navigation_pointer(icon_select) {
   icon_select.setAttribute('select', 'true')
 }
 
-let page = document.getElementById('page_content').getAttribute('page')
+let page = document.getElementById('page_content')
 let nav_bar_loader_container = document.getElementById('nav_bar_loader_container')
 
 let script = null
 let scripts_import = []
 
 async function change_page(page_name) {
+	if (page_name == null) {
+		page_name = 'article'
+	}
+
 	nav_bar_loader_container.style.display = 'flex'
 
 	data = await bearer_fetch(`${page_name}`, 'GET', null, 'text')
@@ -44,16 +48,22 @@ async function change_page(page_name) {
 		document.head.removeChild(script)
 	}
 
-	script = document.createElement('script')
-	script.src = `/static/${page_name}/${page_name}.js`
-	document.head.appendChild(script)
+	if (!(`/static/${page_name}/${page_name}.js`.includes('?'))) {
+		script = document.createElement('script')
+		script.src = `/static/${page_name}/${page_name}.js`
+		document.head.appendChild(script)
+	} else {
+		script = document.createElement('script')
+		script.src = `/static/${page_name.split('/?')[0]}/${page_name.split('/?')[0]}.js`
+		document.head.appendChild(script)
+	}
 
 	window.history.pushState("", "", `?page=${page_name}`)
 
 	nav_bar_loader_container.style.display = 'none'
 	document.getElementById('page_content').style.display = 'block'
 }
-change_page(page)
+change_page(page.getAttribute('page'))
 
 for (let i of nav_icon) {
   i.addEventListener('click', async (event) => {

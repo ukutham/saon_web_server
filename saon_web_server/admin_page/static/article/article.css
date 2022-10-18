@@ -213,10 +213,17 @@ textarea {
 	height: 100%;
 	border-radius: 5%;
 	cursor: pointer;
+}
+
+.product_shadowing {
+	height: 100%;
+	width: 100%;
+	border-radius: 5%;
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
 	justify-content: flex-end;
+	background: linear-gradient(to top, black, transparent 50%, transparent);
 }
 
 .product_name {
@@ -224,11 +231,12 @@ textarea {
 	margin-top: 5px;
 	font-size: 2vw;
 	cursor: pointer;
+	color: white;
 }
 
 .product_major_ingredients {
 	margin-inline: 10px;
-	color: #000000A0;
+	color: #EEE;
 	font-size: 1.5vw;
 	cursor: pointer;
 }

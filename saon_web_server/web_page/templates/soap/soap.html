@@ -27,9 +27,9 @@
 				<div id='soap_info_saon_icon' style="margin-bottom: 50px;">
 					<div>
 						<div style="font-family: Montserrat, sans-serif; font-size: 3em;">Saon</div>
-						<div style="font-family: Montserrat, sans-serif; font-size: 1em;">savonnerie artisanale</div>
+						<div style="font-family: Montserrat, sans-serif; font-size: 1em;">savonnerie écolo</div>
 					</div>
-					<img style="margin-left: 50px;" src="{% static 'nav_bar/img/png/logo_savon_v2_tranparent.png' %}" height="100" width="auto">
+					<img style="margin-left: 50px;" src="{% static 'logo/logo_savon_v2.png' %}" height="100" width="auto">
 				</div>
 				<div id="soap_info_flex_1">
 					<div id='soap_info_img'>
@@ -106,8 +106,10 @@
 				{% for i in product %}
 				<div class="product" product="{{ i.id }}">
 					<button class="product_img" style="background: center / cover no-repeat url({{ i.photo }});" alt='photo du savon {{ i.name }}'>
-						<div class="product_name">{{ i.name }}</div>
-						<div class="product_major_ingredients">{{ i.ingredient }}</div>
+						<div class="product_shadowing">
+							<div class="product_name">{{ i.name }}</div>
+							<div class="product_major_ingredients">{{ i.ingredient }}</div>
+						</div>
 					</button>
 				</div>
 				{% endfor %}

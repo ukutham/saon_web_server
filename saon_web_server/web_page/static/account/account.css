@@ -587,7 +587,7 @@ input[type='text'], input[type='password'], input[type='submit'], input[type='te
 
 .order_all_info_product {
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 }
 
 .order_all_info_product_number {

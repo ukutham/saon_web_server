@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="{{ DIR }}/templates/facture_html/facture.css">
+</head>
+<body>
+	<style type="text/css">
+		@font-face {
+		    font-family: 'Montserrat';
+		    src: url('{{ DIR }}/templates/facture_html/Montserrat(1)/Montserrat-VariableFont_wght.ttf');
+		    font-weight: normal;
+		    font-style: normal;
+		}
+	</style>
+	<header>
+		<table id="saon_logo">
+			<tr>
+				<td style="text-align: right;"><img src="{{ DIR }}/templates/facture_html/img/logo_savon_v2.png" alt="logo de saon"></td>
+				<td style="text-align: left;"><span id="saon_logo_name">SAON</span></td>
+			</tr>
+		</table>
+		<table id="saon_info_and_facture_ref">
+			<tr style="width: 40%">
+				<td id="saon_info">
+					<table>
+						<tr><td>code NAF : {{ saon.naf_code }}</td></tr>
+						<tr><td>siret : {{ saon.siret }}</td></tr>
+						<tr><td>n° TVA : {{ saon.n_tva }}</td></tr>
+						<tr><td>email : {{ saon.email }}</td></tr>
+						<tr><td>n° téléphone : {{ saon.tel }}</td></tr>
+					</table>
+				</td>
+				<td style="width: 20%"></td>
+				<td id="facture_ref" style="width: 40%">
+					<h1>facture n° {{ facture.ref }}</h1>
+				</td>
+			</tr>
+		</table>
+		<div id="facture_info">
+			<table>
+				<tr><td><h5 id="facture_info_title">Information sur la facture :</h5></td></tr>
+				<tr><td>date de la facture : {{ facture.date }}</td></tr>
+				<tr><td>date de vente : {{ facture.date }}</td></tr>
+				<tr><td>payer le : {{ facture.date }}</td></tr>
+				<tr><td>délais de livraison en France métropolitaine : {{ facture.livraison_delay }}</td></tr>
+			</table>
+		</div>
+		<table id="dest_info_container">
+			<tr>
+				<td id="dest_info">
+					<table>
+						<tr><td><h5 id="dest_info_title">Destinataire :</h5></td></tr>
+						<tr><td>{{ dest.name }} {{ dest.surname }}</td></tr>
+						<tr><td>{{ dest.email }}</td></tr>
+						<tr><td>numéro de client : {{ dest.id }}</td></tr>
+					</table>
+				</td>
+				<td style="width: 10%"></td>
+				<td id="livraison_add">
+					<div>
+						<h5 id="livraison_add_title">Adresse de livraison :</h5>
+						<span>{{ address }}</span>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</header>
+	<div id="all_product">
+		<table style="width: 100%;">
+			{% for product in products %}
+			<tr>
+				<td>{{ product.desc }}</td>
+				<td>{{ product.quant }}</td>
+				<td>{{ product.unite }}</td>
+				<td>{{ product.pourc_tva }}</td>
+				<td>{{ product.tva }}</td>
+				<td>{{ product.total }}</td>
+			</tr>
+			{% endfor %}
+		</table>
+	</div>
+	<div id="total_table">
+		<table>
+			<tr>
+				<td>total TVA</td>
+				<td>{{ total_tva }}</td>
+			</tr>
+			<tr>
+				<td>cout de livraison</td>
+				<td>{{ livraison_cost }}</td>
+			</tr>
+			<tr>
+				<td>total TTC</td>
+				<td>{{ total_ttc }}</td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>

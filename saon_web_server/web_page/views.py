@@ -135,7 +135,7 @@ def account(request):
 			'is_staff': request.user.is_staff,
 		}
 
-		order_of_user = [i for i in Order.objects.filter(create_by=request.user).order_by('id').values()]
+		order_of_user = [i for i in Order.objects.filter(create_by=request.user).order_by('-id').values()]
 
 		for i in order_of_user:
 			actual_order = Order.objects.get(id=i['id'])
