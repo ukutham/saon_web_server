@@ -387,7 +387,6 @@ class Article_typeViewSet(ModelViewSet):
 @api_view(['GET'])
 @permission_classes([AlwaysPermission])
 def get_article_media_image(request, file):
-	print(f'{settings.MEDIA_ROOT}/image/article/{file}')
 	try:
 		response = FileResponse(open(f'{settings.MEDIA_ROOT}/image/article/{file}', 'rb'))
 	except:

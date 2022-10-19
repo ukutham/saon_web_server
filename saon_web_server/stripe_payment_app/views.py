@@ -25,7 +25,7 @@ from delivery_choice.models import AddressSelect
 from account.models import User
 from .models import StripeMetaData
 
-stripe.api_key = 'sk_test_51LoVkzGv1JxcHciCMwVe4W4gKJaeJAHZCOG2Q9BtcNBfr8vI7fL1DBgewHtvT7ttpRGaQ55HccXLz0i2035ANX8A00L2P4cP6t'
+stripe.api_key = settings.STRIPE_API_KEY
 
 LIVRAISON_DESCRIPTION = "cout de livraison"
 

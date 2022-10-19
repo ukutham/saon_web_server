@@ -1,5 +1,5 @@
 var	script_FileSaver = document.createElement('script')
-script_FileSaver.src = "http://cdn.jsdelivr.net/g/filesaver.js"
+script_FileSaver.src = `/static/extern_module/FileSaver.js`
 document.head.appendChild(script_FileSaver)
 
 async function get_facture(event) {
