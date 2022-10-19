@@ -1,0 +1,4 @@
+saon_web_server/settings/production.py
+__pycache__
+saon_web_server/staticfiles/
+media/
