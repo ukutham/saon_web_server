@@ -193,6 +193,14 @@
 	margin-bottom: 20px;
 }
 
+#soap_info_ingr[display='none'] {
+	display: none;
+}
+
+#soap_info_ingr[display='None'] {
+	display: none;
+}
+
 #soap_info_ingr > label {
 	margin-bottom: 5px;
 }

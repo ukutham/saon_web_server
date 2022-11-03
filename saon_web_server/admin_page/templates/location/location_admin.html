@@ -1,0 +1,71 @@
+{% load static %}
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="{% static 'location_admin/location_admin.css' %}">
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin="" />
+
+	<meta name ="robots" content ="noindex, nofollow">
+</head>
+<body>
+	<div id="map_an_map_finder" class="gradient_border">
+		<div id="map_finder">
+			<input type="text" name="input_location_finder" id='input_location_finder' autocomplete="off" placeholder="chercher lieux..." onchange="research_location(event)">
+			<div id="map_finder_loader" in_research='false'>
+				<span id="loader_point_1">.</span>
+				<span id="loader_point_2">.</span>
+				<span id="loader_point_3">.</span>
+			</div>
+			<div id="map_finder_result">
+			</div>
+		</div>
+		<div id="map"></div>
+	</div>
+	<div id="open_create_new_article_container">
+		<div class="gradient_border">
+			<button id="open_create_new_article" onclick="open_create_element(event)">créé</button>
+		</div>
+	</div>
+	<div id="modify_location" save='false' open='false'>
+		<div id='modify_location_header'>
+			<h3></h3>
+			<div style="flex: auto;"></div>
+			<div id="ok_icon_container">
+				<svg
+					viewBox=' 0 0 600 600'
+					id='ok_icon'
+					class='info_icon'>
+					<path stroke-width='90' stroke-linecap='round' stroke-linejoin='round' fill='none' d='M 150 350 L 300 500 L 500 150'></path>
+				</svg>
+			</div>
+		</div>
+		<div id="modify_location_body">
+			<input type="text" id="modify_location_name" placeholder="name" onchange="document.getElementById('modify_location').setAttribute('save', 'false')">
+			<input type="text" id="modify_location_web_site" placeholder="site web" onchange="document.getElementById('modify_location').setAttribute('save', 'false')">
+			<div style="flex: auto"></div>
+			<div class="gradient_border">
+				<button id="modify_location_submit" onclick="modify_location(event)">sauvegarder</button>
+			</div>
+			<div class="gradient_border">
+				<button id="del_location" onclick="remove_location(event)">supprimer</button>
+			</div>
+		</div>
+	</div>
+	<div id="create_location" open='false'>
+		<div id="create_location_header">créer une nouvelle adresse</div>
+		<div id="create_location_error"></div>
+		<div id="create_location_body">
+			<input type="text" id="create_location_name" placeholder="nom">
+			<input type="text" id="create_location_web_site" placeholder="site web">
+			<input type="text" id="create_location_rue" placeholder="rue">
+			<input type="text" id="create_location_ville" placeholder="ville">
+			<input type="text" id="create_location_postal_code" placeholder="code postal">
+			<input type="text" id="create_location_pays" placeholder="pays">
+			<div style="flex:auto"></div>
+			<div class="gradient_border">
+				<button id="create_new_article" onclick="create_location(event)">creer</button>
+			</div>
+		</div>
+	</div>
+</body>

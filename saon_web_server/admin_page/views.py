@@ -21,13 +21,13 @@ from account.models import *
 
 def nav_bar(request):
 	template = loader.get_template('nav_bar/admin_nav_bar.html')
-	if 'page' in request.GET and request.GET['page'] in ['stat', 'article', 'order', 'account_admin', 'comptability']:
+	if 'page' in request.GET and request.GET['page'] in ['location_admin', 'article', 'order', 'account_admin', 'comptability']:
 		context = {
 			'page': request.GET['page'],
 		}
 	else:
 		context = {
-		'page': 'stat',
+		'page': 'order',
 	}
 	
 	return HttpResponse(template.render(context, request=request))
@@ -40,13 +40,13 @@ def article(request):
 	all_product = {}
 	article_types = {}
 
-	for article_type in Article_type.objects.all():
+	for article_type in Article_type.objects.all().order_by('id'):
 		all_product[article_type] = []
 		article_types[article_type] = {
 			'name' : article_type.name,
 			'id' : article_type.id,
 		}
-		for article in Article.objects.filter(article_type=article_type):
+		for article in Article.objects.filter(article_type=article_type).order_by('name'):
 			all_product[article_type].append({
 				'id': article.id,
 				'name': article.name,
@@ -197,3 +197,10 @@ def search_account(request):
 
 	return Response({'all_acccount': data})
 
+######################################################
+
+@api_view(['GET'])
+@permission_classes([IsStaffUser])
+def location_admin(request):
+	template = loader.get_template('location/location_admin.html')
+	return HttpResponse(template.render(request=request))

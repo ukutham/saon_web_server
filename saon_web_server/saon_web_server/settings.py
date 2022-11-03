@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'basket.apps.BasketConfig',
     'stripe_payment_app.apps.StripePaymentAppConfig',
     'order.apps.OrderConfig',
+    'juridic_app.apps.JuridicApp',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -169,7 +170,7 @@ STATICFILES_DIRS = (
     os.path.join(PROJECT_ROOT, '../admin_page/static'),
     os.path.join(PROJECT_ROOT, '../stripe_payment_app/static'),
 )
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+#STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

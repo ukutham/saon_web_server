@@ -57,7 +57,6 @@ for (let i = 0; i < all_soap.length; i++) {
 			/*request*/
 
 			var data = await bearer_fetch(`api/article/${all_soap[i].getAttribute('product')}`, 'GET', null)
-			console.log(data)
 
 			/*request end*/
 
@@ -76,6 +75,7 @@ for (let i = 0; i < all_soap.length; i++) {
 			}
 			soap_info_name.children[0].innerHTML = data['name']
 			soap_info_ingr.querySelector('p').innerHTML = data['ingredients']
+			soap_info_ingr.setAttribute('display', data['ingredients']) 
 			soap_info_desc.children[0].innerHTML = data['description']
 
 			add_basket_input.setAttribute('soap_id', data['id'])

@@ -53,29 +53,35 @@ class LocationViewSet(ModelViewSet):
 	def create(self, request):
 		data = request.data
 
-		setattr(data, '_mutable', True)
+		#setattr(data, '_mutable', True)
 
 		validate = True
 		error_data = {}
 
-		if 'rue' not in data :
+		if 'name' not in data or data['name'] == '':
 			validate = False
-			error_data['rue'] = ["This field may not be blank."]
-		if 'code_postal' not in data :
+			error_data['detail'] = ["fields may not be blank."]
+		if 'web_site' not in data:
 			validate = False
-			error_data['code_postal'] = ["This field may not be blank."]
+			error_data['detail'] = ["fields may not be blank."]
+		if 'rue' not in data or data['rue'] == '':
+			validate = False
+			error_data['detail'] = ["fields may not be blank."]
+		if 'code_postal' not in data or data['code_postal'] == '':
+			validate = False
+			error_data['detail'] = ["fields may not be blank."]
 		else :
 			try:
 				data['code_postal'] = int(data['code_postal'])
 			except:
 				validate = False
 				error_data['code_postal'] = ["Not an int"]
-		if 'ville' not in data :
+		if 'ville' not in data or data['ville'] == '':
 			validate = False
-			error_data['ville'] = ["This field may not be blank."]
-		if 'pays' not in data :
+			error_data['detail'] = ["fields may not be blank."]
+		if 'pays' not in data or data['pays'] == '':
 			validate = False
-			error_data['pays'] = ["This field may not be blank."]
+			error_data['detail'] = ["fields may not be blank."]
 
 		if not validate:
 			return Response(error_data, status=status.HTTP_400_BAD_REQUEST)
@@ -89,7 +95,7 @@ class LocationViewSet(ModelViewSet):
 		if data['address'] == None:
 			return Response({'detail': 'Unvalid Address'}, status=status.HTTP_400_BAD_REQUEST)
 
-		if Location.objects.filter(address=data['address'].address).exists():
+		if Location.objects.filter(address=data['address'].address.replace(',', '', 1)).exists():
 			return Response({'detail': 'address already exist'}, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -111,7 +117,7 @@ class LocationViewSet(ModelViewSet):
 		location = Location.objects.get(id=pk)
 
 		for key in request.data:
-			if key == "name" and request.data[key] is not None:
+			if key == "name" and request.data[key] is not None and request.data[key] is not '':
 				location.name = request.data['name']
 
 			if key == "web_site" and request.data[key] is not None:

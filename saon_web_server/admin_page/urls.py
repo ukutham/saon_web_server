@@ -5,6 +5,8 @@ from . import views
 urlpatterns = [
 	path('', views.nav_bar),
 
+	path('location_admin/', views.location_admin),
+
 	path('article/', views.article),
 
 	path('order/', views.order),

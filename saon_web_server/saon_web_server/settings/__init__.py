@@ -23,10 +23,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-w3ziu1hf#3c4ba962@jr==$3*$e146q257$^*cn(zut)d(+(fq'
-STRIPE_API_KEY = 'sk_test_51LoVkzGv1JxcHciCMwVe4W4gKJaeJAHZCOG2Q9BtcNBfr8vI7fL1DBgewHtvT7ttpRGaQ55HccXLz0i2035ANX8A00L2P4cP6t'
+#STRIPE_API_KEY = 'sk_test_51LoVkzGv1JxcHciCMwVe4W4gKJaeJAHZCOG2Q9BtcNBfr8vI7fL1DBgewHtvT7ttpRGaQ55HccXLz0i2035ANX8A00L2P4cP6t'
+STRIPE_API_KEY = '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'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 #ALLOWED_HOSTS = ['savons-saon.fr', '2001:41d0:401:3000:0:0:0:4e03', '51.254.124.210']
 #CSRF_TRUSTED_ORIGINS = ['https://savons-saon.fr', 'https://2001:41d0:401:3000:0:0:0:4e03', 'https://51.254.124.210']
@@ -47,6 +48,7 @@ INSTALLED_APPS = [
     'basket.apps.BasketConfig',
     'stripe_payment_app.apps.StripePaymentAppConfig',
     'order.apps.OrderConfig',
+    'juridic_app.apps.JuridicAppConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -168,6 +170,7 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, '../delivery_choice/static'),
     os.path.join(BASE_DIR, '../admin_page/static'),
     os.path.join(BASE_DIR, '../stripe_payment_app/static'),
+    os.path.join(BASE_DIR, '../juridic_app/static'),
 )
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 

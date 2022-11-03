@@ -59,6 +59,7 @@ from article.views import get_article_media_image
 
 urlpatterns = [
     path('', include('web_page.urls')),
+    path('', include('juridic_app.urls')),
     path('account/', include('account.urls')),
     path('admin/', include('admin_page.urls')),
 

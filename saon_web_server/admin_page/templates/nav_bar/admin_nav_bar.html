@@ -3,6 +3,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<style type="text/css">
+		@font-face {
+		    font-family: 'Montserrat';
+		    src: url("{% static 'fonts/Montserrat/Montserrat-VariableFont_wght.ttf' %}");
+		    font-weight: normal;
+		    font-style: normal;
+		}
+	</style>
+	
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="{% static 'base.css' %}">
@@ -15,16 +24,16 @@
 	<header id='header_with_nav_bar'>
 		<div id="back_to_menu"><a href="..">< retour au menu</a></div>
 		<div id="nav_bar_container">
-			<div id='stat_page' class='nav_icon' {% if page == 'stat' %} select='true' {% else %} select='false' {% endif %} page='stat'>
+			<div id='stat_page' class='nav_icon' {% if page == 'location_admin' %} select='true' {% else %} select='false' {% endif %} page='location_admin'>
 				<svg
 				width="100"
 				height="100"
-				viewBox="0 0 120 120">
+				viewBox="0 0 600 600">
 					<path
-			       style="fill: none;stroke-width:7;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
-			       d="M 8.3692652,111.26173 27.314649,65.581393 77.239512,92.498321 112.78163,25.788265"/>
+					style="stroke-width:30;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+					d="M 300 50 C 225 50 150 100 150 200 C 150 300 280 400 300 550 C 320 400 450 300 450 200 C 450 100 375 50 300 50 z M 300 120 A 80 80 0 0 1 380 200 A 80 80 0 0 1 300 280 A 80 80 0 0 1 220 200 A 80 80 0 0 1 300 120 z "/>
 				</svg>
-				<label>statistique</label>
+				<label>carte SAON</label>
 			</div>
 			<div id='soap_page' class='nav_icon' {% if page == 'article' %} select='true' {% else %} select='false' {% endif %} page='article'>
 				<svg

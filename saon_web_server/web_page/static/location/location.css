@@ -238,6 +238,16 @@ input[type="text"] {
 	margin-block: 5px;
 }
 
+.seller_result_contain a {
+	color: #BBB;
+	transition: color 0.5s;
+}
+
+.seller_result_contain a:hover {
+	color: #444;
+}
+
+
 .seller_result_name {
 	color: black !important;
 	font-size: 1em !important;

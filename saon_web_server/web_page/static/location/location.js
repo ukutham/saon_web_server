@@ -95,8 +95,6 @@ async function seller_container_extention(event) {
 
 /* shearch code */
 
-var data = null
-
 var shearch_button = document.getElementById('shearch_bar_icon')
 var seller_lauder_drops = document.getElementById('seller_loader_drops')
 var seller_result = document.getElementById('seller_result')
@@ -130,7 +128,7 @@ async function seller_reshearch_func(event, get_option) {
 			get_option = `?place=${get_option}`
 		}
 
-		data = await bearer_fetch(`api/location/${get_option}`, 'GET', null)
+		var data = await bearer_fetch(`api/location/${get_option}`, 'GET', null)
 
 		if (data['results'].length === 0) {
 			if (data['detail'] != undefined & data['detail'] != "Not found.") {
@@ -143,7 +141,6 @@ async function seller_reshearch_func(event, get_option) {
 		}
 
 		data = data['results']
-		console.log(data)
 
 		seller_result.innerHTML = ""
 
@@ -160,14 +157,18 @@ async function seller_reshearch_func(event, get_option) {
 			let all_element = []
 
 			for (a in data[i]) {
-				if (!(a == 'latitude' || a == 'longitude')) {
+				if (!(a == 'latitude' || a == 'longitude' || a == "id")) {
 					element_name.push(a)
 					all_element.push(data[i][a])
 				}
 			}
 			html_element += `<button class=\"seller_result_contain\" scale=\'false\'>`
 			for (a in element_name) {
-				html_element += `<div class=\"seller_result_${element_name[a]}\">${data[i][element_name[a]]}</div>`
+				if (element_name[a] == "web_site") {
+					html_element += `<div class=\"seller_result_${element_name[a]}\"><a href="http://${data[i][element_name[a]]}">${data[i][element_name[a]]}</a></div>`
+				} else {
+					html_element += `<div class=\"seller_result_${element_name[a]}\">${data[i][element_name[a]]}</div>`
+				}
 			}
 			html_element += `</button>`
 			if (!(data.length-1 == i)) {

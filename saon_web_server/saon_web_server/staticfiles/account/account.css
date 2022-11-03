@@ -17,6 +17,10 @@
 	--test: #8c9e6c;
 }
 
+body {
+	overflow-x: hidden;
+}
+
 * {
 	margin: 0;
 	padding: 0;

@@ -56,9 +56,9 @@ def location(request):
 def soap(request):
 	all_product = {}
 
-	for article_type in Article_type.objects.all():
+	for article_type in Article_type.objects.all().order_by('id'):
 		all_product[article_type.name] = []
-		for article in Article.objects.filter(article_type=article_type,available=True):
+		for article in Article.objects.filter(article_type=article_type,available=True).order_by('name'):
 			all_product[article_type.name].append({
 				'id': article.id,
 				'name': article.name,

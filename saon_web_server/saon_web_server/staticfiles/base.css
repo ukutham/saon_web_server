@@ -111,7 +111,7 @@ button {
 /* header */
 
 #header_of_body {
-	background: linear-gradient(to bottom, transparent 99%, white 100%) ,linear-gradient(to right,var(--p-color), var(--s-color));
+	background: linear-gradient(to bottom, transparent 98%, white 100%) ,linear-gradient(to right,var(--p-color), var(--s-color));
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -196,34 +196,59 @@ button {
 
 #footer_of_body {
 	height: 300px;
-	background: linear-gradient(to top, transparent 99%, white 100%), linear-gradient(to right,var(--p-color), var(--s-color));
+	background: linear-gradient(to top, transparent 98%, white 100%), linear-gradient(to right,var(--p-color), var(--s-color));
 	margin-top: 50px;
+}
+
+@media (max-width: 1200px) {
+	#footer_of_body {
+		height: 400px;
+	}
 }
 
 #footer_of_body > .wave > svg {
 	transform: rotate(180deg);
 }
 
-#footer_of_body > #social_network_icon {
+#in_footer_content {
+	display: flex;
+	flex-direction: row;
+}
+
+#juridic_page_access {
+	display: flex;
+	flex-direction: column;
+	margin-top: 10px;
+	margin-left: 20px;
+}
+
+#juridic_page_access a {
+	margin-top: 10px;
+	color: var(--element-color-on-s);
+	text-decoration: none;
+}
+
+#footer_of_body #social_network_icon {
 	display: flex;
 	flex-direction: row-reverse;
 	margin-inline: 20px;
 }
 
-#footer_of_body > #social_network_icon > a {
+#footer_of_body #social_network_icon > a {
 	margin-inline: 10px;
 	transition: transform 0.5s;
+	height: max-content;
 }
 
-#footer_of_body > #social_network_icon > a:hover {
+#footer_of_body #social_network_icon > a:hover {
 	transform: scale(1.1);
 }
 
-#footer_of_body > #social_network_icon > a > #insta_icon {
+#footer_of_body #social_network_icon > a > #insta_icon {
 	margin-inline: 8px;
 }
 
-#footer_of_body > #social_network_icon > a > svg {
+#footer_of_body #social_network_icon > a > svg {
 	height: 50px;
 	width: 50px;
 	fill: #000;
@@ -231,12 +256,20 @@ button {
 }
 
 @media (max-width: 600px) {
-	#footer_of_body > #social_network_icon {
+	#footer_of_body #social_network_icon {
 		height: calc(100% - 100px);
 		padding-top: 20px;
 	}
 
-	#footer_of_body > #social_network_icon > a > #insta_icon {
+	#juridic_page_acces {
+		margin-bottom: 50px;
+	}
+
+	#footer_of_body #social_network_icon > a > #insta_icon {
 		margin-inline: 0;
+	}
+
+	#in_footer_content {
+			flex-direction: column;
 	}
 }
