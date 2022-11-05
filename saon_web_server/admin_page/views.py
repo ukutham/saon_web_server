@@ -77,7 +77,7 @@ def order(request):
 				i.livrate_date_1 = (actual_order.creation_date + timedelta(days=2)).strftime('%d-%m-%Y').replace('-', '/')
 				i.livrate_date_2 = (actual_order.creation_date + timedelta(days=5)).strftime('%d-%m-%Y').replace('-', '/')
 				i.facture = actual_order.facture
-				i.facture_name = f'SAON_facture_{i.id}.pdf'
+				i.facture_name = f'{i.facture_id}.pdf'
 				i.creation_date = actual_order.creation_date.strftime('%d-%m-%Y').replace('-', '/')
 				i.products = [x for x in ProductOrder.objects.filter(order=actual_order)]
 				i.create_by = actual_order.create_by

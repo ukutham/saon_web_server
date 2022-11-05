@@ -17,6 +17,8 @@ var basket_input_loader = document.getElementById('basket_input_loader')
 
 var soap_options = document.getElementById('soap_options')
 
+var panier_counter = document.getElementById('panier_counter')
+
 function reset_stock_status(stock) {
 	if (stock === 0) {
 		soap_stock.innerHTML = '<span id=\'stock\' style="margin-right: 0.4em;">aucun</span>savon en stock'
@@ -79,7 +81,7 @@ for (let i = 0; i < all_soap.length; i++) {
 			soap_info_desc.children[0].innerHTML = data['description']
 
 			add_basket_input.setAttribute('soap_id', data['id'])
-			soap_info_price.children[0].innerHTML = data.options.options[0]['cost']
+			soap_info_price.children[0].innerHTML = parseFloat(data.options.options[0]['cost']).toFixed(2)
 			soap_info_price.children[1].innerHTML = data.options.options[0]['masse']
 
 			let html_options = ""
@@ -99,7 +101,7 @@ for (let i = 0; i < all_soap.length; i++) {
 				}
 				let label = document.querySelector(`#soap_options_${options['id']} + div > label`)
 				label.addEventListener('click', (event) => {
-					soap_info_price.children[0].innerHTML = options['cost']
+					soap_info_price.children[0].innerHTML = parseFloat(options['cost']).toFixed(2)
 					soap_info_price.children[1].innerHTML = options['masse']
 					reset_stock_status(parseInt(document.getElementById(label.getAttribute('for')).getAttribute('stock')))
 				})
@@ -179,6 +181,11 @@ add_basket_input.nextElementSibling.addEventListener('click', async (event) => {
 	}
 	else {
 		document.getElementById('add_in_basket_error').innerHTML = ''
+
+		if (panier_counter.getAttribute('visible') != 'true') {
+			panier_counter.setAttribute('visible', 'true')
+		}
+		panier_counter.innerHTML = parseInt(soap_number) + parseInt(panier_counter.innerHTML)
 	}
 
 	add_basket_input.nextElementSibling.setAttribute('inloading', 'false')

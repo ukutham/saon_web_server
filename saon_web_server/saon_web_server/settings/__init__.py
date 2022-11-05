@@ -23,8 +23,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-w3ziu1hf#3c4ba962@jr==$3*$e146q257$^*cn(zut)d(+(fq'
-#STRIPE_API_KEY = 'sk_test_51LoVkzGv1JxcHciCMwVe4W4gKJaeJAHZCOG2Q9BtcNBfr8vI7fL1DBgewHtvT7ttpRGaQ55HccXLz0i2035ANX8A00L2P4cP6t'
-STRIPE_API_KEY = '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'
+STRIPE_API_KEY = 'sk_test_51LoVkzGv1JxcHciCMwVe4W4gKJaeJAHZCOG2Q9BtcNBfr8vI7fL1DBgewHtvT7ttpRGaQ55HccXLz0i2035ANX8A00L2P4cP6t'
+#STRIPE_API_KEY = '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'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

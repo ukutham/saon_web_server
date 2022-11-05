@@ -58,7 +58,7 @@ class ProductViewset(ModelViewSet):
 			new_number = int(request.data['new_number'])
 
 			if product.option.stock < new_number or new_number < 1:
-				if new_number < 1:
+				if product.option.stock < 1:
 					product.delete()
 				return Response({'detail': f'number invalide value', 'stock': product.option.stock}, status=status.HTTP_400_BAD_REQUEST)
 

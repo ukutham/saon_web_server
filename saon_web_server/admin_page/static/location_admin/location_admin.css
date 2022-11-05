@@ -103,6 +103,14 @@
   font-size: 1em !important;
 }
 
+.seller_result_horaire {
+	color: #333 !important;
+}
+
+.seller_result_address {
+	font-style: italic;
+}
+
 #map {
 	width: 100%;
 	height: 100%;

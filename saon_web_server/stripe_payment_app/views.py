@@ -202,6 +202,7 @@ def payment_success(request):
 	}
 
 	new_order = Order.objects.create(**new_order_data)
+	new_order.facture_id = f'FI_{new_order.id}'
 
 	for product_order in products:
 		del product_order['article_id']
@@ -222,7 +223,7 @@ def payment_success(request):
 			'tel': "0766005088",
 		},
 		'facture': {
-			'ref': new_order.id,
+			'ref': new_order.facture_id,
 			'date': str_today_date,
 			'livraison_delay': f"du {(today_date + timedelta(days=2)).strftime('%d-%m-%Y').replace('-', '/')} au {(today_date + timedelta(days=5)).strftime('%d-%m-%Y').replace('-', '/')}",
 		},
@@ -247,11 +248,11 @@ def payment_success(request):
 
 	new_facture = loader.get_template('facture_html/facture.html') 
 
-	pdfkit.from_string(new_facture.render(data, request=request), f'{MEDIA_DIRECTORY}/{new_order.id}.pdf', options=wkhtmltopdf_options)
+	pdfkit.from_string(new_facture.render(data, request=request), f'{MEDIA_DIRECTORY}/FI{new_order.id}.pdf', options=wkhtmltopdf_options)
 
 	############################
 
-	new_order.facture.name = f"facture/{new_order.id}.pdf"
+	new_order.facture.name = f"facture/FI{new_order.id}.pdf"
 	new_order.save()
 
 	Basket.objects.get(create_by=request.user).delete()

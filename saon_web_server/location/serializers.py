@@ -8,9 +8,9 @@ from account.models import User
 class LocationSerializer(ModelSerializer):
 	class Meta:
 		model = Location
-		fields = ['longitude', 'latitude', 'name', 'address', 'web_site', 'id']
+		fields = ['longitude', 'latitude', 'name', 'horaire','address', 'web_site', 'id']
 
 class CreationLocationSerializer(ModelSerializer):
 	class Meta:
 		model = Location
-		fields = ['name', 'web_site']
+		fields = ['name', 'horaire', 'web_site']

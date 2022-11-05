@@ -29,6 +29,7 @@ class Order(models.Model):
 	livraison_mode = models.CharField(max_length=1, choices=LIVRAISON_MODE_CHOICE)
 	state = models.CharField(max_length=1, choices=STATE_OPTION)
 	facture = models.FileField(upload_to=directory_facture_url, null=True)
+	facture_id = models.CharField(max_length=200, default='FI0')
 	creation_date = models.DateField(auto_now_add=True)
 	create_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
 
@@ -65,9 +66,6 @@ def get_livraison_price_by_masse(masse, livraison_mode):
 	queryset = LivraisonCost.objects.filter(livraison_mode=livraison_mode)
 	for livraison_cost in queryset:
 		masse_list.append(float(livraison_cost.masse))
-
-	print(masse_list)
-	print(masse)
 
 	near_masse = masse_list[min(range(len(masse_list)), key = lambda i: abs(masse_list[i]-masse))]
 

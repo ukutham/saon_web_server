@@ -14,15 +14,33 @@
 <body>
 	<div id='soap_container'>
 		<div id='soap_info' style="transform: translateX(100%);">
-			<button id='soap_info_closer' tabindex="0" role="button">
-				<svg
-				viewBox='0 0 200 200'
-				height='50'
-				width='50'
-				>
-					<path stroke='black' stroke-width="10" stroke-linecap="round" stroke-linejoin="round" d='M 40 40 L 160 160 z M 160 40 L 40 160 z'/>
-				</svg>
-			</button>
+			<div style="position: sticky; top: 0; display: flex; justify-content: space-between; z-index: 10;">
+				<button id='soap_info_closer' tabindex="0" role="button">
+					<svg
+					viewBox='0 0 200 200'
+					height='50'
+					width='50'
+					>
+						<path stroke='black' stroke-width="10" stroke-linecap="round" stroke-linejoin="round" d='M 40 40 L 160 160 z M 160 40 L 40 160 z'/>
+					</svg>
+				</button>
+				<button id="panier" onclick="var basket = document.getElementById('div_nav_basket');change_page('basket'); navigation_pointer(basket.getAttribute('position_pointer'), basket)">
+					<div id="panier_icon">
+						<svg
+			                viewBox=' 0 0 600 600'
+			                height='50'
+			                width='50'
+			                class='nav_icon'
+			                >
+			                <path stroke-width="40" stroke-linecap="round" stroke-linejoin="round" d='M 70 350 L 530 350 L 400 550 L 200 550 z M 50 300 L 550 300 L 550 350 L 50 350 z M 260 400 L 260 500 C 260 550, 340 550, 340 500 L 340 400 C 340 350, 260 350, 260 400 M 160 400 L 160 470 C 160 520, 240 520, 240 470 L 240 400 C 240 350, 160 350, 160 400 M 360 400 L 360 470 C 360 520, 440 520, 440 470 L 440 400 C 440 350, 360 350, 360 400'></path>
+			                <path stroke-width="50" stroke-linecap="round" stroke-linejoin="round" d='M 60 250 L 210 100 z M 540 250 L 390 100 z'></path>
+		            	</svg>
+					</div>
+					<div id="panier_counter" visible='{% if n_product == 0 %}false{% else %}true{% endif %}'>
+						{{ n_product }}
+					</div>
+				</button>
+			</div>
 			<div id="soap_info_body" style="display: none;">
 				<div id='soap_info_saon_icon' style="margin-bottom: 50px;">
 					<div>

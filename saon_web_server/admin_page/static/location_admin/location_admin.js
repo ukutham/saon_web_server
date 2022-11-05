@@ -53,6 +53,7 @@ function open_modify_element(event) {
 	modify_location.querySelector('#del_location').setAttribute('location_id', target.getAttribute('location_id'))
 	modify_location.querySelector('#modify_location_name').value = target.querySelector('.seller_result_name').innerHTML
 	modify_location.querySelector('#modify_location_header > h3').innerHTML = target.querySelector('.seller_result_address').innerHTML
+	modify_location.querySelector('#modify_location_horaire').value = target.querySelector('.seller_result_horaire').innerHTML
 	modify_location.querySelector('#modify_location_web_site').value = target.querySelector('.seller_result_web_site').innerHTML
 
 	create_location.setAttribute('open', 'false')
@@ -75,11 +76,11 @@ function open_create_element(event) {
 }
 
 
+var seller_result = document.getElementById('map_finder_result')
 
 async function research_location(event) {
 	var location_search = event.target.value
 	var map_finder_loader = document.getElementById('map_finder_loader')
-	var seller_result = document.getElementById('map_finder_result')
 
 	if (map_finder_loader.getAttribute('in_research') == 'false') {
 		map_finder_loader.setAttribute('in_research', 'true') 
@@ -121,7 +122,7 @@ async function research_location(event) {
 			html_element += `<button class=\"seller_result_contain\" scale=\'false\' onclick='open_modify_element(event)' location_id='${data[i]['id']}''>`
 			for (a in element_name) {
 				if (element_name[a] == "web_site") {
-					html_element += `<a class=\"seller_result_${element_name[a]}\" href="http://${data[i][element_name[a]]}">${data[i][element_name[a]]}</a>`
+					html_element += `<a class=\"seller_result_${element_name[a]}\" href="http://${data[i][element_name[a]]}" target='_blank'>${data[i][element_name[a]]}</a>`
 				} else {
 					html_element += `<div class=\"seller_result_${element_name[a]}\">${data[i][element_name[a]]}</div>`
 				}
@@ -132,7 +133,17 @@ async function research_location(event) {
 			}
 
 			active_marker.push(L.marker([data[i]['latitude'], data[i]['longitude']],).addTo(map))
-			active_marker[active_marker.length-1].bindPopup(`<div style='margin: 5px; font-weight: bold;'>${data[i]['name']}</div`)
+
+			active_marker.push(L.marker([data[i]['latitude'], data[i]['longitude']],).addTo(map))
+			active_marker[active_marker.length - 1]['location_data'] = {}
+			active_marker[active_marker.length - 1]._icon.setAttribute('onclick', 'print_location(event)')
+			active_marker[active_marker.length - 1]._icon.setAttribute('active_marker_id', active_marker.length - 1)
+
+			for (a in data[i]) {
+				if (!(a == 'latitude' || a == 'longitude')) {
+					active_marker[active_marker.length - 1]['location_data'][a] = data[i][a]
+				}
+			}
 		}
 
 		map.setView([lat, lon], 6);
@@ -155,6 +166,52 @@ async function research_location(event) {
 	}
 }
 
+async function print_location(event) {
+	var data = active_marker[event.target.getAttribute('active_marker_id')].location_data
+
+	seller_result.innerHTML = ""
+
+	html_element = ""
+	html_element += `<button class=\"seller_result_contain\" scale=\'false\' onclick='open_modify_element(event)' location_id='${data['id']}''>`
+	for (let a in data) {
+		if (a == "web_site") {
+			html_element += `<a class=\"seller_result_${a}\" href="http://${data[a]}" target='_blank'>${data[a]}</a>`
+		} else if (a != 'id') {
+			html_element += `<div class=\"seller_result_${a}\">${data[a]}</div>`
+		}
+	}
+	html_element += `</button>`
+
+	seller_result.innerHTML = html_element
+}
+
+async function put_all_point_in_map() {
+	var data = await bearer_fetch(`../api/location/`, 'GET', null)
+
+	data = data['results']
+
+	for (let a in active_marker) {
+		map.removeLayer(active_marker[a])
+	}
+	active_marker.splice(0, active_marker.length)
+
+	for (let i = 0; i < data.length; i++) {
+		active_marker.push(L.marker([data[i]['latitude'], data[i]['longitude']],).addTo(map))
+		active_marker[active_marker.length - 1]['location_data'] = {}
+		active_marker[active_marker.length - 1]._icon.setAttribute('onclick', 'print_location(event)')
+		active_marker[active_marker.length - 1]._icon.setAttribute('active_marker_id', active_marker.length - 1)
+
+		for (a in data[i]) {
+			if (!(a == 'latitude' || a == 'longitude')) {
+				active_marker[active_marker.length - 1]['location_data'][a] = data[i][a]
+			}
+		}
+	}
+	map.setView([lat, lon], 6);
+}
+
+put_all_point_in_map()
+
 /* ############################################################################################# */
 
 async function create_location(event) {
@@ -163,6 +220,7 @@ async function create_location(event) {
 
 	var posted_data = {
 		'name': document.getElementById('create_location_name').value,
+		'horaire': document.getElementById('create_location_horaire').value,
 		'web_site': document.getElementById('create_location_web_site').value,
 		'rue': document.getElementById('create_location_rue').value,
 		'ville': document.getElementById('create_location_ville').value,
@@ -186,6 +244,7 @@ async function create_location(event) {
 		modify_location.querySelector('#modify_location_submit').setAttribute('location_id', response.Object.id)
 		modify_location.querySelector('#del_location').setAttribute('location_id', response.Object.id)
 		modify_location.querySelector('#modify_location_name').value = response.Object.name
+		modify_location.querySelector('#modify_location_horaire').value = response.Object.horaire
 		modify_location.querySelector('#modify_location_header > h3').innerHTML = response.Object.address
 		modify_location.querySelector('#modify_location_web_site').value = response.Object.web_site
 
@@ -203,6 +262,7 @@ async function modify_location(event) {
 
 		var posted_data = {
 			'name': document.getElementById('modify_location_name').value,
+			'horaire': document.getElementById('modify_location_horaire').value,
 			'web_site': document.getElementById('modify_location_web_site').value,
 		}
 
@@ -211,6 +271,7 @@ async function modify_location(event) {
 		element_select = document.querySelector(`.seller_result_contain[location_id="${event.target.getAttribute('location_id')}"]`)
 		if (element_select != undefined) {
 			element_select.querySelector('.seller_result_name').innerHTML = data.name
+			element_select.querySelector('.seller_result_horaire').innerHTML = data.horaire
 			element_select.querySelector('.seller_result_web_site').innerHTML = data.web_site
 			element_select.querySelector('.seller_result_web_site').setAttribute('href','http://'+data.web_site)
 		}

@@ -10,7 +10,7 @@
 </head>
 <body>
 	<div id='absolute_container'>
-		<div id="seller_container" style="transform: translateX(-100%);">
+		<div id="seller_container" open='true'>
 			<div id="shearch_bar">
 				<div id="shearch_bar_text">
 					<input type="text" autocomplete="off" placeholder="Où trouver nos savons">
@@ -41,17 +41,17 @@
 				<div id="seller_loader_bar"></div>
 				<div id='seller_loader_drops'></div>
 			</div>
-			<button id="seller_extender" open='false' onclick="seller_container_extention(event)">
-				<div id='extender_bar_1' style="transform: translateY(5px);">
-					<div style="height: 20px; bottom: 10px; transform: rotate(55deg);"></div>
+			<button id="seller_extender" open='true' onclick="seller_container_extention(event)">
+				<div id='extender_bar_1'>
+					<div></div>
 				</div>
-				<div id='extender_bar_2' style="transform: translateY(-5px);">
-					<div style="height: 20px; bottom: 10px; transform: rotate(-55deg);"></div>
+				<div id='extender_bar_2'>
+					<div></div>
 				</div>
 			</button>
 			<div id='seller_result'></div>
 		</div>
 	</div>
 	<div id='map' style="width: 100vw; height: 100vh;"></div>
-	<div id='map_hidder' style="opacity: 0; z-index: -1;"></div>
+	<div id='map_hidder' open='true'></div>
 </body>

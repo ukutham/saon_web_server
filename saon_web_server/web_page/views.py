@@ -66,8 +66,16 @@ def soap(request):
 				'photo': article.principal_image.url,
 				})
 
+	n_product = 0
+
+	if request.user and request.user.is_authenticated:
+		if Basket.objects.filter(create_by=request.user).exists():
+			basket = Basket.objects.get(create_by=request.user)
+			for product in Product.objects.filter(basket=basket):
+				n_product += product.number
+
 	template = loader.get_template('soap/soap.html')
-	return HttpResponse(template.render({'all_product': all_product},request=request))
+	return HttpResponse(template.render({'all_product': all_product, 'n_product': n_product},request=request))
 
 
 @api_view(['GET'])
@@ -144,7 +152,7 @@ def account(request):
 			i['livrate_date_1'] = (actual_order.creation_date + timedelta(days=2)).strftime('%d-%m-%Y').replace('-', '/')
 			i['livrate_date_2'] = (actual_order.creation_date + timedelta(days=5)).strftime('%d-%m-%Y').replace('-', '/')
 			i['facture'] = actual_order.facture
-			i['facture_name'] = f'SAON_facture_{i["id"]}.pdf'
+			i['facture_name'] = f'{i["facture_id"]}.pdf'
 			i['creation_date'] = actual_order.creation_date.strftime('%d-%m-%Y').replace('-', '/')
 			i['products'] = [x for x in ProductOrder.objects.filter(order=actual_order)]
 
