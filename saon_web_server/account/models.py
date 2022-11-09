@@ -1,38 +1,26 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
+
 import random
+import string
+
+URL_LENGHT = 100
 
 class UserManager(BaseUserManager):
 	use_in_migration = True
 
 	@classmethod
 	def get_url_activation_email(self):
-		random_number = random.random()
-		random.seed(random_number)
-		random_number = random.randint(100000000000, 999999999999)
+		output_string = ''.join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(URL_LENGHT))
 
-		while User.objects.filter(url_activation_email=str(random_number)).exists():
-			random.seed()
-			random_number = random.random()
-			random.seed(random_number)
-			random_number = random.randint(100000000000, 999999999999)
-
-		return random_number
+		return output_string
 
 	@classmethod
 	def get_url_password_forgot(self):
-		random_number = random.random()
-		random.seed(random_number)
-		random_number = random.randint(100000000000, 999999999999)
+		output_string = ''.join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(URL_LENGHT))
 
-		while User.objects.filter(url_password_forgot=str(random_number)).exists():
-			random.seed()
-			random_number = random.random()
-			random.seed(random_number)
-			random_number = random.randint(100000000000, 999999999999)
-
-		return random_number
+		return output_string
 
 	def save_user(self, email, password, **extra_fields):
 		extra_fields['url_activation_email'] = str(0)
@@ -77,9 +65,9 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 	is_active = models.BooleanField(default=True)
 	email_activate = models.BooleanField(default=False)
-	url_activation_email = models.CharField(max_length=50)
+	url_activation_email = models.CharField(max_length=URL_LENGHT)
 
-	url_password_forgot = models.CharField(max_length=50, default=0)
+	url_password_forgot = models.CharField(max_length=URL_LENGHT, default=0)
 
 	##########################################
 	""" Permission code """

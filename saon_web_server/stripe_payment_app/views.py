@@ -3,7 +3,6 @@ from django.shortcuts import render
 import stripe
 from django.shortcuts import redirect
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 from django.template import loader
@@ -11,7 +10,7 @@ from django.http import HttpResponse, Http404
 from django.shortcuts import get_object_or_404, render
 from django.http import FileResponse
 import os
-from saon_web_server.permissions import FactureViewPermission
+from saon_web_server.permissions import FactureViewPermission, IsAuthenticated
 from saon_web_server import settings
 
 import json

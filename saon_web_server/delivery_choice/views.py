@@ -7,14 +7,13 @@ from django.shortcuts import render
 from django.template import loader
 from django.http import HttpResponse
 
-from rest_framework.permissions import IsAuthenticated
 from time import sleep
 
 from geopy.geocoders import Nominatim
 
 from .models import delivery_address, AddressSelect
 from .serializers import DeliveryAddressSerializer, AddressSelectSerializer
-from saon_web_server.permissions import AlwaysPermission, DefaultPermission, CreationPermission, SeePermission, ModifyPermission, RemovePermission
+from saon_web_server.permissions import AlwaysPermission, DefaultPermission, CreationPermission, SeePermission, ModifyPermission, RemovePermission, IsAuthenticated
 
 def delivery_choice_page(request):
 	template = loader.get_template('delivery_choice/delivery_choice.html')

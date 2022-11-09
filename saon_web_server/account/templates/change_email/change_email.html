@@ -23,9 +23,21 @@
 </head>
 <body>
 	<script type="text/javascript" src="{% static 'base.js' %}"></script>
+	<div id="return_to_menu" style="width: 100vw; display: flex; margin-left: 10px; transform: translateY(calc(-1 * calc(50vh - 100px)));">
+		<a href="../account/mail_send_page">
+			<svg
+		    fill="none"
+		    stroke="#000"
+		    viewBox=' 0 0 600 600'
+		    height='70px'
+		    width='70px'>
+				<path stroke-width="40" stroke-linecap="round" stroke-linejoin="round" d="M 300 450 L 100 300 L 300 150 L 100 300 L 550 300 L 100 300 z"/>
+			</svg>
+		</a>
+	</div>
 	<div>
 		<div id='saon_icon'>
-			<img src="{% static 'logo/logo_savon_v2.png' %}">
+			<img herf='../' src="{% static 'logo/logo_savon_v2.png' %}" style="cursor: pointer;">
 		</div>
 		<div class="error_message" id='mail_error_message'></div>
 		<div class="compte_state_change">
@@ -35,8 +47,8 @@
 			</div>
 		</div>
 		<div class="compte_state_validation">
-			<div class="gradient_border" style="border-radius: 10px">
-				<input type="submit" name="change_mail" value='valider' compte_id="{{ user.id }}">
+			<div class="gradient_border" style="border-radius: 10px; cursor: pointer;">
+				<input type="submit" name="change_mail" value='valider'>
 			</div>
 		</div>
 	</div>

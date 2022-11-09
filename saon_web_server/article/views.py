@@ -7,12 +7,10 @@ from rest_framework.decorators import api_view, permission_classes
 from django.http import FileResponse
 from saon_web_server import settings
 
-from rest_framework.permissions import IsAuthenticated
-
 from basket.models import Product, Basket
 from .models import Article, Article_type, Article_options
 from .serializers import ArticleListSerializer, ArticleDetailSerializer, Article_typeSerializer, ArticleOptionsSerializer
-from saon_web_server.permissions import AlwaysPermission, DefaultPermission, CreationPermission, SeePermission, ModifyPermission, RemovePermission
+from saon_web_server.permissions import AlwaysPermission, DefaultPermission, CreationPermission, SeePermission, ModifyPermission, RemovePermission, IsAuthenticated
 
 class ArticleViewset(ModelViewSet):
 

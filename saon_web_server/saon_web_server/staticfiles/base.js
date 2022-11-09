@@ -59,11 +59,29 @@ async function error_message(type, message) {
 	error_container.style.display = 'none'
 }
 
+/* TOKEN */
+
+function set_access_token(accessToken) {
+	window.sessionStorage.accessToken = accessToken
+}
+
+function set_refresh_token(refreshToken) {
+	window.sessionStorage.refreshToken = refreshToken
+}
+
+function get_access_token() {
+	return window.sessionStorage.accessToken
+}
+
+function get_refresh_token() {
+	return window.sessionStorage.refreshToken
+}
+
 /* get header */
 
 function get_headers() {
 	var GlobalHearders = new Headers()
-	if (window.sessionStorage.accessToken != undefined) {
+	if (get_access_token() != undefined) {
 		GlobalHearders.append('Authorization', `Bearer ${window.sessionStorage.accessToken}`)
 	}
 	GlobalHearders.append('Accept', "application/json")
@@ -74,18 +92,17 @@ function get_headers() {
 
 function get_headers_without_Ct() {
 	var GlobalHearders = new Headers()
-	if (window.sessionStorage.accessToken != undefined) {
+	if (get_access_token() != undefined) {
 		GlobalHearders.append('Authorization', `Bearer ${window.sessionStorage.accessToken}`)
 	}
 	GlobalHearders.append('X-CSRFToken', getCookie('csrftoken'))
 	return GlobalHearders
 }
 
-
 /* refresh_token */
 
 async function refresh_token() {
-	if (window.sessionStorage.refreshToken === undefined) {
+	if (get_refresh_token() === undefined) {
 		return("unconnected")
 	}
 
@@ -97,7 +114,7 @@ async function refresh_token() {
 				'X-CSRFToken': getCookie('csrftoken'),
 			},
 			body: JSON.stringify({
-				'refresh': window.sessionStorage.refreshToken,
+				'refresh': get_refresh_token(),
 			}),
 		}
 
@@ -109,7 +126,7 @@ async function refresh_token() {
 		return res.json()
 	})
 	.then(new_token => {
-		window.sessionStorage.accessToken = new_token.access
+		set_access_token(new_token.access)
 		return('ok')
 	})
 	.catch(status_error => {

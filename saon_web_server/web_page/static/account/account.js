@@ -541,8 +541,9 @@ if (page_name === 'account') {
 		}
 
 		var status = await bearer_fetch('api/account/change_email/', 'POST', body)
+		console.log(status)
 		
-		if (status['email'] != undefined) {
+		if (status['email'] != 'ok') {
 			document.getElementById('mail_error_message').innerHTML = status['email']
 		} else {
 			change_page('account')

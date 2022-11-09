@@ -5,12 +5,11 @@ from django.db import transaction
 from rest_framework import serializers, status
 from django.core.serializers import json
 
-from rest_framework.permissions import IsAuthenticated
 from time import sleep
 
 from .models import Basket, Product
 from .serializers import BasketSerializer, ProductSerializer
-from saon_web_server.permissions import AlwaysPermission, DefaultPermission, CreationPermission, SeePermission, ModifyPermission, RemovePermission
+from saon_web_server.permissions import AlwaysPermission, DefaultPermission, CreationPermission, SeePermission, ModifyPermission, RemovePermission, IsAuthenticated
 
 class ProductViewset(ModelViewSet):
 

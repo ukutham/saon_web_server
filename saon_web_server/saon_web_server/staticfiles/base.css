@@ -1,6 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
-
-
 :root {
 	--background-color: white;
 
@@ -111,7 +108,7 @@ button {
 /* header */
 
 #header_of_body {
-	background: linear-gradient(to bottom, transparent 98%, white 100%) ,linear-gradient(to right,var(--p-color), var(--s-color));
+	background: linear-gradient(to right,var(--p-color), var(--s-color));
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -157,6 +154,7 @@ button {
 	display: flex;
 	flex-direction: column;
 	width: 100%;
+	transform: translateY(2px);
 }
 
 #saon_start > .wave {
@@ -196,7 +194,7 @@ button {
 
 #footer_of_body {
 	height: 300px;
-	background: linear-gradient(to top, transparent 98%, white 100%), linear-gradient(to right,var(--p-color), var(--s-color));
+	background: linear-gradient(to right,var(--p-color), var(--s-color));
 	margin-top: 50px;
 }
 
@@ -204,6 +202,10 @@ button {
 	#footer_of_body {
 		height: 400px;
 	}
+}
+
+#footer_of_body > .wave {
+	transform: translateY(-2px);
 }
 
 #footer_of_body > .wave > svg {
@@ -226,6 +228,7 @@ button {
 	margin-top: 10px;
 	color: var(--element-color-on-s);
 	text-decoration: none;
+	font-size: 0.75em;
 }
 
 #footer_of_body #social_network_icon {

@@ -16,6 +16,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="{% static 'validation_page/validation_page.css' %}">
 	<link rel="icon" type='image/png' href="{% static 'logo/logo_savon_v2.png' %}">
+	<script type="text/javascript" src="{% static 'base.js' %}"></script>
 	<title>Saon</title>
 
 	<meta name ="robots" content ="noindex, nofollow">
@@ -23,7 +24,7 @@
 <body>
 	<div id="accept_message">
 		<div id='saon_icon'>
-			<img src="{% static 'nav_bar/img/png/logo_savon_v2_tranparent.png' %}">
+			<img src="{% static 'logo/logo_savon_v2.png' %}">
 		</div>
 		<div id="accept_message_icon">
 			<svg
@@ -37,6 +38,9 @@
 		<div id='accept_message_message'>Votre compte est maintenant activer. Bravo!!!</div>
 		<div id='accept_message_return'><a href="">retourner a votre compte</a></div>
 		<script type="text/javascript">
+			set_access_token('{{ access_token }}')
+			set_refresh_token('{{ refresh_token }}')
+
 			document.querySelector('#accept_message_return > a').href = `${window.location.origin}/?page=account`
 		</script>
 	</div>

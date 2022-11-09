@@ -5,11 +5,9 @@ from rest_framework.decorators import action
 from django.db import transaction
 from geopy.geocoders import Nominatim
 
-from rest_framework.permissions import IsAuthenticated
-
 from .models import Location
 from .serializers import LocationSerializer, CreationLocationSerializer
-from saon_web_server.permissions import AlwaysPermission, DefaultPermission, CreationPermission, SeePermission, ModifyPermission, RemovePermission
+from saon_web_server.permissions import AlwaysPermission, DefaultPermission, CreationPermission, SeePermission, ModifyPermission, RemovePermission, IsAuthenticated
 
 class LocationViewSet(ModelViewSet):
 	

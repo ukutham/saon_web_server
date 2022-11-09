@@ -16,13 +16,13 @@ from django.core.mail import send_mail
 from django.core.validators import validate_email
 from django.contrib.auth.hashers import make_password
 
-from django.templatetags.static import static
+from rest_framework.authtoken.models import Token
 
-from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 from .models import User, UserManager
 from .serializers import UserSerializer, CreateUserSerializer
-from saon_web_server.permissions import AlwaysPermission, DefaultPermission, CreationPermission, EmailNotActivatePermission, UserSeePermission, UserModifyPermission, UserModifyEmailPermission, UserRemovePermission
+from saon_web_server.permissions import AlwaysPermission, DefaultPermission, CreationPermission, EmailNotActivatePermission, UserSeePermission, UserModifyPermission, UserModifyEmailPermission, UserRemovePermission, IsAuthenticated
 
 @api_view(['GET'])
 @permission_classes([AlwaysPermission])
@@ -47,48 +47,19 @@ def validation_page(request, url_activation_email):
 
 	user.save()
 
+	token = TokenObtainPairSerializer.get_token(user)
+
 	template = loader.get_template('validation_page/validation_page.html')
-	return HttpResponse(template.render(request=request))
+	return HttpResponse(template.render({'access_token': token.access_token, 'refresh_token': token}, request=request))
 
 @api_view(['GET'])
 @permission_classes([AlwaysPermission])
-def change_email(request):
+def change_email_when_email_not_activate(request):
+	print('ok')
 	template = loader.get_template('change_email/change_email.html')
 	return HttpResponse(template.render(request=request))
 
-@api_view(['POST'])
-@permission_classes([AlwaysPermission])
-def set_url_password_forgot(request):
-	template = loader.get_template('password_forgot/password_forgot.html')
-
-	if 'email' not in request.data:
-		return HttpResponse(template.render({ 'error': 'request non valide' }, request=request ))
-
-	if not User.objects.filter(email=request.data['email']).exists():
-		return HttpResponse(template.render({ 'error': "cet email n'existe pas" }, request=request ))
-
-	user = User.objects.get(email=request.data['email'])
-
-	if user.url_password_forgot == '0':
-		user.url_password_forgot = UserManager.get_url_password_forgot()
-		user.save()
-
-	split_url = request.build_absolute_uri().split('/')
-	hostname = f'{split_url[0]}//{split_url[2]}/'
-
-	send_mail(
-	    subject = 'Changement de mot de passe',
-        message = loader.render_to_string('email_password_forgot_template/email_password_forgot_template.html', {'url_password_forgot': user.url_password_forgot, 'hostname': hostname, 'host': split_url[2]}),
-        html_message = loader.render_to_string('email_password_forgot_template/email_password_forgot_template.html', {'url_password_forgot': user.url_password_forgot, 'hostname': hostname, 'host': split_url[2]}),
-        from_email = 'michique.pinson@gmail.com',
-        recipient_list = [user.email],
-        fail_silently = False,
-	)
-
-	sleep(1)
-
-	template = loader.get_template('password_forgot_email/password_forgot_email.html')
-	return HttpResponse(template.render(request=request))
+#######################################################
 
 @api_view(['GET'])
 @permission_classes([AlwaysPermission])
@@ -99,24 +70,36 @@ def change_password_page(request, url_password_forgot):
 	if not User.objects.filter(url_password_forgot=url_password_forgot).exists():
 		raise Http404
 
+	template = loader.get_template('change_password_page/change_password_page.html')
+	return HttpResponse(template.render(request=request))
+
+
+@api_view(['POST'])
+@permission_classes([AlwaysPermission])
+def change_forgot_password(request, url_password_forgot):
+	if url_password_forgot == '0':
+		return Response(status=status.HTTP_404_NOT_FOUND)
+
+	if not User.objects.filter(url_password_forgot=url_password_forgot).exists():
+		return Response(status=status.HTTP_404_NOT_FOUND)
+
+	if 'new_password' not in request.data:
+		return Response(status=status.HTTP_400_BAD_REQUEST)
+	elif request.data['new_password'] == '':
+		return Response({'error': 'mot de passe vide, t\'es sur de vouloir faire ca ?'}, status=status.HTTP_400_BAD_REQUEST)
+
 	user = User.objects.get(url_password_forgot=url_password_forgot)
 	user.url_password_forgot = '0'
 
-
-	characters = list(string.ascii_letters + string.digits + "!@#$%^&*")
-	random.shuffle(characters)
-	new_password = []
-	for i in range(10):
-		new_password.append(random.choice(characters))
-
-	new_password = "".join(new_password)
-	user.password = make_password(new_password)
-
+	user.password = make_password(request.data.get('new_password'))
 	user.save()
 
-	template = loader.get_template('random_password_page/random_password_page.html')
-	return HttpResponse(template.render({'new_password': new_password} ,request=request))
+	token = TokenObtainPairSerializer.get_token(user)
 
+	return Response({'status': 'ok', 'access_token': str(token.access_token), 'refresh_token': str(token)})
+
+
+#######################################################
 
 
 class UserViewSet(ModelViewSet):
@@ -208,7 +191,7 @@ class UserViewSet(ModelViewSet):
 		except:
 			return Response(data={'phone_number': 'numéro de téléphone invalide'} ,status=status.HTTP_400_BAD_REQUEST)
 
-		request.user.phone_number = request.data['phone_number']
+		request.user.phone_number = f'+33{request.data["phone_number"]}'
 		request.user.save()
 
 		return Response(data={'Modification': 'ok'})

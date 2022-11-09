@@ -16,17 +16,6 @@ var map = null;
 
 var active_marker = [];
 
-function scale_icon_of_marker(marker, factor) {
-	let new_icon = marker.options.icon
-	const size = [25, 41]
-	const shadow_size = [41, 41]
-	const anchor = [12, 41]
-	new_icon.options.iconSize = [size[0]*factor, size[1]*factor]
-	new_icon.options.shadowSize = [shadow_size[0]*factor, shadow_size[1]*factor]
-	new_icon.options.iconAnchor = [anchor[0]*factor, anchor[1]*factor]
-	return new_icon
-}
-
 function initmap() {
 	if (typeof L == 'undefined')
 	{
@@ -46,73 +35,32 @@ initmap()
 var seller_container = document.getElementById('seller_container')
 var seller_extender = document.getElementById('seller_extender')
 
-var extender_bar_1 = document.getElementById('extender_bar_1')
-var extender_bar_2 = document.getElementById('extender_bar_2')
-
 var map_hidder = document.getElementById('map_hidder')
 
 async function seller_container_extention(event) {
 	if (seller_extender.getAttribute('open') == 'false') {
-		seller_container.style.transform = 'translateX(0px)'
-
-		extender_bar_1.style.transform = 'translateY(0px)'
-		extender_bar_1.children[0].style.height = '30px'
-		extender_bar_1.children[0].style.bottom = '15px'
-		extender_bar_1.children[0].style.transform = 'rotate(45deg)'
-
-		extender_bar_2.style.transform = 'translateY(0px)'
-		extender_bar_2.children[0].style.height = '30px'
-		extender_bar_2.children[0].style.bottom = '15px'
-		extender_bar_2.children[0].style.transform = 'rotate(-45deg)'
-
-		if (window.innerWidth <= 850) {
-			map_hidder.style.zIndex = '1'
-			map_hidder.style.opacity = '0.5'
-		}
-
-		await sleep(1000);
+		map_hidder.setAttribute('open', 'true')
+		seller_container.setAttribute('open', 'true')
 		seller_extender.setAttribute('open', 'true')
 	} else {
-		seller_container.style.transform = 'translateX(-100%)'
-
-		extender_bar_1.style.transform = 'translateY(5px)'
-		extender_bar_1.children[0].style.height = '20px'
-		extender_bar_1.children[0].style.bottom = '10px'
-		extender_bar_1.children[0].style.transform = 'rotate(55deg)'
-
-		extender_bar_2.style.transform = 'translateY(-5px)'
-		extender_bar_2.children[0].style.height = '20px'
-		extender_bar_2.children[0].style.bottom = '10px'
-		extender_bar_2.children[0].style.transform = 'rotate(-55deg)'
-
-		map_hidder.style.opacity = '0'
-		map_hidder.style.zIndex = '-1'
-
-		await sleep(1000);
+		map_hidder.setAttribute('open', 'false')
+		seller_container.setAttribute('open', 'false')
 		seller_extender.setAttribute('open', 'false')
 	}
 }
 
 /* shearch code */
 
-var data = null
-
 var shearch_button = document.getElementById('shearch_bar_icon')
 var seller_lauder_drops = document.getElementById('seller_loader_drops')
 var seller_result = document.getElementById('seller_result')
 var shearch_bar = document.querySelector('#shearch_bar_text > input')
 
-var text_in_shearch_bar = document.querySelector('#shearch_bar_text > input').value
-
 async function seller_reshearch_func(event, get_option) {
-	if (text_in_shearch_bar == shearch_bar.value) {
-		return
-	}
 	if (shearch_button.getAttribute('inreshearch') == 'false') {
 
 		shearch_button.setAttribute('inreshearch', 'true')
 
-		text_in_shearch_bar = shearch_bar.value
 
 		if (!(seller_result.children.length === 0)) {
 			for (let i = 0; i<seller_result.children.length; i++) {
@@ -130,7 +78,7 @@ async function seller_reshearch_func(event, get_option) {
 			get_option = `?place=${get_option}`
 		}
 
-		data = await bearer_fetch(`api/location/${get_option}`, 'GET', null)
+		var data = await bearer_fetch(`api/location/${get_option}`, 'GET', null)
 
 		if (data['results'].length === 0) {
 			if (data['detail'] != undefined & data['detail'] != "Not found.") {
@@ -143,7 +91,6 @@ async function seller_reshearch_func(event, get_option) {
 		}
 
 		data = data['results']
-		console.log(data)
 
 		seller_result.innerHTML = ""
 
@@ -160,14 +107,18 @@ async function seller_reshearch_func(event, get_option) {
 			let all_element = []
 
 			for (a in data[i]) {
-				if (!(a == 'latitude' || a == 'longitude')) {
+				if (!(a == 'latitude' || a == 'longitude' || a == "id")) {
 					element_name.push(a)
 					all_element.push(data[i][a])
 				}
 			}
 			html_element += `<button class=\"seller_result_contain\" scale=\'false\'>`
 			for (a in element_name) {
-				html_element += `<div class=\"seller_result_${element_name[a]}\">${data[i][element_name[a]]}</div>`
+				if (element_name[a] == "web_site") {
+					html_element += `<div class=\"seller_result_${element_name[a]}\"><a href="http://${data[i][element_name[a]]}" target='_blank'>${data[i][element_name[a]]}</a></div>`
+				} else {
+					html_element += `<div class=\"seller_result_${element_name[a]}\">${data[i][element_name[a]]}</div>`
+				}
 			}
 			html_element += `</button>`
 			if (!(data.length-1 == i)) {
@@ -175,7 +126,17 @@ async function seller_reshearch_func(event, get_option) {
 			}
 
 			active_marker.push(L.marker([data[i]['latitude'], data[i]['longitude']],).addTo(map))
-			active_marker[active_marker.length-1].bindPopup(`<div style='margin: 5px; font-weight: bold;'>${data[i]['name']}</div`)
+
+			active_marker.push(L.marker([data[i]['latitude'], data[i]['longitude']],).addTo(map))
+			active_marker[active_marker.length - 1]['location_data'] = {}
+			active_marker[active_marker.length - 1]._icon.setAttribute('onclick', 'print_location(event)')
+			active_marker[active_marker.length - 1]._icon.setAttribute('active_marker_id', active_marker.length - 1)
+
+			for (a in data[i]) {
+				if (!(a == 'latitude' || a == 'longitude')) {
+					active_marker[active_marker.length - 1]['location_data'][a] = data[i][a]
+				}
+			}
 		}
 
 		map.setView([lat, lon], 6);
@@ -199,6 +160,58 @@ async function seller_reshearch_func(event, get_option) {
 		shearch_button.setAttribute('inreshearch', 'false')
 	}
 }
+
+async function print_location(event) {
+	var marker = active_marker[event.target.getAttribute('active_marker_id')]
+	var data = marker.location_data
+	map.setView([marker._latlng.lat, marker._latlng.lng], 17)
+
+	seller_result.innerHTML = ""
+
+	html_element = ""
+	html_element += `<button class=\"seller_result_contain\" scale=\'false\'>`
+	for (let a in data) {
+		if (a == "web_site") {
+			html_element += `<div class=\"seller_result_${a}\"><a href="http://${data[a]}" target='_blank'>${data[a]}</a></div>`
+		} else if (a != 'id') {
+			html_element += `<div class=\"seller_result_${a}\">${data[a]}</div>`
+		}
+	}
+	html_element += `</button>`
+
+	seller_result.innerHTML = html_element
+
+	if (seller_extender.getAttribute('open') == 'false') {
+		seller_container_extention(event)
+	}
+}
+
+async function put_all_point_in_map() {
+	var data = await bearer_fetch(`api/location/`, 'GET', null)
+
+	data = data['results']
+
+	for (let a in active_marker) {
+		map.removeLayer(active_marker[a])
+	}
+	active_marker.splice(0, active_marker.length)
+
+	for (let i = 0; i < data.length; i++) {
+		active_marker.push(L.marker([data[i]['latitude'], data[i]['longitude']],).addTo(map))
+		active_marker[active_marker.length - 1]['location_data'] = {}
+		active_marker[active_marker.length - 1]._icon.setAttribute('onclick', 'print_location(event)')
+		active_marker[active_marker.length - 1]._icon.setAttribute('active_marker_id', active_marker.length - 1)
+
+		for (a in data[i]) {
+			if (!(a == 'latitude' || a == 'longitude')) {
+				active_marker[active_marker.length - 1]['location_data'][a] = data[i][a]
+			}
+		}
+	}
+	map.setView([lat, lon], 6);
+}
+
+put_all_point_in_map()
 
 shearch_button.addEventListener('click', (event) => {
 	get_option = shearch_button.previousElementSibling

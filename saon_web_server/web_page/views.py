@@ -2,13 +2,12 @@ from django.shortcuts import render
 from django.template import loader
 from django.template import Library
 from django.http import HttpResponse
-from rest_framework.permissions import IsAuthenticated
 
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 
 from article.models import *
-from saon_web_server.permissions import AlwaysPermission
+from saon_web_server.permissions import AlwaysPermission, IsAuthenticated
 
 from basket.models import Basket, Product
 from order.models import Order, ProductOrder
@@ -163,8 +162,43 @@ def account(request):
 		template = loader.get_template('connection/connection.html')
 		return HttpResponse(template.render(request=request))
 
-@api_view(['GET'])
+
+from account.models import User, UserManager
+from django.core.mail import send_mail
+
+@api_view(['GET', 'POST'])
 @permission_classes([AlwaysPermission])
 def password_forgot(request):
 	template = loader.get_template('password_forgot/password_forgot.html')
+
+	if request.method == 'GET':
+		return HttpResponse(template.render(request=request))
+
+	if 'email' not in request.data:
+		return HttpResponse(template.render({ 'error': 'request non valide' }, request=request ))
+
+	if not User.objects.filter(email=request.data['email']).exists():
+		return HttpResponse(template.render({ 'error': "cet email n'existe pas" }, request=request ))
+
+	user = User.objects.get(email=request.data['email'])
+
+	if user.url_password_forgot == '0':
+		user.url_password_forgot = UserManager.get_url_password_forgot()
+		user.save()
+
+	split_url = request.build_absolute_uri().split('/')
+	hostname = f'{split_url[0]}//{split_url[2]}'
+
+	send_mail(
+	    subject = 'Changement de mot de passe',
+        message = loader.render_to_string('email_password_forgot_template/email_password_forgot_template.html', {'url_password_forgot': user.url_password_forgot, 'hostname': hostname, 'host': split_url[2]}),
+        html_message = loader.render_to_string('email_password_forgot_template/email_password_forgot_template.html', {'url_password_forgot': user.url_password_forgot, 'hostname': hostname, 'host': split_url[2]}),
+        from_email = 'michique.pinson@gmail.com',
+        recipient_list = [user.email],
+        fail_silently = False,
+	)
+
+	sleep(1)
+
+	template = loader.get_template('password_forgot_email/password_forgot_email.html')
 	return HttpResponse(template.render(request=request))

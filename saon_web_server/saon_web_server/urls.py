@@ -57,10 +57,13 @@ Address_select_router.register('', AddressSelectViewset, basename='account')
 from stripe_payment_app.views import secure_facture
 from article.views import get_article_media_image
 
+from account.views import change_email_when_email_not_activate
+
 urlpatterns = [
     path('', include('web_page.urls')),
     path('', include('juridic_app.urls')),
     path('account/', include('account.urls')),
+    path('change_email_when_email_not_activate/', change_email_when_email_not_activate),
     path('admin/', include('admin_page.urls')),
 
     path('superadmin/', admin.site.urls),

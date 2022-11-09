@@ -5,7 +5,6 @@ from django.shortcuts import render
 from django.template import loader
 from django.template import Library
 from django.http import HttpResponse, FileResponse
-from rest_framework.permissions import IsAuthenticated
 from datetime import date, timedelta, datetime
 from rest_framework import status
 
@@ -13,7 +12,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 
-from saon_web_server.permissions import IsStaffUser
+from saon_web_server.permissions import IsStaffUser, IsAuthenticated
 
 from article.models import *
 from order.models import *

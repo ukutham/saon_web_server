@@ -5,6 +5,13 @@ class AlwaysPermission(BasePermission):
 	def has_permission(self, request, view):
 		return True
 
+class IsAuthenticated(BasePermission):
+	def has_permission(self, request, view):
+		if request.user and request.user.is_authenticated and request.user.email_activate:
+			return True
+		
+		return False
+
 class IsActivePermission(BasePermission):
 	def has_permission(self, request, view):
 		if request.user and request.user.is_authenticated:
@@ -261,10 +268,8 @@ class FactureViewPermission(BasePermission):
 			return True
 
 		facture = request.build_absolute_uri().split('/')[-1]
-		print(facture)
 		try:
 			order = Order.objects.get(facture=f'facture/{facture}')
-			print(order)
 
 			if order.create_by == request.user:
 				return True
